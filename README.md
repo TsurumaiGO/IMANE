@@ -1,4 +1,4 @@
-# Imanex (Incident manegement networking excercise) 
+# Imanex (Incident management networking exercise) 
 
 
 # Getting Started / スタートガイド
