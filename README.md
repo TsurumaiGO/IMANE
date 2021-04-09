@@ -28,7 +28,7 @@
 - Tomcatのインストールとworkshop.jarの配備
   - Apache Tomcatをインストール
     - http://tomcat.apache.org/
-  - apache-tomcat-x.x.xx\webapps内にworkshop.jarを配備する
+  - apache-tomcat-x.x.xx\webapps内にworkshop.warを配備する
 
 - サーバーの起動
   1. Tomcatを起動
@@ -47,7 +47,7 @@
   - [IMANE-PCサーバー環境構築と演習開始方法](https://drive.google.com/file/d/1g_2clxpkU8UtCgrSM63hIYKnH7hDyE-j/view?usp=sharing)
 
 - 操作の流れについてはついてはIMANE-PCの操作説明のPDFを参照してください
-  - [IMANE-PCの操作説明](https://drive.google.com/file/d/1g_2clxpkU8UtCgrSM63hIYKnH7hDyE-j/view?usp=sharing)
+  - [IMANE-PCの操作説明](https://drive.google.com/file/d/1cHsT7w-BvoI9WSXi1ZQGjmmHKsY5d70Q/view?usp=sharing)
 
 - 同梱されてる演習シナリオについてはシナリオ概要のPDFを参照してください
   - [シナリオ概要](https://drive.google.com/file/d/1cMO9Nqt-RyStZ5-CS1KRWjsVoH2MdvkT/view?usp=sharing)
@@ -76,4 +76,3 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 # Acknowledgments / 謝辞
 
 This work was supported by Council for Science, Technology and Innovation (CSTI), Cross-ministerial Strategic Innovation Promotion Program (SIP), “Cyber-Security for Critical Infrastructure” (funding agency: NEDO). 
-
