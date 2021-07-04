@@ -60617,7 +60617,7 @@ var bounds = exports.bounds = {
 
   
   
-  try{//modified by hkato
+  try{//modified by FrICORE
 	  var org = message.message;
 	  var json = JSON.parse(message.message);
 //	  var msg = Object.assign(message);
@@ -60632,12 +60632,9 @@ var bounds = exports.bounds = {
 	  if(json.statecards){msg.message += " [S]";}
 	  g.append('title').text(title);
 	  g.attr('id', id);
-	  }catch(t){
-		  var msg = message;
-	  }
-  
-  
-  
+  }catch(t){
+	  var msg = message;
+  }
   
   
   var textObj = _svgDraw2.default.getTextObj();
@@ -60665,6 +60662,14 @@ var bounds = exports.bounds = {
 
   rectElem.attr('height', textHeight + 2 * conf.noteMargin);
   bounds.bumpVerticalPos(textHeight + 2 * conf.noteMargin);
+  
+
+  //modified by FrICORE
+  try{
+  	var ev = new CustomEvent("drawnote", {detail:g});
+  	document.dispatchEvent(ev);
+  }catch(t){}
+  
 };
 
 /**
@@ -60680,7 +60685,7 @@ var drawMessage = function drawMessage(elem, startx, stopx, verticalPos, message
   var g = elem.append('g');
   var txtCenter = startx + (stopx - startx) / 2;
   
-  try{//modified by hkato
+  try{//modified by FrICORE
 	  var json = JSON.parse(message.message);
 //	  var msg = Object.assign(message);
 //      var msg = $.extend(message);
@@ -60751,6 +60756,14 @@ var drawMessage = function drawMessage(elem, startx, stopx, verticalPos, message
   if (msg.type === _sequenceDiagram.parser.yy.LINETYPE.SOLID_CROSS || msg.type === _sequenceDiagram.parser.yy.LINETYPE.DOTTED_CROSS) {
     line.attr('marker-end', 'url(' + url + '#crosshead)');
   }
+
+  //modified by FrICORE
+  try{
+  	var ev = new CustomEvent("drawmessage", {detail:g});
+  	document.dispatchEvent(ev);
+  }catch(t){}
+
+
 };
 
 var drawActors = exports.drawActors = function drawActors(diagram, actors, actorKeys, verticalPos) {
@@ -60768,6 +60781,7 @@ var drawActors = exports.drawActors = function drawActors(diagram, actors, actor
     // Draw the box with the attached line
     _svgDraw2.default.drawActor(diagram, actors[key].x, verticalPos, actors[key].description, conf);
     bounds.insert(actors[key].x, verticalPos, actors[key].x + conf.width, conf.height);
+    
   }
 
   // Add a margin between the actor boxes and the first arrow
@@ -61086,6 +61100,16 @@ var drawActor = exports.drawActor = function drawActor(elem, left, verticalPos, 
   drawRect(g, rect);
 
   _drawTextCandidateFunc(conf)(description, g, rect.x, rect.y, rect.width, rect.height, { 'class': 'actor' });
+  
+  
+  //modified by FrICORE
+  try{
+  	g.attr("data-role", description);
+  	var ev = new CustomEvent("drawactor", {detail:{element:g[0], role:description}});
+  	document.dispatchEvent(ev);
+  }catch(t){}
+  
+  
 };
 
 var anchorElement = exports.anchorElement = function anchorElement(elem) {
@@ -61616,7 +61640,7 @@ var draw = exports.draw = function draw(text, id) {
     formatter = pre.concat(mid).concat(post);
 
     var xAxis = _d2.default.svg.axis().scale(timeScale).orient('bottom').tickSize(-h + theTopPad + conf.gridLineStartPadding, 0, 0).tickFormat(_d2.default.time.format.multi(formatter));
-          //hkato
+          //modified by FrICORE
           if(conf.axisRange){
         	  xAxis.ticks(conf.axisRange);
           }//-->

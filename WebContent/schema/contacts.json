@@ -56,7 +56,7 @@
           },
           "system": {
             "title":"自動応答",
-            "description":"自動応答ユーザかどうか(true/false)をフェーズごとに設定します。\nたとえば[true,false,true]とすると、フェーズ0とフェーズ２で自動応答ユーザとなります。省略値:なし(すべてのフェーズで自動応答無効)",
+            "description":"自動応答ユーザかどうか(true/false)をフェーズごとに設定します。\nたとえば[true,false,true]とすると、フェーズ1とフェーズ3で自動応答ユーザとなります。省略値:なし(すべてのフェーズで自動応答無効)",
             "type": "array",
             "items": {
               "required": ["boolean"]
@@ -80,7 +80,33 @@
             "title": "アイコン",
             "description":"カードを表示する際に、html要素にclass値を付加します。Font Awesomeのアイコンを使用することを想定しています。",
             "type":"string"
-          }
+          },
+					"availableStates":{
+						"title": "所有ステートカード",
+						"description": "所有するステートカードのIDのリスト。",
+						"type": "array",
+						"items": {
+							"required": ["string"]
+						}
+
+					},
+					"party":{
+						"title": "パーティ",
+						"description": "メンバが属する集団。複数可。",
+						"type":"array",
+						"items": {
+							"required": ["string"]
+						}
+					},
+					"partyrole":{
+						"title": "パーティロール",
+						"description": "パーティ内のロール。複数可。",
+						"type":"array",
+						"items": {
+							"required": ["string"]
+						}
+					}
+					
         }
       }
     }

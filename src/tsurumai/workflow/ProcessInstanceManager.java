@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 import javax.security.auth.login.LoginException;
 
 import tsurumai.workflow.model.Member;
-
+@Deprecated
 public class ProcessInstanceManager {
 	public class Session{
 		
@@ -111,8 +111,8 @@ public class ProcessInstanceManager {
 		}
 		return null;
 	}
-	public boolean isValidProcess(long id) {
-		return _getProcessInstance(id) != null;
-	}
+//	public boolean isValidProcess(long id) {
+//		return _getProcessInstance(id) != null;
+//	}
 
 }

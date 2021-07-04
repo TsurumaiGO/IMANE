@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 //@JsonInclude(JsonInclude.Include.NON_NULL)
-
+@Deprecated 
 public class ProcessInstance{
 	public String name;
 	public int state;

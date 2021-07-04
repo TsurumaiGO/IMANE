@@ -160,7 +160,6 @@
     }
   },
   "required": [
-    "states",
-    "message"
+    "states"
   ]
 }

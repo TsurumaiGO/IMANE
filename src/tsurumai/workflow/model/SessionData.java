@@ -13,7 +13,7 @@ import tsurumai.workflow.ProcessInstanceManager.Session;
 @XmlRootElement
 @JsonIgnoreProperties({"comment","","//","#"})
 //@JsonInclude(JsonInclude.Include.NON_NULL)
-
+/***ログインユーザのション情報を保持する。システム内部でのみ使用される。*/
 public class SessionData {
 	@XmlAttribute
 	public String username;

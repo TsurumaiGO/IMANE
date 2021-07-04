@@ -53,24 +53,7 @@ import tsurumai.workflow.util.Util;
  * */
 @XmlRootElement
 public class ReplyData{
-	@XmlTransient
 
-	public boolean isTriggerAction(){
-		if(type != null && type.equals("trigger"))	return true;
-		if(actionid != null && actionid.equals("s0000"))	return true;//互換性のため
-		return false;
-	}
-	//protected static CacheControl<Collection<ReplyData>> cache = new CacheControl<>();
-	public interface Types{
-		/**既定の応答*/
-		public static final String NOT_FOUND = "notfound";
-		public static final String NULL = "null";
-		/**ダミーの空応答(非表示)*/
-		public static final String HIDDEN="hidden";
-		/**トリガーイベント*/
-		public static final String TRIGGER ="trigger";
-	}
-	
 
 	/**応答元アクションID*/
 	@XmlAttribute
@@ -100,10 +83,12 @@ public class ReplyData{
 //	public String replycondition;//指定されたIDのアクションに対するリプライであれば適用
 
 	/**この応答の適用条件となるアクションIDと経過時間のセットの配列。*/
+	@Deprecated
 	@XmlElement
 	public Map<String, Object>[] timecondition;
 
 	/**この応答の多重度制約。actionidに指定されたいずれかのアクションをmultiplicity回実行しようとした場合に適用される。*/
+	@Deprecated
 	@XmlElement
 	public Map<String, Object> constraints;
 
@@ -111,7 +96,7 @@ public class ReplyData{
 	@XmlAttribute
 	public String state;
 
-	/**アクションが実行されてから応答を返すまでの待ち時間。*/
+	/**アクションが実行されてから応答を返すまでの待ち時間(秒数)。*/
 	@XmlAttribute
 	public int delay = 0;
 
@@ -120,6 +105,7 @@ public class ReplyData{
 	public int order = 0;
 	
 	/**アクション中断を示すリプライの場合にtrue*/
+	@Deprecated
 	@XmlAttribute
 	public boolean abort = false;
 	
@@ -129,49 +115,76 @@ public class ReplyData{
 	@XmlAttribute
 	public String type;
 
-	/**フェーズ開始からの経過時間*/
+	/**このリプライが有効となるまでの、フェーズ開始からの経過時間(秒数)。*/
 	@XmlAttribute
 	public int elapsed = -1;
 	
-	/**送信元ロール*/
+	/**このリプライが有効となる送信元のロール。*/
 	@XmlAttribute
 	public String from;
 	
 	/***/
-	/**指定されたシステムステートがあれば適用(複数指定するとOR条件で評価)*/
+	/**このリプライが適用されるために必要なシステムステートの条件式を指定する。<br>
+	 * ステートカードのID、演算子(AND,OR,NOT,NORのいずれか)を指定可能。
+	 * 例:["state1"]<br>
+	 * 例:["state1", "state2"]<br>
+	 * 例:["state1", "state2", "state3", "AND"]<br>
+	 */
 	@XmlAttribute
 	public String[] statecondition;
 	
-	/**リプライ実行時にシステムにステートカードを追加する*/
+	/**このリプライの実行時にシステムにステートカードを追加する。*/
 	@XmlAttribute
 	public String[] addstate;
-	/**リプライ実行時にシステムが持つステートカードを破棄する*/
+	/**このリプライの実行時にシステムが持つステートカードを破棄する。*/
 	@XmlAttribute
 	public String[] removestate;
 	
-	/**情報共有アクションにステートカードが添付されていれば適用*/
+	/**情報共有アクションにこのステートカードが添付されていればこのリプライが適用される。*/
 	@XmlAttribute
 	public String attachmentcondition;
 	
-	/**リプライ候補の評価優先度*/
+	/**リプライ候補の評価優先度。*/
 //	@XmlAttribute
 	public int priority;
 
-	/**トリガイベントが発火した日時*/
+	/**トリガイベントが発火した日時。演習中のみ有効。*/
 	@XmlAttribute
 	public Date fireWhen;
 	
 	/**固定(既定)のオブジェクト*/
+	@Deprecated
 	@XmlAttribute
 	public boolean fixed = false;
 
-	/***/
+	/**ステートの識別子。*/
 	@XmlAttribute
 	public String id;
 	
 	/**条件評価スクリプト式。function evaluate(arg){...}が呼び出される。*/
+	@Deprecated
 	@XmlAttribute
 	public String evalator;
+	
+	
+	
+	@XmlTransient
+
+	public boolean isTriggerAction(){
+		if(type != null && type.equals("trigger"))	return true;
+		if(actionid != null && actionid.equals("s0000"))	return true;//互換性のため
+		return false;
+	}
+	//protected static CacheControl<Collection<ReplyData>> cache = new CacheControl<>();
+	public interface Types{
+		/**既定の応答*/
+		public static final String NOT_FOUND = "notfound";
+		public static final String NULL = "null";
+		/**ダミーの空応答(非表示)*/
+		public static final String HIDDEN="hidden";
+		/**トリガーイベント*/
+		public static final String TRIGGER ="trigger";
+	}
 	
 
 	protected static ServiceLogger logger = ServiceLogger.getLogger();

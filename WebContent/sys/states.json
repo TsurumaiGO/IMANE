@@ -1,0 +1,31 @@
+[
+   {
+     "id":"10010001",
+     "name":"演習開始",
+     "type":1
+   },
+   {
+     "id":"10010002",
+     "name":"演習終了",
+     "type":1
+   },
+   {
+     "id":"system.started",
+     "name":"演習開始",
+     "description": "演習を開始します。",
+     "type":1
+   },
+   {
+     "id":"system.paused",
+     "name":"一時停止",
+     "description": "演習を一時的に停止します。",
+     "type":1
+   },
+   {
+     "id":"system.aborted",
+     "name":"中断",
+     "description": "演習を中断します。",
+     "type":1
+   }
+   
+]

@@ -23,19 +23,29 @@ import tsurumai.workflow.util.Util;
 @JsonIgnoreProperties({"comment","","//","#"})
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 
-/**演習フェーズの定義を表現します。*/
+/**演習中に参加者のアクションに応じて付与されるポイントを表現します。*/
 @XmlRootElement
 public class PointCard {
-	public int phase = -1;//省略値:-1(すべてのフェーズ)
+	/**対象とするフェーズ番号。省略値:-1(すべてのフェーズ)*/
+	public int phase = -1;
+	/**説明。*/
 	public String description ="";
-	public int before = 0;//フェーズ開始からの経過時間(秒)の上限。省略値:0(常に真となる)
-	public int after = 0;//フェーズ開始からの経過時間(秒)の下限。省略値:0(常に真となる)
-	public String state;// = -1;//システムステート条件。省略値:なし(システムステートによらず常に真となる)
-	public String[] statecondition;//システムステート前提条件(AND条件)。省略値:無制限
-	public int multiplicity = 1;//許可する重複回数。省略値:1
-	public int point = 0;//得点(マイナスは減点)。省略値:0。
-	public String name = "";//名前,
-	public String id;//省略不可
+	/**フェーズ開始からの経過時間(秒)の上限。省略値:0(常に真となる)*/
+	public int before = 0;
+	/**フェーズ開始からの経過時間(秒)の下限。省略値:0(常に真となる)*/
+	public int after = 0;
+	/**システムステート条件。省略値:なし(システムステートによらず常に真となる)*/
+	public String state;
+	/**システムステート前提条件(AND条件)。省略値:無制限*/
+	public String[] statecondition;
+	/**許可する重複回数。省略値:1*/
+	public int multiplicity = 1;
+	/**得点(マイナスは減点)。省略値:0。*/
+	public int point = 0;
+	/**名前*/
+	public String name = "";
+	/**ポイントカードの識別子。*/
+	public String id;
 	
 //	protected static String basedir = "data";
 //	
@@ -90,7 +100,7 @@ public class PointCard {
 //			return PointCard.cards.toArray(new PointCard[ret.size()]);
 			return cache.set(ret.toArray(new PointCard[ret.size()]));
 		}catch(Throwable t){
-			ServiceLogger.getLogger().warn("ポイントカードの初期化に失敗しました。ポイント機能は無効化されます。",t);
+			ServiceLogger.getLogger().warn("ポイントカードの初期化に失敗しました。ポイント機能は無効化されます。");
 			return new PointCard[0];
 		}
 	}

@@ -55,44 +55,67 @@ public class Member {
 
 		logger.info("ユーザデータを再ロードしました。" + file);
 	}
+	/**名前。*/
 	@XmlAttribute
 	public String name;
+	/**ロールを示す識別子。*/
 	@XmlAttribute
 	public String role;
+	/**ロールの表示名。*/
 	@XmlAttribute
 	public String rolename;
+	/**ロールのログインID。*/
 	@XmlAttribute
 	public String email;
+	/**ロールの説明。*/
 	@XmlAttribute
 	public String desc;
+	/**各フェーズで自動応答ユーザかどうかを示す。配列のインデックスはフェーズ番号に対応する。*/
 	@XmlAttribute
 	public boolean[] system;
+	/**このロールが属するチーム名。*/
 	@XmlAttribute
 	public String team;
-
+	/**このロールが現在オンラインかどうかを示す。演習中のみ有効。*/
 	@XmlAttribute
 	public boolean online;
-
+	/**演習中にロールの状態を保持する。演習中のみ有効。*/	
 	@XmlAttribute
 	public String state;
-	
 	@XmlAttribute
 	public boolean hidden=false;
 
+	/**このロールがアクションを実行する際の宛先リストのソート順を指定する。*/	
 	@XmlAttribute
 	public String[] recipients;
+	/**ロールのリストを返すときの(デフォルトの)ソート順を指定する。*/
 	@XmlAttribute
 	public int order;
+	
+	/**ファシリテータかどうかを示す。*/
 	@XmlAttribute
 	public boolean isadmin = false;
+	
+	/**このロールが入手済みのステートカードのIDのリストを保持する。演習中のみ有効。*/
 	@XmlAttribute
 	public Set<String> availableStates = new HashSet<>();
-	
+
+	/**カードのｈｔｍｌ要素にcssクラス名として展開される。カードにアイコンやスタイルを指定するために使用する。*/
 	@XmlAttribute
 	public String icon;
 	
+	/**experimental*/
+	@XmlAttribute
+	public String[] party;
+	/**experimental*/
+	@XmlAttribute
+	public String[] partyrole;
+	
+	/**ログイン時のパスワード。未設定の場合は空文字でログイン可能。*/
 	@XmlTransient
 	public String passwd;
+	
+	
 	
 	protected javax.websocket.Session session;
 	

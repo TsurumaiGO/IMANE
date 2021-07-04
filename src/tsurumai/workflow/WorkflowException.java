@@ -16,6 +16,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
+import tsurumai.workflow.util.ServiceLogger;
+import tsurumai.workflow.util.Util;
+
 
 
 /**シナリオデータの異常*/
@@ -55,7 +58,8 @@ class WorkflowSessionException extends WorkflowException{
 	private static final long serialVersionUID = 1L;
 	
 	public WorkflowSessionException() {
-		super(HttpServletResponse.SC_UNAUTHORIZED);
+		//super(HttpServletResponse.SC_UNAUTHORIZED);
+		super(HttpServletResponse.SC_NO_CONTENT, true);
 	}
 	public WorkflowSessionException(final String msg, final Throwable cause) {
 		super(msg, cause);
@@ -67,7 +71,16 @@ class WorkflowSessionException extends WorkflowException{
 		super(msg, status,cause, nostacktrace);
 	}
 }
-
+/**エラーではない*/
+class WorkflowWarning extends WorkflowException{
+	public WorkflowWarning() {
+		super(HttpServletResponse.SC_NO_CONTENT, true);
+	}
+	public WorkflowWarning(String msg) {
+		super(msg, HttpServletResponse.SC_NO_CONTENT, true);
+	}
+	
+}
 public class WorkflowException extends WebApplicationException{
 	protected int status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 	private static final long serialVersionUID = 1L;
@@ -82,12 +95,14 @@ public class WorkflowException extends WebApplicationException{
 	public WorkflowException(int status) {
 		this(String.valueOf(status), status, null);
 	}
+	public WorkflowException(int status, boolean nostacktrace) {
+		this(String.valueOf(status), status, null, nostacktrace);
+	}
 	public WorkflowException(final String msg, final Throwable cause) {
 //		super(msg, cause);
 		this(msg, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, cause, false);	
 		if(cause instanceof UnrecognizedPropertyException){
 		}
-		
 	}
 	public WorkflowException(final String msg, int status) {
 		this(msg, status, null);
@@ -100,8 +115,9 @@ public class WorkflowException extends WebApplicationException{
 	}
 	public WorkflowException(final String msg, int status, final Throwable cause, boolean nostacktrace) {
 		super(msg, cause, status);
+		//System.err.println(msg);
+		ServiceLogger.getLogger().error(msg, this, nostacktrace);
 		if(!nostacktrace){
-			System.err.println(msg);
 			this.printStackTrace();
 		}
 	}

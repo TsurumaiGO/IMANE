@@ -29,17 +29,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tsurumai.workflow.model.CardData;
 import tsurumai.workflow.model.Member;
+import tsurumai.workflow.model.PhaseData;
 import tsurumai.workflow.model.PointCard;
 import tsurumai.workflow.model.ReplyData;
+import tsurumai.workflow.model.ScenarioData;
 import tsurumai.workflow.model.StateData;
 import tsurumai.workflow.util.Pair;
 import tsurumai.workflow.util.ServiceLogger;
 import tsurumai.workflow.util.Util;
+import tsurumai.workflow.vtime.Task;
+import tsurumai.workflow.vtime.World;
+import tsurumai.workflow.vtime.Task.TaskListener;
 @JsonIgnoreProperties({"comment","","//","#"})
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 
 /**操業レベル定義
  * @deprecated 操業レベルに関する処理は廃止されました*/
+@Deprecated
 class OperationLevelDef implements Comparable<OperationLevelDef>{
 	
 	/**フェーズ開始からの経過時間(秒)**/public int time;
@@ -52,6 +58,7 @@ class OperationLevelDef implements Comparable<OperationLevelDef>{
 	}
 	
 }
+@Deprecated 
 @JsonIgnoreProperties({"comment","","//","#"})
 /**フェーズにおける操業状態の定義*/
  class OperationStateDef{
@@ -64,7 +71,7 @@ class OperationLevelDef implements Comparable<OperationLevelDef>{
 		return this.state;
 	}
 	/**現在のフェーズの開始からの経過時間にもとづいて、現在の操業レベルを返す*/
-	public OperationLevelDef getOperationLevel(int phase, final Date started){
+	public OperationLevelDef getOperationLevel(int phase, final Date started){//tag:virtualdate
 		if(phase != this.phase) return null;
 		long elapsed = (new Date().getTime() - started.getTime())/1000 ;//経過時間(s)
 		OperationLevelDef[] def = getState();
@@ -88,8 +95,11 @@ class TriggerEvent{
 	public String to;
 	
 	public TriggerEvent(String state, final String from, final String to){
+		this(state, from, to, null);
+	}
+	public TriggerEvent (String state, final String from, final String to, Date date){
 		this.state = state;
-		this.date = new Date();
+		this.date = date == null ? date : new Date(); //new Date();
 		this.from = from;
 		this.to= to;
 	}
@@ -220,6 +230,12 @@ public class WorkflowInstance {
 	@XmlElement
 	public PointCard[] pointcards = null; 
 	
+	@XmlElement
+	public String scenarioName = ""; 
+	@XmlElement
+	public boolean frozen = false;
+	
+	
 	/**ユーザの所有ステートカード。ユーザIDとステートIDのマップ。*/
 	protected Map<String, Set<String>> memberStates =new HashMap<>();
 	/**自動応答ユーザのステートカード状態を初期化する*/
@@ -251,12 +267,13 @@ public class WorkflowInstance {
 	
 	protected WorkflowService caller = null;
 	protected Worker worker = null;
-	public static WorkflowInstance newInstance(WorkflowService caller, final String team, long pid){
-		WorkflowInstance inst = newInstance(caller.getScenarioDirectory(), team, pid);
+	public static WorkflowInstance newInstance(WorkflowService caller, final String team/*, long pid*/){
+		WorkflowInstance inst = newInstance(caller.getScenarioDirectory(), team);
 		inst.caller = caller;
 		inst.team = team;
 		return inst;
 	}
+
 	/**
 	 * ワークフローインスタンスを初期化
 	 * @param basedir シナリオセット(チーム定義)の格納先
@@ -266,7 +283,7 @@ public class WorkflowInstance {
 		WorkflowInstance inst = new WorkflowInstance();
 		inst.team = team;
 		inst.initialize(basedir);
-		inst.pid = pid;//TODO: 2019,9,4
+		//inst.pid = pid;//TODO: 2019,9,4
 		return inst;
 	}
 	public static WorkflowInstance newInstance(String basedir, final String team){
@@ -283,6 +300,7 @@ public class WorkflowInstance {
 	protected void initialize(final String basedir){
 		try{
 			logger.info("initialize:" +this.toString());
+			this.scenarioName = basedir;
 			ObjectMapper mapper = new ObjectMapper();
 
 			String path = basedir + File.separator + "operationstate.json";
@@ -321,8 +339,13 @@ public class WorkflowInstance {
 //			Thread.sleep(1000);
 //		}catch(Throwable t) {}
 //		
+		
+//		this.world = new World(this.team);
+		this.startWorld();
+		
 		this.worker = new Worker();
 		this.worker.start();
+
 		logger.info("workflow started:" +this.toString());
 	}
 	/**フェーズを終了*/
@@ -336,31 +359,31 @@ public class WorkflowInstance {
 		logger.info("workflow ended:" +this.toString());
 	}
 	
-	/**一時停止(使用するかどうか？)*/
-	public void suspend(){
-		logger.info("suspend:" +this.toString());
-		this.state = State.SUSPENDED;
-		this.saved  = new Date();
-		if(this.worker != null){
-			this.worker.stop();
-		}
-	}
-
-	/**一時停止から復帰(使用するかどうか？)*/
-	public void resume(){
-		logger.info("resume:" +this.toString());
-		this.state = State.STARTED;
-
-		this.worker = new Worker();
-		this.worker.start();
-		logger.info("resumed:" +this.toString());
-	}
+//	/**一時停止(使用するかどうか？)*/
+//	public void suspend(){
+//		logger.info("suspend:" +this.toString());
+//		this.state = State.SUSPENDED;
+//		this.saved  = new Date();
+//		if(this.worker != null){
+//			this.worker.stop();
+//		}
+//	}
+//
+//	/**一時停止から復帰(使用するかどうか？)*/
+//	public void resume(){
+//		logger.info("resume:" +this.toString());
+//		this.state = State.STARTED;
+//
+//		this.worker = new Worker();
+//		this.worker.start();
+//		logger.info("resumed:" +this.toString());
+//	}
 	
 	/**フェーズを中断・異常終了*/
 	public void abort(){
 		logger.info("abort:" +this.toString());
 		this.state = State.ABORTED;
-		
+		this.world.stop();
 		logger.info("workflow aborted:" +this.toString());
 
 	}
@@ -376,8 +399,15 @@ public class WorkflowInstance {
 	}
 
 	protected boolean isRunning(){return State.STARTED.equals(this.state);}
+	protected boolean isSuspending(){
+
+		boolean ret = State.SUSPENDED.equals(this.state);
+		if(this.world.isPaused() != ret) {logger.error("内部状態が矛盾しています。", new WorkflowException("ワークフロー状態が矛盾"));}
+
+		return ret;
+	}
 	
-	/**アクション要求を処理する
+	/**ユーザからの手動アクション要求を処理する
 	 * */
 	public void requestAction(CardData action, Member from, Member to, Member[] cc, NotificationMessage reply) throws WorkflowException{
 		prepareAction(action, from, to, cc, reply);
@@ -391,7 +421,8 @@ public class WorkflowInstance {
 				(from !=null ? from.toString() : "nul") +",to:"+ (to != null ? to.toString()  : "null") + 
 					",cc:" + Util.toString(cc!= null ?  cc.toString() : "null") + ",action:"+action.toString());
 		
-		NotificationMessage msg  = new NotificationMessage(this.pid, action, to, from, cc, reply);
+		NotificationMessage msg  = new NotificationMessage(/*this.pid,*/ action, to, from, cc, reply);
+		msg.sentDate = this.getTime();
 		msg.team = this.team;
 		enqueueAction(msg);
 
@@ -407,17 +438,26 @@ public class WorkflowInstance {
 	 * */
 	protected void prepareAction(CardData action, Member from, Member to, Member[] cc, NotificationMessage reply) throws WorkflowException{
 
-		if(!this.isRunning()){
+		if(!this.isRunning() && !this.isSuspending()){
 			rejectAction(action, from, to, cc,reply,  "演習が実行されていません。");return;
-			
 		}
+
+		//type:controlのアクション以外は拒否する
+		//TODO: ただし、自動アクションやリプライは停止するはずなので、意図した動作はしないかもしれない
+		if(this.getActiveScenario().isFeatureEnabled("virtualtime")) {
+			if(action.is(CardData.Types.control) && !this.isSuspending()) {
+				rejectAction(action, from, to, cc,reply,  "演習が一時停止されています。");return;
+			}
+		}
+
 		//		システムユーザ以外または汎用アクションでないならすぐにリプライ送信
 		if(!to.isSystemUser(this.phase) || !action.is(CardData.Types.action)){
-			NotificationMessage msg  = new NotificationMessage(this.pid, action, to, from, cc, reply);
+			NotificationMessage msg  = new NotificationMessage(/*this.pid, */action, to, from, cc, reply);
+			msg.sentDate = this.getTime();
 			executeAction(msg);
 			return;
 		}
-		
+
 		if(action.abortaction  != null && action.abortaction.length() != 0){
 			int c = countQueuedAction(new String[]{action.abortaction});
 			if(c ==  0){
@@ -442,7 +482,7 @@ public class WorkflowInstance {
 	}
 	/**受け付けたアクションを即時実行*/
 	protected void executeAction(NotificationMessage msg){
-		msg.replyDate = new Date();//TODO:必要?
+		msg.replyDate = this.getTime();//tag:virtualtime
 		history.add(msg);
 		updateSystemState(msg.action, msg.id);
 		Notifier.dispatch(msg);
@@ -467,15 +507,17 @@ public class WorkflowInstance {
 	//	postTeamNotification(message, NotificationMessage.LEVEL_HIDDEN, null);
 	}
 	/**システムからの通知を送信します。*/
-	public void postTeamNotification(String message, int level, String[] state){
-		CardData data = CardData.find(CardData.Types.notification);
-		NotificationMessage msg = constructNotification(this.pid, data,  Member.TEAM, Member.SYSTEM, null, null);
-		msg.team = team;
-		msg.message = message;
-		msg.action.statecards = state;
-		msg.level = level;
-		logger.info("システムからの通知メッセージを送信:" + msg.toString());
-		Notifier.dispatch(msg);
+	public void sendTeamNotification(String message, int level, String[] state){
+//		CardData data = CardData.find(CardData.Types.notification);
+//		
+//		NotificationMessage msg = constructNotification(this.pid, data,  Member.TEAM, Member.SYSTEM, null, null);
+//		msg.team = team;
+//		msg.message = message;
+//		msg.action.statecards = state;
+//		msg.level = level;
+//		logger.info("システムからの通知メッセージを送信:" + msg.toString());
+//		Notifier.dispatch(msg);
+		NotificationMessage msg = Notifier.sendTeamNotification(this.team, message, level, state);
 		this.addHistory(msg);
 		
 	}
@@ -529,16 +571,30 @@ public class WorkflowInstance {
 			
 			if(!evaluateAutoAction(cur))
 				continue;
-			if(!autoActionHistory.containsKey(cur.id)){
-				logger.info("自動アクションを受付:" + cur.name +  ":" + (cur.delay / 1000)+"秒後");
-
+			//2021.6.7 実行待機中のアクションを多重登録しないよう修正
+			if(!autoActionHistory.containsKey(cur.id) && !this.isActionPending(cur.id)){
+				logger.debug("自動アクションを受付:" + cur.name +  ":" + (cur.delay)+"秒後");
 				List<Member> cc = Member.getMembers(this.team, cur.cc);
 				registerTrigger(cur, to, from, cc);
 			}
 		}
 	}
+	class AutoActionTimer extends Timer {
+		String actionid;
+		AutoActionTimer(String actionid){
+			super();
+			this.actionid = actionid;
+		}
+	}
+
+	//TODO: tag:virtualtime 仮想時刻ベースのスケジューリングに変更
 	/**自動アクションをスケジュール登録する*/
 	protected void registerTrigger(CardData cur, Member to, Member from, List<Member> cc) {
+
+		if(isFeatureEnabled("virtualtime")) {
+			logger.debug("virtualtime enabled.");
+			__registerTrigger(cur, to, from, cc);return;
+		}
 		
 		TimerTask handler = new TimerTask(){
 			@Override
@@ -546,13 +602,47 @@ public class WorkflowInstance {
 				if(!autoActionHistory.containsKey(cur.id)){
 					logger.info("自動アクションを実行:" + cur.name);
 					acceptAction(cur,  from, to, cc.toArray(new Member[cc.size()]), null);
-					autoActionHistory.put(cur.id, new Date());
+					autoActionHistory.put(cur.id, WorkflowInstance.this.getTime());//new Date()); tag:virtualtime
 				}
 			}
 		};
-		Timer tm = new Timer();tm.schedule(handler, cur.delay*1000);
+		AutoActionTimer tm = new AutoActionTimer(cur.id);tm.schedule(handler, cur.delay*1000);
 		
 		this.autoActionTimers.add(tm);
+	}
+	/**自動アクションをスケジュール登録する(仮想時刻対応版)*/
+	protected void __registerTrigger(CardData cur, Member to, Member from, List<Member> cc) {
+		TaskListener l = new TaskListener() {
+			@Override
+			public void onSkipped(Task t, Date when, String reason) {}
+			
+			@Override
+			public void onExecuted(Task t, Date when) {
+				if(!autoActionHistory.containsKey(cur.id)){
+					logger.info("自動アクションを実行:" + cur.name);
+					acceptAction(cur,  from, to, cc.toArray(new Member[cc.size()]), null);
+					autoActionHistory.put(cur.id, WorkflowInstance.this.getTime());//new Date()); tag:virtualtime
+				}
+			}
+		};
+		if(isActionPending(cur.id)) {
+			logger.debug("specified action are waiting to be execution." + cur.toString());
+			return;
+		}
+		
+		Task task = new Task(cur.id, this.getTime(this.getTime().getTime() + cur.delay * 1000)).addListener(l);
+		logger.info("registering new scedule task "+ task.toString());
+		this.world.getScheduler().register(task);
+	}
+	
+	
+	
+	boolean isActionPending(String id) {
+		for(AutoActionTimer tm : this.autoActionTimers){
+			if(tm.actionid.equals(id))
+					return true;
+		}
+		return false;
 	}
 	protected void clearAutoActionTimers() {
 		for (Timer t: this.autoActionTimers) {
@@ -561,7 +651,7 @@ public class WorkflowInstance {
 		this.autoActionTimers.clear();
 	}
 	
-	ArrayList<Timer> autoActionTimers = new ArrayList<Timer>();
+	ArrayList<AutoActionTimer> autoActionTimers = new ArrayList<AutoActionTimer>();
 	/**ステート条件の演算子*/
 	public static enum Operator{
 		AND,
@@ -761,7 +851,7 @@ public class WorkflowInstance {
 			boolean result = and ? memberHasAllStates(userid, p.trailer) : memberHasStates(userid, p.trailer);
 			boolean ret =  (not ? !result : result);
 			if(ret){
-				logger.info("ユーザステート条件がヒットしました: " + (and ? " and " : " or ") + (not ? " not " : " ") + Util.toString(p.trailer) + ":" + ret);
+				logger.debug("ユーザステート条件がヒットしました: " + (and ? " and " : " or ") + (not ? " not " : " ") + Util.toString(p.trailer) + ":" + ret);
 			}
 		    return ret;
 		}
@@ -870,7 +960,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 			
 			boolean ret =  (not ? !result : result);
 			if(ret){
-				logger.info("ステート条件がヒットしました: " + (and ? " and " : " or ") + (not ? " not " : " ") + Util.toString(p.trailer) + ":" + ret);
+				logger.debug("ステート条件がヒットしました: " + (and ? " and " : " or ") + (not ? " not " : " ") + Util.toString(p.trailer) + ":" + ret);
 			}
 			return ret;
 		}
@@ -880,6 +970,12 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	 * 
 	 * */
 	protected boolean evaluateAutoAction(final CardData action){
+		
+		if(action.breakpoint) {
+			//
+			logger.debug("ブレークポイントに到達", action);
+		}
+		
 		boolean hasStates = evaluateMemberStateCondition(action.from, action.statecondition, Operator.AND);
 		if(hasStates){
 			return true;
@@ -901,11 +997,19 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 				if(!r.isTriggerAction()) continue;
 				if(r.elapsed == -1)	continue;
 			
-				Date notbefore = new Date(this.start.getTime() + r.elapsed * 1000);
-				if(!new Date().after(notbefore)){
+				
+				//<!--TAG:feature-virtualtime
+				
+//				Date notbefore = new Date(this.start.getTime() + r.elapsed * 1000);
+//				if(!new Date().after(notbefore)){
+				Date notbefore = this.getTime(this.start.getTime() + r.elapsed * 1000);
+				//TODO: 上の行は変更しなくても良いかもしれない。(startが仮想時刻か実時刻か？)
+				if(!this.getTime().after(notbefore)){
 					logger.debug(String.format("トリガーイベントは待機中です。宛先:%s, 名前:%s, メッセージ:%s,予定時刻:%s",r.to,r.name,r.message, new SimpleDateFormat("MM/dd HH:mm:ss").format(notbefore)));
 					continue;
 				}
+				//TAG:feature-virtualtime-->
+				
 				
 				//すでに発火済ならスキップ
 				if((r.state != null && r.state.length() != 0) &&  triggerIsFired(/*Integer.valueOf(r.state)*/r.state, r.to)){//, r.to))
@@ -920,19 +1024,19 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 				CardData data2 = new ObjectMapper().readValue(data.toString(), CardData.class);
 				Member to = Member.roleToMember(this.team, r.to);
 				Member from = Member.roleToMember(this.team, r.from);
-				NotificationMessage msg = constructNotification(this.pid, data2,  to, from, null, null);
+				NotificationMessage msg = Notifier.constructNotification(/*this.pid,*/ data2,  to, from, null, null);
 				msg.message = r.message;
 				msg.team = this.team;
-				msg.sentDate = new Date();
+				msg.sentDate = this.getTime();//new Date(); //tag: virtualtime
 	
 				String[] statecards = null;
 	
 				if(msg.action.statecards != null && msg.action.statecards.length != 0){
-					statecards = Util.join(statecards, msg.action.statecards); 
+					statecards = Util.concat(statecards, msg.action.statecards); 
 				}
 				
 				if(r.state != null && r.state.length() != 0){
-					statecards = Util.put(statecards, r.state);
+					statecards = Util.concat(statecards, r.state);
 				}else{
 					logger.warn("トリガーイベントにステートカードが設定されていません。このイベントは破棄されます。" + r.toString());
 					continue;
@@ -970,7 +1074,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 				logger.warn("送信済のトリガーイベントを送信しようとしました。イベントは無視されます。ステート:" +String.valueOf(state));
 				continue;
 			}
-			TriggerEvent newEvent = new TriggerEvent(state, msg.from != null ? msg.from.role : null, msg.to != null ? msg.to.role : null);
+			TriggerEvent newEvent = new TriggerEvent(state, msg.from != null ? msg.from.role : null, msg.to != null ? msg.to.role : null, this.getTime());//tag:virtualtime
 			logger.info(String.format("トリガーイベントを履歴に保存しました。メッセージ:%s, from:%s,to:%s, ステート:%s",msg.message, newEvent.from, newEvent.to, newEvent.state));
 			logger.info(String.valueOf(this.triggerEvents.size())+ "のトリガーイベントが履歴にあります。");
 			
@@ -989,25 +1093,11 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		}
 		return null;
 	}
-	public static  NotificationMessage constructNotification(long pid, CardData data, Member to, Member from, Member[] cc, NotificationMessage replyTo) throws WorkflowException{
-		if(data.is(CardData.Types.talk)){
-			//送信者と受信者にディスパッチ
-		}else if(data.is(CardData.Types.notification)){
-			//送信者と受信者にディスパッチ
-		}else if(data.is(CardData.Types.action)){
-			//送信者と受信者にディスパッチ
-//		}else if(data.type == "response"){//TODO:いらんな
-//			//送信者と受信者にディスパッチ
-//			if(replyTo == null)throw new WorkflowException("問い合わせ先が指定されていません。", HttpServletResponse.SC_BAD_REQUEST );
-//		}else if(data.type == "notification"){
-//			
-		}
-		NotificationMessage msg = new NotificationMessage(pid, data, to, from, cc, replyTo);
-		return msg;
-	}
+
 	/**自動アクション、トリガーイベントなどの発生条件をスキャンし必要に応じて起動する
 	 * */
 	class Worker extends TimerTask{
+		Object lock = new Object();
 		protected Timer timer = new Timer();
 		int interval = Integer.parseInt(System.getProperty("check.interval","1000"));
 		public Worker(int interval){this.interval = interval;}
@@ -1024,6 +1114,9 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		/**定期的に実行される処理**/
 		@Override
 		public void run() {
+			
+			if(frozen) return;
+			
 			//経過時間に応じて操業レベル変化
 			if(!WorkflowInstance.this.isRunning()){
 				return;
@@ -1044,6 +1137,8 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		}
 	}
 	
+	
+	
 	/**履歴からアクション実行履歴を探索*/
 	protected Collection<NotificationMessage> getActionHistory(String actionid){
 		Collection<NotificationMessage> ret = new ArrayList<>();
@@ -1058,7 +1153,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	protected Collection<NotificationMessage> getActionQueue(String actionid, int order){
 		Collection<NotificationMessage> ret = new ArrayList<>();
 		for(NotificationMessage n : actionQueue){
-			if(n.action.id.equals(actionid) && n.action.curretorder == order){
+			if(n.action.id.equals(actionid) && n.action.currentorder == order){
 				ret.add(n);
 			}
 		}
@@ -1100,7 +1195,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 					int c = countQueuedAction(actions.toArray(new String[actions.size()]));
 					int m = multiplicity.intValue();
 					if(c <=m){
-						logger.log(String.format(rep.name + ":多重度条件(constraints)を満たしていません。キューの数:%d, 上限:%d, リプライ:%s", c, m ,rep.toString()));
+						logger.info(String.format(rep.name + ":多重度条件(constraints)を満たしていません。キューの数:%d, 上限:%d, リプライ:%s", c, m ,rep.toString()));
 						return false;
 					}
 				}
@@ -1155,12 +1250,12 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 			logger.info("履歴にアクションがあります。" + m.action.name);
 			if(m.replyTo != null && m.replyDate == null) 
 				throw new RuntimeException("バグ: 履歴にreplyDateが設定されていない");
-			else if(m.replyDate != null){
-				long ret = ((new Date().getTime() - m.replyDate.getTime())/1000);
+			else if(m.replyDate != null){//tag:virtualtime
+				long ret = ((this.getTime().getTime() - m.replyDate.getTime())/1000);
 				logger.info(String.format("アクション[%s]は%d秒前に実行されました。",  m.action.name, ret));
 				return ret;
 			}else if(m.sentDate != null){
-				long ret = ((new Date().getTime() - m.sentDate.getTime())/1000);
+				long ret = ((this.getTime().getTime() - m.sentDate.getTime())/1000);
 				logger.info(String.format("アクション[%s]は%d秒前に送信されました。",  m.action.name, ret));
 				return ret;
 			}else{
@@ -1189,14 +1284,14 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	 *    
 	 * */
 	protected NotificationMessage makeReplyMessage(final NotificationMessage actionRequest){
-		NotificationMessage reply = new NotificationMessage(this.pid, actionRequest.action, 
+		NotificationMessage reply = new NotificationMessage(/*this.pid,*/ actionRequest.action, 
 				actionRequest.from, actionRequest.to, actionRequest.cc, null);
-		reply.sentDate = actionRequest.sentDate;//TODO:うーん？？
+		reply.sentDate = actionRequest.sentDate;
 		int nextorder = 0;
-		Collection<NotificationMessage> queued = getActionQueue(actionRequest.action.id, actionRequest.action.curretorder);
+		Collection<NotificationMessage> queued = getActionQueue(actionRequest.action.id, actionRequest.action.currentorder);
 		if(queued != null && queued.size() != 0){
-			logger.debug("要求されたアクションは実行待ちです。オーダー:" +String.valueOf(actionRequest.action.curretorder));
-			nextorder = queued.iterator().next().action.curretorder;
+			logger.debug("要求されたアクションは実行待ちです。オーダー:" +String.valueOf(actionRequest.action.currentorder));
+			nextorder = queued.iterator().next().action.currentorder;
 		}
 		Collection<ReplyData> replies = ReplyData.findReply(this.phase,  actionRequest.action.id, actionRequest.to, nextorder,  
 				actionRequest.action.attachments);//Util.toIntArray(actionRequest.action.attachments));
@@ -1204,7 +1299,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 			logger.debug(String.format("リプライ候補が見つかりません。エラーリプライを返します。action=%s, phase=%s, to=%s", 
 					actionRequest.action.id, String.valueOf(phase), actionRequest.to.toString()));
 			reply.reply = ReplyData.getErrorReply(phase, null);
-			reply.replyDate = new Date();
+			reply.replyDate = this.getTime();//new Date(); tag:virtualtime
 			return reply; 
 		}
 		logger.debug(replies.size() + "個のリプライ候補がヒットしました。オーダー:" +String.valueOf(nextorder));
@@ -1231,14 +1326,14 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		//送信待ちのときは続行、そうでないときはエラー
 		if(rep==null){
 			logger.warn(String.format("該当するリプライデータが見つかりません。action=%s, phase=%s, to=%s", 
-					actionRequest.action.id, String.valueOf(phase), actionRequest.to.toString()), null);
+					actionRequest.action.id, String.valueOf(phase), actionRequest.to.toString()));
 			return null;
 		}else{
 			reply.reply = rep;
 			logger.debug(String.format("該当するリプライデータが見つかりました。reply=%s, action=%s, phase=%s, to=%s : %s",
 					reply.id, actionRequest.action.id, String.valueOf(phase), actionRequest.to.toString(), reply.reply.name));
 		}
-		reply.replyDate = new Date();
+		reply.replyDate = this.getTime();//new Date(); tag:virtualtime
 		return reply;
 		
 	}
@@ -1246,7 +1341,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	protected boolean isLastAction(NotificationMessage msg){
 
 		try{	
-			Collection<ReplyData> reps = ReplyData.findReply(phase,  msg.action.id, msg.from, msg.action.curretorder + 1, 
+			Collection<ReplyData> reps = ReplyData.findReply(phase,  msg.action.id, msg.from, msg.action.currentorder + 1, 
 					msg.action.attachments);//Util.toIntArray(msg.action.attachments));
 			boolean ret = (reps.size() == 0);
 			for(ReplyData d : reps.toArray(new ReplyData[reps.size()])){
@@ -1269,7 +1364,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 				return ret;
 			}
 		}catch(WorkflowException t){
-			logger.warn(String.format("アクション%s(%s)には後続リプライがありません。(エラー)", msg.action.id, msg.action.name),t);
+			logger.warn(String.format("アクション%s(%s)には後続リプライがありません。(エラー)", msg.action.id, msg.action.name));
 			return true;
 		}
 	}
@@ -1289,23 +1384,23 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		
 		for(NotificationMessage n: actionQueue){
 			try{
-				if(n.reply != null) {logger.warn("???? リプライ付きアクションがキューにある...",  null);}
+				if(n.reply != null) {logger.warn("???? リプライ付きアクションがキューにある...");}
 
 				String[] attachments = n.action.attachments;//Util.toIntArray(n.action.attachments);
-				Collection<ReplyData> candidates = ReplyData.findReply(this.phase,  n.action.id, n.to, n.action.curretorder, attachments);
+				Collection<ReplyData> candidates = ReplyData.findReply(this.phase,  n.action.id, n.to, n.action.currentorder, attachments);
 
 				//キューになければ受付完了通知を送信
 				NotificationMessage rep = null;
 				
 				if(candidates == null || candidates.size() == 0){
 					if(!n.to.isSystemUser(phase)){
-						NotificationMessage err = new NotificationMessage(this.pid, n.action, n.from, n.to, n.cc, null);
+						NotificationMessage err = new NotificationMessage(/*this.pid, */n.action, n.from, n.to, n.cc, null);
 						err.sentDate = n.sentDate;
 						err.reply = ReplyData.getNullReply(phase);
 						rep = err;
 						logger.debug("自動応答ユーザでないため空のリプライを返します。" + n.toString());
 					}else{
-						NotificationMessage err = new NotificationMessage(this.pid, n.action, n.from, n.to, n.cc, null);
+						NotificationMessage err = new NotificationMessage(/*this.pid, */n.action, n.from, n.to, n.cc, null);
 						err.sentDate = n.sentDate;
 						err.reply = ReplyData.getErrorReply(phase, null);
 						rep = err;
@@ -1320,19 +1415,20 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 				}
 
 				//応答可能なら応答
-				if(!new Date().after(new Date(rep.sentDate.getTime() + rep.reply.delay*1000))){
+				//if(!new Date().after(new Date(rep.sentDate.getTime() + rep.reply.delay*1000))){
+				//tag:virtualtime
+				if(!this.getTime().after(this.getTime(rep.sentDate.getTime() + rep.reply.delay*1000))){
 //					Date sent = new Date(rep.sentDate.getTime());
-					Date when = new Date(rep.sentDate.getTime() + rep.reply.delay*1000);
+					//Date when = new Date(rep.sentDate.getTime() + rep.reply.delay*1000);
+					Date when = this.getTime(rep.sentDate.getTime() + rep.reply.delay*1000);
 					logger.debug("遅延条件(delay)が満たされていないためリプライを保留します。[" + rep.reply.name + "],予定時刻:" + new SimpleDateFormat("MM/dd HH:mm:ss").format(when));
 					continue;
 				}
 				rep.replyTo = n;
-				rep.replyDate = new Date();
+				rep.replyDate = this.getTime();//new Date();
 				rep.team = this.team;
 				
 				updateSystemState(n.action, rep.id);
-				
-				
 				updateSystemState(rep.reply, rep.id);
 				Notifier.dispatch(rep);
 				//履歴に追加
@@ -1342,7 +1438,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 					actionQueue.remove(n);
 					logger.info("キューからアクションを削除しました。"+n.action.name + ":"+toString());
 				}else{
-					n.action.curretorder ++;
+					n.action.currentorder ++;
 					logger.info("アクションに後続リプライがあるためキューに残します。"+ n.action.name + ":" + toString());
 				}
 				processAbortAction(rep);
@@ -1370,7 +1466,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	}
 	/**イベント履歴にイベントを追加*/
 	protected void addHistory(NotificationMessage m){
-		m.replyDate = new Date();//送信
+		m.replyDate = this.getTime();//tag: virtualtime //new Date();//送信
 		history.add(m);
 
 	}
@@ -1410,8 +1506,8 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 			if(d != null){
 				if(d instanceof Date)
 					cur.when = (Date)d;
-				else if(d instanceof Long)
-					cur.when = new Date(((Long)d).longValue());
+				else if(d instanceof Long)//tag:virtualtime
+					cur.when = this.getTime(((Long)d).longValue());
 			}
 			ret.add(cur);
 		}
@@ -1457,6 +1553,9 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 			this.systemState.put(state, val);
 		}
 	}
+	
+	/**@deprecated
+	 *  not used*/
 	public void setTriggerEvent(TriggerEvent[] e){
 		this.triggerEvents.clear();
 		if(e == null || e.length == 0)return;
@@ -1466,6 +1565,10 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		}
 	}
 	
+	
+	/**
+	 * not used
+	 * */
 	/**時刻情報を矯正*/
 	protected NotificationMessage adjustDate(NotificationMessage org){
 		if(org == null)return null;
@@ -1479,15 +1582,18 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		return ret;
 				
 	}
+	
+	
 	/**this.savedから現在時刻の差分だけ時刻を補正する*/
 	protected Date adjustDate(Date org){
 		if(org == null)return null;
 		Date ret = (Date)org.clone();
 		if(this.saved == null){
 			logger.warn("saved date not avairable.");
-			this.saved = new Date();
+			this.saved = this.getTime();//tag:virtualtime //new Date();
 		}
-		long offset = new Date().getTime() - this.saved.getTime();//開始時刻じゃなくて
+		//long offset = new Date().getTime() - this.saved.getTime();//開始時刻じゃなくて
+		long offset = this.getTime().getTime() - this.saved.getTime();//開始時刻じゃなくて
 
 		ret.setTime(ret.getTime() + offset);
 		return ret;
@@ -1496,7 +1602,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	public String save(){
 		try{
 			if(this.saved == null)
-				this.saved = new Date();
+				this.saved = this.getTime();//new Date(); tag:virtualtime
 			String ret = new ObjectMapper().writeValueAsString(this);
 			return ret;
 		}catch(Throwable t){
@@ -1569,11 +1675,15 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		if(m.replyTo != null)
 			shiftRecursive(m.replyTo, diff);
 	}
+	
+	
+	
 
 	/**ステートカードが追加されたときの処理<br>
 	 * 現在の実装ではポイントカードを評価する
 	 * */
 	protected void onAddState(final String state, final String msgid){
+		processControlState(state, true);
 		evaluateScore(state, msgid);
 	}
 	/**ステートカードが削除されたときの処理<br>
@@ -1581,6 +1691,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	 * */
 	protected void onRemoveState(final String state){
 		//
+		processControlState(state, false);
 	}
 	/**発行されたポイントカードのIDと、発行の引き金になったリプライIDのマップ*///発行日時がいいのか
 	protected HashMap<String, Collection<String>> pointHistory = new HashMap<>();
@@ -1616,19 +1727,19 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		
 		Collection<String> hist = pointHistory.get(pt.id);
 		if(hist != null && !hist.isEmpty() && hist.size() >= pt.multiplicity){
-			logger.log(pt.name  + ":ポイント多重度超過:" + String.valueOf(pt.multiplicity));
+			logger.info(pt.name  + ":ポイント多重度超過:" + String.valueOf(pt.multiplicity));
 			return false;
 		}
 		
 		//期間チェック
 		if(this.start == null)return false;
-		Date now = new Date();
+		Date now = this.getTime();//tag:virtualtime //new Date();
 		if(pt.before != 0 && (this.start.getTime() + pt.before*1000 > now.getTime())){
-			logger.log(pt.name + ":ポイント期限切れ:" + pt.toString());
+			logger.info(pt.name + ":ポイント期限切れ:" + pt.toString());
 			return false;
 		}
 		if(pt.after != 0&& (this.start.getTime() + pt.after*1000 < now.getTime())){
-			logger.log(pt.name + ":ポイント期間未達:" + pt.toString());
+			logger.info(pt.name + ":ポイント期間未達:" + pt.toString());
 			return false;
 		}
 
@@ -1636,8 +1747,161 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 			if(!evaluateStateCondition(pt.statecondition,Operator.AND))
 				return false;
 		}
-		logger.log("ポイント獲得条件をパス:" + this.team + ";" + pt.toString());
+		logger.info("ポイント獲得条件をパス:" + this.team + ";" + pt.toString());
 		return true;
 	}
 
+	
+	/**イベントループを一時停止する(デバッグ用)*/
+	public WorkflowInstance freeze() {
+		if(this.worker == null) return this;
+		this.frozen = true;
+		logger.info("Workflow worker suspended.");
+		return this;
+	}
+	/**イベントループを再開する(デバッグ用)*/
+	public synchronized WorkflowInstance melt() {
+		if(this.worker == null) return this;
+		this.frozen = false;
+		logger.info("Workflow worker resumed.");
+		return this;
+	}
+
+	
+	//-------------------feature virtual-time-------------------------------------------------
+	/***/
+	@XmlElement
+	public World world  = null;
+	public WorkflowInstance startWorld() {
+		logger.enter();
+		this.world = new World(this.team).initialize();
+		return this;
+	}
+	public boolean validateCurrentWorld() {
+		if(this.world == null)return false;
+		return true;
+	}
+
+//	public boolean procesSystemAction(String actionid) {
+//		if(Util.contains(CardData.SYSTEM_ACTIONS.class.getFields(), actionid)) {
+//			return true;
+//		}
+//		
+//		return false;
+//	}
+	
+	/**一時停止*/
+	public boolean suspend(){
+		logger.info("suspend:" +this.toString());
+
+		if(!validateCurrentWorld()){
+			logger.error("world not initialized.");
+			return false;
+		}
+		if(this.world.isPaused()) {
+			logger.warn("system already suspended.");
+			return false;
+		}
+		
+		this.world.pause();
+		NotificationMessage msg = NotificationMessage.makeBroadcastMessage("演習が一時停止されました。", CardData.Types.notification);
+		msg.sentDate = this.world.getTime();
+		Notifier.broadcast(msg);
+		
+		this.state = State.SUSPENDED;
+		this.saved  = new Date();
+		if(this.worker != null){
+			this.worker.stop();
+		}
+		return true;
+	}
+
+	/**一時停止から復帰*/
+	public boolean resume(){
+		
+		logger.info("resume:" +this.toString());
+
+		if(!this.world.isPaused()) {
+			logger.warn("system not paused.");
+			return false;
+		}
+
+		if(!validateCurrentWorld()){
+			logger.info("world not initialized.");
+			return false;
+		}else {
+			this.world.resume();
+			NotificationMessage msg = NotificationMessage.makeBroadcastMessage("演習が再開されました。", CardData.Types.notification);
+			msg.sentDate = this.world.getTime();//tag: virtualtime
+			Notifier.broadcast(msg);
+		}
+		
+		this.state = State.STARTED;
+
+		this.worker = new Worker();
+		this.worker.start();
+
+		logger.info("resumed:" +this.toString());
+		return true;
+	}
+
+	
+	protected void processControlState(String id, boolean add) {
+		if(id.equals(StateData.SYSTEM_STATES.PAUSE)) {
+			if(add) {
+				logger.info("コントロールステートにより演習を一時停止します。");
+				this.suspend();
+			}else {
+				logger.info("コントロールステートにより演習を再開します。");
+				this.resume();
+			}
+		}else if(id.equals(StateData.SYSTEM_STATES.START)){
+			logger.info("コントロールステートにより演習を開始します。");
+			this.start(this.phase);
+		}else if(id.equals(StateData.SYSTEM_STATES.ABORT)) {
+			logger.info("コントロールステート演習を停止します。");
+			this.abort();
+		}
+	}
+	
+	
+	protected Date getTime() {
+		if(this.world == null) {
+			throw new WorkflowException("仮想時刻が初期化されていません。");
+		}
+		return this.world.getTime();
+	}
+	protected Date getTime(long tm) {
+		if(this.world == null) {
+			throw new WorkflowException("仮想時刻が初期化されていません。");
+		}
+		return this.world.getTime(tm);
+	}
+//	public PhaseData getActivePhase() {
+//		List<PhaseData> p = PhaseData.loadAll();
+//		for(PhaseData d : p) {
+//			if(d.phase == this.phase) return d;
+//		}
+//		return null;
+//	}
+	
+	public ScenarioData getActiveScenario() {
+		
+		return ScenarioData.load(this.scenarioName);
+	}
+	public boolean isFeatureEnabled(String feature) {
+		ScenarioData d = getActiveScenario();
+		if(d == null) return false;
+		return d.isFeatureEnabled(feature);
+		
+	}
+
+	
+	
+
+	
+	
+	
+	
+	
 }

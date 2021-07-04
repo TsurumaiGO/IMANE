@@ -13,10 +13,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
@@ -62,6 +64,7 @@ import tsurumai.workflow.model.SessionData;
 import tsurumai.workflow.model.StateData;
 import tsurumai.workflow.util.ServiceLogger;
 import tsurumai.workflow.util.Util;
+import tsurumai.workflow.vtime.WorldService;
 
 /**Webサービスの外部インタフェースを実装する*/
 @WebListener
@@ -99,6 +102,14 @@ public class WorkflowService extends Application implements ServletContextListen
 			return relative;
 		}
 	}
+	public static String getContextRelativePath(final String relative, final String alternative){
+		if(context != null )
+			return context.getRealPath(relative);
+		else{
+			logger.warn("サーブレットコンテキストが初期化されていません。リソースは正常にロードできない可能性があります。" + relative);
+			return relative;
+		}
+	}
 	@Singleton
 	protected static ServletContext context;
 	
@@ -125,9 +136,23 @@ public class WorkflowService extends Application implements ServletContextListen
 		scenarioBase = basedir;
 		changeScenario(null);
 	}
+	@Override
+	public Set<Class<?>> getClasses() {
+	
+		Set<Class<?>> ret = new HashSet<>();
+		ret.add(this.getClass());
+		ret.add(WorldService.class);
+		return ret;
+		
+	}
+	protected String resolveScenarioName(String relname) {
+		String dir = (relname != null && relname.length() != 0) ? (scenarioBase + File.separator + relname) :scenarioBase;
+		return dir;
+
+	}
 	/**シナリオセットを変更する*/
 	protected void changeScenario(final String relname){
-		String dir = (relname != null && relname.length() != 0) ? (scenarioBase + File.separator + relname) :scenarioBase;
+		String dir = resolveScenarioName(relname);
 		logger.info("シナリオセットが変更されました:" +dir);
 
 		ReplyData. reload(dir + File.separator + "replies.json");
@@ -137,8 +162,14 @@ public class WorkflowService extends Application implements ServletContextListen
 		PhaseData.reload(dir + File.separator + "setting.json");
 		PointCard.reload(dir + File.separator + "points.json");
 		//validateScenarioSet();
+		activeScenario = relname == null ? "_default_" : relname;
 		initializeProcesses();
 
+	}
+	public PhaseData getActiveScenario() {
+		List<PhaseData> p = PhaseData.loadAll();
+//TODO:
+		return null;
 	}
 	/**シナリオデータの検証結果*/
 	class ValidationResult{
@@ -296,6 +327,7 @@ public class WorkflowService extends Application implements ServletContextListen
 			
 			throw new WorkflowSessionException("ログインしていません。",HttpServletResponse.SC_UNAUTHORIZED, null, true);
 		} catch (Throwable t) {
+			if(t instanceof WorkflowSessionException || t instanceof WorkflowWarning)	throw t;//ログ出力抑制のため再スロー
 			throw new WorkflowSessionException("セションが無効です。",HttpServletResponse.SC_INTERNAL_SERVER_ERROR,null, true);
 		}
 	}
@@ -310,7 +342,7 @@ public class WorkflowService extends Application implements ServletContextListen
 	}
 
 	static {
-		logger.log("started");
+		logger.info("started");
 	}
 	
 	/**ログインする。
@@ -327,6 +359,7 @@ public class WorkflowService extends Application implements ServletContextListen
 			@FormParam("server") String server, @FormParam("admin") boolean asAdmin) throws WorkflowException {
 		try {
 			enter();
+			logger.enter(userid, server, asAdmin);
 			String sv = server == null || server.length() == 0 ? this.server : server;
 			ProcessInstanceManager mgr = ProcessInstanceManager.getSession();
 			
@@ -447,7 +480,8 @@ public class WorkflowService extends Application implements ServletContextListen
 					logger.warn("チーム定義は無視されました:" + oo.toString());
 			}
 			return teams;
-		}catch(JSONException |IOException t){
+		//}catch(JSONException |IOException t){
+		}catch(Throwable t){
 			logger.error(t);
 			throw new WorkflowException("チーム定義をロードできません。", t);
 		}
@@ -455,40 +489,43 @@ public class WorkflowService extends Application implements ServletContextListen
 	/**プロセスインスタンスを検索する。
 	 * 
 	 * <p class = "interface">
-	 * GET /process/{app}<br>
+	 * GET /process<br>
 	 * </p>
 	 * */
 
-	@Path("/process/{app}")
+	@Path("/process")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public ProcessInstance[] list(@PathParam("app") String app, @QueryParam("process") String processName,
-			@QueryParam("status") @DefaultValue("-1") int status, @QueryParam("duration") @DefaultValue("1") int duration, 
-			@QueryParam("uda") String uda, @QueryParam("rootonly") @DefaultValue("true") boolean rootonly) throws WorkflowException{
+	public /*ProcessInstance[] */WorkflowInstance[] list() throws WorkflowException{
 		try {
 
-			enter();
-			logger.log("list");
+			logger.enter();
 			ProcessInstanceManager mgr = getSession();
 
 			Map<String, String>teamsdef = listTeams();
 
-			ArrayList<ProcessInstance> ret = new ArrayList<>();
+			//ArrayList<ProcessInstance> ret = new ArrayList<>();
+			ArrayList<WorkflowInstance> ret = new ArrayList<>();
+			
 			for(String team : teamsdef.keySet()){
 				WorkflowInstance inst = getWorkflowInstance(team);
-				if(mgr.isValidProcess(inst.pid)) {
-					ProcessInstance p = mgr.getProcessInstance(inst.pid);
-					p.workflow = inst;
-					p.name = activeScenario;
-					ret.add(p);
-				}else {
-					logger.warn("プロセスインスタンスが不正です。pid=" + String.valueOf(inst.pid));
-				}
+				ret.add(inst);
+//				if(mgr.isValidProcess(inst.pid)) {
+//					ProcessInstance p = mgr.getProcessInstance(inst.pid);
+//					p.workflow = inst;
+//					p.name = activeScenario;
+//					ret.add(p);
+//				}else {
+//					logger.warn("プロセスインスタンスが不正です。pid=" + String.valueOf(inst.pid));
+//				}
 			}
-
-			ProcessInstance[] r = ret.toArray(new ProcessInstance[ret.size()]);
+			WorkflowInstance[] wf = ret.toArray(new WorkflowInstance[ret.size()]);
+			String str = new ObjectMapper().writeValueAsString(wf);
+			return wf;
+	//		ProcessInstance[] r = ret.toArray(new ProcessInstance[ret.size()]);
 			
-			return r;
+//			return r;
+			
 
 		}catch(WorkflowException t) {
 			throw t;
@@ -499,43 +536,26 @@ public class WorkflowService extends Application implements ServletContextListen
 		}
 	}
 
-	/**プロセスインスタンスを削除する。(未実装/NOP)
-	 * <p class="interface">
-	 * DELETE /process/{app}/{id}
-	 * </p>
-	 * @param app アプリケーション名
-	 * @param team チーム名
-	 * */
-	@Path("/process/{app}/{id}")
-	@DELETE
-	@Produces(MediaType.APPLICATION_JSON)
-	public void deleteProcess(@PathParam("app") String app, @PathParam("teamname") String teamname){
-	}
-
 	/**プロセスインスタンスをチームに割り当て、ワークフローを開始する。
 	 * 
 	 * <p class="interface">
-	 * POST /process/{app}/{id}/start
+	 * GET /process/{team}/start 
 	 * </p>
-	 * @param  app アプリケーション名
-	 * @param id ワークフロープロセスのID
 	 * @param team チームID
 	 * @param phase フェーズ番号
 	 * @return プロセスインスタンス状態を格納したjsonオブジェクト
 	 
 	 * */
-	@Path("/process/{app}/{id}/start")
-	@POST
+	@Path("/process/{team}/start")
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public ProcessInstance assign(@PathParam("app") String app, @PathParam("id") final long id, 
-			@FormParam("team") final String team, 
-			@FormParam("phase") final String phase, @FormParam("force") boolean force) throws WorkflowException{
+	public /*ProcessInstance*/WorkflowInstance assign(@PathParam("team") final String team,	@QueryParam("phase") final String phase) throws WorkflowException{
 		if(team == null){throw new WorkflowException("パラメタが無効です。", HttpServletResponse.SC_BAD_REQUEST);}
 		try {
-			enter();
-			ProcessInstanceManager mgr = getSession();
-			ProcessInstance proc = mgr.getProcessInstance(id);
-			if(proc == null) throw new WorkflowException("ワークフロープロセスが見つかりません。 プロセスID:" + String.valueOf(id) + " not found.", HttpServletResponse.SC_NOT_FOUND );
+			logger.enter(team);
+//			ProcessInstanceManager mgr = getSession();
+//			ProcessInstance proc = mgr.getProcessInstance(id);
+//			if(proc == null) throw new WorkflowException("ワークフロープロセスが見つかりません。 プロセスID:" + String.valueOf(id) + " not found.", HttpServletResponse.SC_NOT_FOUND );
 
 			Map<String,String> teams = listTeams();
 			if(teams != null && !teams.containsKey(team)){
@@ -543,87 +563,104 @@ public class WorkflowService extends Application implements ServletContextListen
 			}
 
 			WorkflowInstance wf = getWorkflowInstance(team);
-			if(wf == null || force){
-				wf= WorkflowInstance.newInstance(this, team, id);
+			if(wf == null){
+				wf= WorkflowInstance.newInstance(this, team);
 				workflow.add(wf);
 			}
 			
 //			if(!wf.isRunning()){
 				wf.start(Integer.parseInt(phase));
-				postTeamNotification(id, team, "演習ワークフローを開始しました。フェーズ:" + (phase !=null ? phase : ""), NotificationMessage.LEVEL_NORMAL);
+				postTeamNotification(team, "演習ワークフローを開始します。フェーズ:" + (phase !=null ? phase : ""), NotificationMessage.LEVEL_CONTROL);
 //			}else{
 //				logger.warn("workflow is already started. team=" + team, null);
 //				throw new WorkflowException("フェーズの実行中はフェーズを開始できません。実行中のフェーズを中止してください。", HttpServletResponse.SC_BAD_REQUEST);
 //			}
-			return proc;
+			//return proc;
+			return wf;
 		}finally{exit();}
 	}
 	/**ワークフローを中断する。
 	 * <p>
-	 * POST /process/{app}/{id}/abort
+	 * GET /process/{app}/{id}/abort
 	 * </p>
 	 * 
 	 * @param app アプリケーション名
 	 * @param id ワークフロープロセスのID
 	 * @param team チームID
 	 * */
-	@Path("/process/{app}/{id}/abort")
-	@POST
+	@Path("/process/{team}/abort")
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public void abort(@PathParam("app") String app, @PathParam("id") final long id, 
-			@FormParam("team") final String team) throws WorkflowException{
+	public WorkflowInstance abort(@PathParam("team") final String team) throws WorkflowException{
 		enter();
 		if(team == null){throw new WorkflowException("パラメタが無効です。", HttpServletResponse.SC_BAD_REQUEST);}
 		try{
 			WorkflowInstance wf = getWorkflowInstance(team);
-			postTeamNotification(id, team, "演習ワークフローが中断されました。" , NotificationMessage.LEVEL_CRITICAL);
+			postTeamNotification(team, "演習ワークフローが中断されました。" , NotificationMessage.LEVEL_CRITICAL);
 			wf.abort();
+			return wf;
 		}finally{exit();}
 	}
 	
+	/**プロセスインスタンスを一時停止する。
+	 * 
+	 * <p class="interface">
+	 * GET /{team}/resume
+	 * */
+	@Path("/process/{team}/pause")
+	@Produces(MediaType.APPLICATION_JSON)
+	@GET
+	public WorkflowInstance suspend(@PathParam("team") final String team) throws WorkflowException{
+		logger.enter(team);
+		try{
+			WorkflowInstance inst = getWorkflowInstance(team);
+			if(inst== null){
+				throw new WorkflowException("ワークフローインスタンスが見つかりません。");
+			}
+			inst.suspend();
+			return inst;
+		}finally{exit();}
+	}
+	
+	
 	/**プロセスインスタンスを再開する。
+	 * 
 	 * <p class="interface">
 	 * GET /process/{app}/{id}/reume
 	 * </p>
-	 * @param app アプリケーション名
-	 * @param id ワークフロープロセスのID
+
 	 * */
-	@Path("/process/{app}/{id}/reume")
+	@Path("/process/{team}/resume")
 	@GET
-	public void resume(@PathParam("app") String app, @PathParam("id") final String id) throws WorkflowException{
-		enter();
+	@Produces(MediaType.APPLICATION_JSON)
+	public WorkflowInstance resume(@PathParam("team") final String team) throws WorkflowException{
+		logger.enter(team);
 		try{
-			if("all".equals(id)){
-				for(WorkflowInstance inst : workflow){
-					inst.resume();
-				}
-			}else{
-				WorkflowInstance inst = getWorkflowInstance(Long.valueOf(id));
-				if(inst== null){
-					throw new WorkflowException("ワークフローインスタンスが見つかりません。");
-				}
-				inst.resume();
-			}
+			WorkflowInstance inst = getWorkflowInstance(team);
+			if(inst== null)
+				throw new WorkflowException("ワークフローインスタンスが見つかりません。");
+			inst.resume();
+			return inst;
 		}finally{exit();}
 	}
-	/**ワークフローインスタンスを返す。
-	 * @param processid ワークフロープロセスのID
-	 * */
-	public static WorkflowInstance getWorkflowInstance(long processid){
-		if(workflow == null || workflow.size() == 0)return null;
-		for(WorkflowInstance i : workflow){
-			if(i.pid == processid)return i;
-		}
-		return null;
-	}
-	
+//	/**ワークフローインスタンスを返す。
+//	 * @param processid ワークフロープロセスのID
+//	 * */
+//	public static WorkflowInstance getWorkflowInstance(long processid){
+//		if(workflow == null || workflow.size() == 0)return null;
+//		for(WorkflowInstance i : workflow){
+//			if(i.pid == processid)return i;
+//		}
+//		return null;
+//	}
+//	
 
 	protected static Collection<WorkflowInstance> workflow = new ArrayList<>();
 	/**チームメンバへの通知メッセージを送信します。*/
-	protected void  postTeamNotification(final long pid, final String team, final String message, int level) throws WorkflowException{
+	protected void  postTeamNotification(final String team, final String message, int level) throws WorkflowException{
 
 		WorkflowInstance inst = getWorkflowInstance(team);
-		if(inst != null)inst.postTeamNotification(message, NotificationMessage.LEVEL_HIDDEN, null);
+		if(inst != null)inst.sendTeamNotification(message, level, null);
 	}
 	
 	/**指定されたIDをもつプロセスインスタンスを取得する。
@@ -633,68 +670,66 @@ public class WorkflowService extends Application implements ServletContextListen
 	 * @param app アプリケーション名
 	 * @param id ワークフロープロセスのID
 	 * */
-	@Path("/process/{app}/{id}")
+	@Path("/process/{team}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public ProcessInstance get(@PathParam("app") String app, @PathParam("id") final long id)  throws WorkflowException{
+	public WorkflowInstance get(@PathParam("team") String team)  throws WorkflowException{
 		try {
-			enter();
-			logger.log("get");
-			ProcessInstanceManager mgr = getSession();
-			ProcessInstance proc = mgr.getProcessInstance(id);
-			return proc;
+
+			logger.enter(team);
+//			ProcessInstanceManager mgr = getSession();
+//			ProcessInstance proc = mgr.getProcessInstance(id);
+//			return proc;
+			return this.getWorkflowStatus(team);
 		} finally {
 			exit();
 		}
 	}
 	
-	/**プロセスインスタンスの状態を更新する。
-	 * <p class = "interface">
-	 * PUT /process/{app}/{id}
-	 * </p>
-	 * @param app アプリケーション名
-	 * @param id ワークフロープロセスのID
-	 * @param requme プロセスを再開する
-	 * @param suspend プロセスを一時停止する
-	 * @param abort プロセスを中断する
-	 * */
-	@Path("/process/{app}/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@PUT
-	public ProcessInstance update(@PathParam("app") String app, @PathParam("id") long id,
-			/* @QueryParam("uda") Map<String, String> udas, */ @QueryParam("resume") String resume,
-			@FormParam("suspend") String suspend, @FormParam("abort") String abort) throws WorkflowException {
-		try {
-			logger.log("update");
-
-			ProcessInstanceManager mgr = getSession();
-
-			ProcessInstance proc = mgr.getProcessInstance(id);
-			if (abort != null)
-				proc.abort();
-			if (suspend != null)
-				proc.suspend();
-			if (resume != null)
-				proc.resume();
-
-			Map<String, String> udas = new HashMap<>();
-			Map<String, String[]> params = request.getParameterMap();
-			for (Iterator<String> i = params.keySet().iterator(); i.hasNext();) {
-				String key = i.next();
-				if (key.startsWith("uda.")) {
-					String[] vals = params.get(key);
-					udas.put(key.replace("uda\\.", ""), vals[0]);
-				}
-			}
-
-
-			return get(app, id);
-		} catch (WorkflowException t) {
-			throw new WorkflowException("ワークフロープロセスの更新に失敗しました。", t);
-		} finally {
-			exit();
-		}
-	}
+//	/**プロセスインスタンスの状態を更新する。
+//	 * <p class = "interface">
+//	 * PUT /process/{team}
+//	 * </p>
+//	 * @param team
+//	 * 
+//	 * @deprecated
+//
+//	 * */
+//	@Path("/process/{team}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@PUT
+//	public ProcessInstance update(@PathParam("team") String team) throws WorkflowException {
+//		try {
+//			logger.enter(team);
+//
+//			ProcessInstanceManager mgr = getSession();
+//
+//			ProcessInstance proc = mgr.getProcessInstance(id);
+//			if (abort != null)
+//				proc.abort();
+//			if (suspend != null)
+//				proc.suspend();
+//			if (resume != null)
+//				proc.resume();
+//
+//			Map<String, String> udas = new HashMap<>();
+//			Map<String, String[]> params = request.getParameterMap();
+//			for (Iterator<String> i = params.keySet().iterator(); i.hasNext();) {
+//				String key = i.next();
+//				if (key.startsWith("uda.")) {
+//					String[] vals = params.get(key);
+//					udas.put(key.replace("uda\\.", ""), vals[0]);
+//				}
+//			}
+//
+//
+//			return get(app, id);
+//		} catch (WorkflowException t) {
+//			throw new WorkflowException("ワークフロープロセスの更新に失敗しました。", t);
+//		} finally {
+//			exit();
+//		}
+//	}
 
 	/**ワークフロープロセスインスタンスを開始する。
 	 * <p class = "interface">
@@ -702,18 +737,12 @@ public class WorkflowService extends Application implements ServletContextListen
 	 * </p>
 	 * @param app アプリケーション名
 	 * */
-	@Path("/process/{app}")
+	@Path("/process/{team}")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public ProcessInstance start(@PathParam("app") String app,
-			@FormParam("process") String proc/*
-												 * ,
-												 * 
-												 * @QueryParam("params")
-												 * Map<String, String> params
-												 */) throws WorkflowException {
+	public WorkflowInstance start(@PathParam("team") String team) throws WorkflowException {
 		try {
-			logger.log("start");
+			logger.enter(team);
 
 			Map<String, String> udas = new HashMap<>();
 			Map<String, String[]> params = request.getParameterMap();
@@ -726,34 +755,35 @@ public class WorkflowService extends Application implements ServletContextListen
 			}
 			ProcessInstanceManager mgr = getSession();
 			ProcessInstance p = mgr.startProcessInstance(udas);//proc, app, udas);
-			return p;
+			return getWorkflowInstance(team);
+//			return p;
 		} finally {
 			exit();
 		}
 	}
 
-	/**ワークフロープロセスを削除する。
-	 * <p class = "interface">
-	 * DELETE /process/{app}/{id}
-	 * </p>
-	 * @param app アプリケーション名
-	 * @param id ワークフロープロセスのID
-	 * 
-	 * */
-	@Path("/process/{app}/{id}")
-	@DELETE
-	public void delete(@PathParam("app") String app, @PathParam("id") long id) throws WorkflowException{
-		try {
-			logger.log("delete");
-			ProcessInstanceManager mgr = getSession();
-			mgr.getProcessInstance(id);
-		} finally {
-			exit();
-		}
-
-	}
-
-	
+//	/**ワークフロープロセスを削除する。
+//	 * <p class = "interface">
+//	 * DELETE /process/{app}/{id}
+//	 * </p>
+//	 * @param app アプリケーション名
+//	 * @param id ワークフロープロセスのID
+//	 * 
+//	 * */
+//	@Path("/process/{app}/{id}")
+//	@DELETE
+//	public void delete(@PathParam("app") String app, @PathParam("id") long id) throws WorkflowException{
+//		try {
+//			logger.enter(app, id);
+//			ProcessInstanceManager mgr = getSession();
+//			mgr.getProcessInstance(id);
+//		} finally {
+//			exit();
+//		}
+//
+//	}
+//
+//	
 	
 	
 	public static String readAll(final String path) throws IOException {
@@ -859,21 +889,21 @@ public class WorkflowService extends Application implements ServletContextListen
 	/**ワークフロープロセスを初期化する。*/
 	protected void initializeProcesses() throws WorkflowException{
 		try{
-		workflow = new ArrayList<>();
-		ProcessInstanceManager mgr = ProcessInstanceManager.getSession();
-		for(ProcessInstance i : mgr.listProcesses()) {
-			mgr.deleteInstance(i.getId());
-		}
-		
-		for(String team : listTeams().keySet()){
-			ProcessInstance inst = mgr.startProcessInstance();
-			long pid = inst.getId();
-			workflow.add(WorkflowInstance.newInstance(this,  team, pid));
-			logger.info(String.format("ワークフロープロセスを生成しました。チーム:%s ; id:%s", team,String.valueOf(pid)));
-		}
-		for(WorkflowInstance i : workflow){
-			i.initialize(null);
-		}
+			workflow = new ArrayList<>();
+			ProcessInstanceManager mgr = ProcessInstanceManager.getSession();
+			for(ProcessInstance i : mgr.listProcesses()) {
+				mgr.deleteInstance(i.getId());
+			}
+			
+			for(String team : listTeams().keySet()){
+//				ProcessInstance inst = mgr.startProcessInstance();
+//				long pid = inst.getId();
+				workflow.add(WorkflowInstance.newInstance(this,  team));
+				logger.info(String.format("ワークフロープロセスを生成しました。チーム:%s", team));
+			}
+			for(WorkflowInstance i : workflow){
+				i.initialize(null);
+			}
 		}catch(Throwable t){
 			throw new WorkflowException("ワークフロープロセスの起動に失敗しました。",t);
 		}
@@ -946,6 +976,7 @@ public class WorkflowService extends Application implements ServletContextListen
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	public Response downloadScenarioSet(@PathParam("name") String name) throws WorkflowException{
 		try{
+			logger.enter(name);
 			if(name == null || name.length() == 0)
 				throw new WorkflowParameterException("シナリオセット名が指定されていません。");
 			
@@ -1011,13 +1042,12 @@ public class WorkflowService extends Application implements ServletContextListen
 	 * @param id ワークフロープロセスのID
 	 * @return json形式のアクションカードの配列
 	 * */
-	@Path("/process/{app}/{id}/cards")
+	@Path("/process/cards")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
-	public CardData[] getActionCards(@PathParam("app") String app, @PathParam("id") long id,
-			@QueryParam("all") boolean all) throws WorkflowException{
+	public CardData[] getActionCards(@QueryParam("all") boolean all) throws WorkflowException{
 		try{
-			return getCards(null, id, all);
+			return getCards(null, all);
 
 		}catch(Throwable t){
 			throw new WorkflowException("アクションカードの読み込みに失敗しました。", t);
@@ -1027,10 +1057,9 @@ public class WorkflowService extends Application implements ServletContextListen
 	
 	/**アクションカードを取得する。
 	 * @param type アクションの種類。nullを指定するとすべての種類を返す。
-	 * @param pid プロセスID(未使用)
 	 * @param all trueを指定するとすべてのアクション、falseならログオン中のユーザがrolesに含まれるアクションを返す
 	 * */
-	protected CardData[] getCards(String type, long pid, boolean all) throws WorkflowException{
+	protected CardData[] getCards(String type, boolean all) throws WorkflowException{
 		try{
 			String role = null;
 			if(!all){
@@ -1080,12 +1109,10 @@ public class WorkflowService extends Application implements ServletContextListen
 	 * @param id ワークフロープロセスのID
 	 * @param data json形式のアクションカードの文字列。
 	 * */
-	@Path("/process/{app}/{id}/act")
+	@Path("/process/act")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@POST
-	public void doAction(@PathParam("app") String app, @PathParam("id") long id,  final String data/*
-			@FormParam("action") CardData action, @FormParam("from") Member from,  @FormParam("to") Member[] to, 
-			@FormParam("replyTo") NotificationMessage replyTo*/) throws WorkflowException{
+	public void doAction(final String data) throws WorkflowException{
 		try{
 			JSONObject content = new JSONObject(data);
 			ObjectMapper mapper = new ObjectMapper();
@@ -1100,6 +1127,7 @@ public class WorkflowService extends Application implements ServletContextListen
 			JSONObject replyto = !cont.isNull("replyto") ? cont.getJSONObject("replyto") : null;
 		
 			CardData actobj = mapper.readValue(action.toString(), CardData.class);
+			
 			Member toobj = mapper.readValue(to.toString(), Member.class);
 			Member[] ccobj  = cc != null ? mapper.readValue(cc.toString(), Member[].class) : null;
 
@@ -1130,7 +1158,8 @@ public class WorkflowService extends Application implements ServletContextListen
 	@GET
 	public Collection<Member> getTeamMembers(@PathParam("teamname") String teamname, @QueryParam("presence") boolean presence) throws WorkflowException{
 		try{
-			enter();
+
+			logger.enter(teamname, presence);
 			Collection<Member> ret = null;
 			if(!presence){
 				
@@ -1181,7 +1210,7 @@ public class WorkflowService extends Application implements ServletContextListen
 	}
 
 	/**チーム名からワークフローインスタンスを探索*/
-	protected WorkflowInstance getWorkflowInstance(final String team) throws WorkflowException{
+	protected static WorkflowInstance getWorkflowInstance(final String team) throws WorkflowException{
 		for(WorkflowInstance i : workflow){
 			if(i.team.equals(team))
 				return i;
@@ -1198,7 +1227,7 @@ public class WorkflowService extends Application implements ServletContextListen
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<NotificationMessage> getHistories(@PathParam("teamname") String teamname,  @QueryParam("userrole") String userrole){
 		try{
-			enter();
+			logger.enter(teamname, userrole);
 			Collection<NotificationMessage> ret = new ArrayList<NotificationMessage>();
 			for(WorkflowInstance i : workflow){
 				if(/*i == null || */i.team.equals(teamname)){
@@ -1228,42 +1257,41 @@ public class WorkflowService extends Application implements ServletContextListen
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<ReplyData> getTriggerEvents(@PathParam("teamname") String teamname){
 		try{
-			enter();
+			logger.enter(teamname);
 			Collection<ReplyData> ret = new ArrayList<ReplyData>();
 			WorkflowInstance inst = getWorkflowInstance(teamname);
-			if(inst == null) throw new WorkflowException("ワークフローが開始されていません。", HttpServletResponse.SC_NOT_FOUND, true);
-			if(inst.phase <=0) throw new WorkflowException("フェーズが開始されていません。", HttpServletResponse.SC_NOT_FOUND, true);
+			if(inst == null) throw new WorkflowWarning("ワークフローが開始されていません。");
+			if(inst.phase <=0) throw new WorkflowWarning("フェーズが開始されていません。");
 
 			Collection<ReplyData> rr = ReplyData.loadReply(inst.phase);
 			Collection <ReplyData> replies = Collections.synchronizedList(new ArrayList<ReplyData>(rr));
 			ReplyData[] reps = replies.toArray(new ReplyData[replies.size()]);
 			for(int i = 0; i < reps.length; i ++){
 				ReplyData r = reps[i];
-				try{
-					if(r.actionid == null){
-						logger.error("リプライにアクションIDがありません。" +r.toString());
-						continue;
-					}
-					if(!r.isTriggerAction())	continue;
-
-					TriggerEvent[] triggers = inst.getTriggerEvent();
-					for(TriggerEvent e : triggers){
-						if(r.state == null){
-							throw new ScenarioException("トリガーイベントにステートカードが定義されていません。" +  r.toString());
-						}
-						if(e.state .equals(r.state)){
-							r.fireWhen = e.date;break;
-						}
-					}
-					ret.add(r);
-				
-				}catch(Throwable t){
-					logger.error("トリガーイベントの処理に失敗しました。", t);
+				if(r.actionid == null){
+					logger.error("リプライにアクションIDがありません。" +r.toString());
+					continue;
 				}
+				if(!r.isTriggerAction())	continue;
+
+				TriggerEvent[] triggers = inst.getTriggerEvent();
+				for(TriggerEvent e : triggers){
+					if(r.state == null){
+						throw new ScenarioException("トリガーイベントにステートカードが定義されていません。" +  r.toString());
+					}
+					if(e.state .equals(r.state)){
+						r.fireWhen = e.date;break;
+					}
+				}
+				ret.add(r);
 			}
 			return ret;
+		
+		}catch(WorkflowWarning t) {
+			logger.warn(t.getMessage());
+			return new ArrayList<>();
 		}catch(WorkflowException t){
-			throw t;
+			throw new WorkflowException("トリガーイベントの処理に失敗しました。" + t.getMessage(), HttpServletResponse.SC_NOT_FOUND, t);
 		}	
 	}
 	
@@ -1305,7 +1333,7 @@ public class WorkflowService extends Application implements ServletContextListen
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<ReplyData> getReply(@QueryParam("phase") int phase){
 		try{
-			enter();
+			
 			Collection<ReplyData> ret  = ReplyData.loadReply(phase == 0 ? -1 : phase, getScenarioDirectory() + File.separator + "replies.json");
 			return ret;
 		}catch(WorkflowException t){
@@ -1325,7 +1353,7 @@ public class WorkflowService extends Application implements ServletContextListen
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<StateData> getState(@QueryParam("team") String team){
 		try{
-			enter();
+			logger.enter(team);
 			if(team == null){
 				Collection<StateData> ret  = StateData.loadAll(getScenarioDirectory() + File.separator + "states.json");
 				return ret;
@@ -1356,6 +1384,7 @@ public class WorkflowService extends Application implements ServletContextListen
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response download(@PathParam("teamname") String teamname){
+		logger.enter(teamname);
 		if("all".equals(teamname)){
 			//StringBuffer buff  = new StringBuffer();
 			ArrayList<String> buff = new ArrayList<>();
@@ -1387,7 +1416,7 @@ public class WorkflowService extends Application implements ServletContextListen
 	public Response upload(@PathParam("teamname") String teamname){
 		String data = "";
 		try{
-			enter();
+			logger.enter(teamname);
 			byte[] bytes = _uploadResource();
 			data = new String(bytes, "utf-8");
 		}catch(IOException t){
@@ -1533,13 +1562,13 @@ public class WorkflowService extends Application implements ServletContextListen
 	/**ロギング*/
 	public void enter() {
 		if (request != null) {
-			logger.info("enter:" + request.getRequestURI() + "; " + request.getRemoteHost());
+			logger.info("enter: " + request.getMethod() + " " + request.getRequestURI() + "; " + request.getRemoteHost());
 		}
 	}
 	/**ロギング*/
 	protected void exit() {
 		if (request != null) {
-			logger.info("exit:" + request.getRequestURI() + "; " + request.getRemoteHost());
+			logger.info("exit: " + request.getMethod() + " " + request.getRequestURI() + "; " + request.getRemoteHost());
 		}
 	}
 
@@ -1574,4 +1603,29 @@ public class WorkflowService extends Application implements ServletContextListen
 			throw new WorkflowException("リソースが読み込めません:" + name, HttpServletResponse.SC_BAD_REQUEST, t);
 		}
 	}
+	
+	
+	
+	@Path("freeze")
+	@GET
+	/**イベントループを一時停止する(デバッグ用)*/
+	public synchronized boolean freeze() {
+		WorkflowService.workflow.forEach(w->{
+			w.freeze();
+		});
+		return true;
+	}
+	@Path("melt")
+	@GET
+	/**イベントループを再開する(デバッグ用)*/
+	public synchronized boolean melt() {
+		WorkflowService.workflow.forEach(w->{
+			w.melt();
+		});
+		return true;
+	}
+	
+	
+	
+	
 }

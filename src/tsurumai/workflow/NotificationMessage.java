@@ -32,8 +32,8 @@ public class NotificationMessage implements Cloneable{
 	public Date visibleDate;
 	@XmlAttribute
 	public int level;
-	@XmlAttribute
-	public long processId;
+//	@XmlAttribute
+//	public long processId;
 	@XmlAttribute 
 	public String id;
 	@XmlAttribute
@@ -59,25 +59,31 @@ public class NotificationMessage implements Cloneable{
 	@XmlAttribute
 	public String team;
 	
-	public static final int LEVEL_TRACE=0;
-	public static final int LEVEL_NORMAL=1;
+	public static final int LEVEL_NORMAL=0;
+	public static final int LEVEL_TRACE=1;
 	public static final int LEVEL_WARN=2;
-	public static final int LEVEL_CRITICAL=3;
-	public static final int LEVEL_EMERGENCY=4;
+	public static final int LEVEL_CRITICAL=4;
+	public static final int LEVEL_EMERGENCY=8;
 	public static final int LEVEL_HIDDEN=0x10;
+	public static final int LEVEL_CONTROL=0x20;
+	
 
 	
 	public NotificationMessage(){}
-	public NotificationMessage(long pid, CardData action, Member to, Member from, Member[] cc) throws WorkflowException{
-		this(pid, action, to, from, cc, null);
+	public NotificationMessage(/*long pid, */CardData action, Member to, Member from, Member[] cc) throws WorkflowException{
+		this(/*pid,*/ action, to, from, cc, null);
 	}
 
-	public NotificationMessage(long pid, CardData action, Member to, Member from, Member[] cc, NotificationMessage replyTo) throws WorkflowException{
+	public NotificationMessage(/*long pid,*/ CardData action, Member to, Member from, Member[] cc, NotificationMessage replyTo) throws WorkflowException{
 
-		this.action = action;this.to= to; this.from = from;this.replyTo = replyTo;
-		this.processId = pid;
-		this.id = String.valueOf(pid) + "-" + Util.random();
-		this.sentDate = new Date();
+		//fix: CardDataのインスタンスが共有されるため、通知時に書き換えた結果が後続の処理に伝搬してしまう
+		this.action = action.clone();
+		this.to= (Member)to; 
+		this.from = (Member)from;
+		this.replyTo = replyTo != null ?(NotificationMessage)replyTo.clone() : null;
+		//this.processId = pid;
+		this.id = /*String.valueOf(pid) + "-" +*/ Util.random();
+		this.sentDate = new Date();//virtualtime: marked.
 		this.cc = cc;
 		this.team = this.from.team;
 
@@ -85,28 +91,36 @@ public class NotificationMessage implements Cloneable{
 	}
 	protected static ServiceLogger logger = ServiceLogger.getLogger();
 	public static NotificationMessage makeBroadcastMessage(final String message, final CardData.Types actiontype){
+		return makeBroadcastMessage(message, actiontype, null);
+	}	
+	public static NotificationMessage makeBroadcastMessage(final String message, final CardData.Types actiontype, String actionid){
 		NotificationMessage ret = new NotificationMessage();
-		ret.action = CardData.find(actiontype);
+		ret.action = CardData.find(actiontype).clone();
 		if(ret.action == null){
-			logger.error("通知アクションのデータが定義されていません。種類:" + actiontype);
+			logger.error("通知アクションのデータが定義されていません。種類:" + actiontype + " id:" + actionid);
 		}
-		ret.id = Util.random();
-		ret.sentDate = new Date();
+		ret.id = actionid != null ? actionid : Util.random();
+		ret.sentDate = new Date();//virtualtime: marked.
 		ret.to  = Member.TEAM;
 		ret.from = Member.SYSTEM;
 		ret.message = message;
 		return ret;
-	}	
+	}
+	
+	
 	protected String constructMessage(CardData data,  NotificationMessage replyTo) throws WorkflowException{
 		StringBuffer buff = new StringBuffer();
 
-		if(data.type.equals("query")){
+		if(data.type == null) return data.message == null ? "" : data.message;
+		
+		//TODO:以下、恐らく機能していない
+		if(data != null && data.type.equals("query")){
 			buff.append(data.name + " " + (data.message == null ? "" : data.message));
-		}else if(data.type.equals("inform")){
+		}else if(data != null && data.type.equals("inform")){
 			buff.append(data.name + " " +(data.message == null ? "" : data.message) + ":" + data.comment);
-		}else if(data.type.equals("action") || data.type.equals("auto")){
+		}else if(data != null && data.type.equals("action") || data.type.equals("auto")){
 			buff.append(/*data.name + " " +*/(data.message == null ? "" : data.message));
-		}else if(data.type.equals("response")){
+		}else if(data != null && data.type.equals("response")){
 			if(replyTo == null)throw new WorkflowException("問い合わせ先が指定されていません。", HttpServletResponse.SC_BAD_REQUEST );
 			buff.append(data.name + " " +(data.message == null ? "" : data.message));
 		}else{

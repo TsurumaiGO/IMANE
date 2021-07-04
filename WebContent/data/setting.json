@@ -1,8 +1,7 @@
 {
-  "teams":[
-    {"id":"SampleCompany.com","name":"SampleCompany"}
-  ],
-  "phases":[
-    {"phase":1,"description":"phase1","timelimit":1200,"endstate":[]}
-  ]
+    "name": "feature-virtualtime テストシナリオ",
+    "phases": [{"phase":1,"description":"phase1","timelimit":1200}],
+    "features": ["virtualtime"],
+    "invisible-action": ["invisible"],
+		"teams": [{"id":"test.example.com", "name":"test.example.com"}]
 }

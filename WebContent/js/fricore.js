@@ -3,7 +3,7 @@
 /**演習ワークフロー状態のコンテナ*/
 //window.FRICORE = {};
 var FrICORE = function(){
-	/**管理者モード*/
+	/**管理者モード。*/
 	this.isadmin =false;
 	/**デバッグモード。'.debugmenu'クラスを指定された要素はデバッグモードのときに表示される。*/
 	this.debug = false;
@@ -28,11 +28,62 @@ var FrICORE = function(){
 	/**現在のワークフロー状態(ファシリテータ画面)*/
 	this.workflowstate={};
 	/**ワークフロープロセスリスト(ファシリテータ画面)*/
-	this.wfprocesses=[];
+//	this.wfprocesses=[];
 	this.count=[];
-	
 	/**シーケンス図データ*/
 	this.sequence={};
+
+	/**実験的機能の有効化*/
+	this.experimental = false;
+	/**デバッグ用プロパティ;コンソールログの最大行数*/
+	this.MAX_LOG_LINES = 5;
+	/**デバッグ用プロパティ;コンソールログの最大文字数*/
+	this.MAX_LOG_CHARS = 300;
+	/**デバッグ用プロパティ;トレース情報の出力ON/OFF*/
+	this.enableTrace = true;
+	/**デバッグ用プロパティ;演習状態の自動更新を無効にする*/
+	this.disabAutoRefresh = false;	
+	
+	this.level = {
+		NORMAL:0,
+		TRACE:1,
+		WARN:2,
+		CRITICAL:4,
+		EMERGENCY:8,
+		HIDDEN:0x10,
+		CONTROL:0x20
+	};
+	this.hoge = function(){
+		console.log("testes");
+	}
+	
+}
+FrICORE.info = function(msg){
+	console.log("[info] " + digestText(msg.toString()));
+}
+FrICORE.error = function(msg, xhr){
+	try{
+		console.error("[error] " + digestText(msg) + " " + xhrToString(xhr));
+		console.error(parseStackTrace("Function.FrICORE.error"));
+	}catch(t){
+		console.error("unknown error " + t);
+	}
+}
+FrICORE.trace = function(msg){
+	if(this.enableTrace || this.debug)
+		FrICORE.info("[trace] " + msg);
+}
+/**boolean型の設定プロパティを切り替える*/
+FrICORE.prototype.toggleConfig = function(classname, propertyname){
+	var checked = $(classname).data("checked");
+	$(classname).data("checked",!checked)
+		.removeClass(checked ? "checked" : "").addClass(!checked ? "checked" : "");
+	if(this.hasOwnProperty(propertyname)){
+		this[propertyname] = !checked;
+		FrICORE.info("config property changed: " + propertyname);
+	}else
+		FrICORE.warn("no config property found: " + propertyname);
+	
 }
 window.FRICORE = new FrICORE();
 
@@ -40,6 +91,44 @@ var versioninfo={SERVER_VERSION:'unknown', SERVER_DESC:'unknown',
 		CLIENT_VERSION:'unknown', CLIENT_DESC:"unknown"}
 
 //utilities------------------------------------------------------------------
+
+/**スタックトレース情報を分解する
+
+errがErrorオブジェクトの場合、Error.stackプロパティからスタックトレースを取得する。そうでない場合は新規にスタックトレースを生成する。
+baseがで指定された関数(Function.関数名)、この関数自身(Function.getStackTrace)が出現するまでのスタックトレース情報は捨てる。
+
+@return [{label:関数名,line:ファイル名:行数}]
+*/
+function parseStackTrace(base, err){
+	var e = err || new Error();
+
+	var arr = e.stack.split("\n").slice(1);
+	var basepoint = "";
+	if(typeof base == "object" && base.hasOwnProperty("stack"))
+		basepoint = base.stack;
+	else if(typeof base == "string")
+		basepoint = base || "Function.getStackTrace";
+
+	var regex = new RegExp("[ ]+at " + base + " (.*)");
+	var buff = [];
+	for(var i = 0; i < arr.length; i ++){
+		var g = regex.exec(arr[i]);
+		if(!g) return "<no stack trace>";
+		if(g.length < 2)	return [];
+		buff.push({label:g[1],line:g[2]});
+	}
+	return buff.map(e=>{return "  " + e}).join("\n");
+}
+/**parseStackTrace()の復帰値をエラーコンソールに出力する*/
+function printStackTrace(base, err){
+	var st = parseStackTrace(base, err);
+	if(_.isArray(st)){
+		console.error(st.reduce(e=>{"  at " + e.label + " " + e.line;}));
+	}else{
+		console.error(st);
+	}
+}
+
 /** URLパラメタを分解*/
 function parseURL(){
 	var arr=location.search.substring(1).split('&');
@@ -50,7 +139,7 @@ function parseURL(){
 	}
 	return params;
 }
-
+/***/
 var Monitor = function(){
 	this.last = new Date().getTime();
 }
@@ -92,13 +181,14 @@ function history(){
 /**振り返り画面のチームリストを更新する*/
 function updateTeamPicker(){
 	if(!FRICORE.workflowstate){return;}	
-	if(!FRICORE.wfprocesses){
+//	if(!FRICORE.wfprocesses){
 		getProcess();
-	}
+//	}
 	$('#teampicker').empty();
 	$('#teampicker').append('<option value=""/>');
+	
 	_.each(FRICORE.wfprocesses, function(e){
-		var elem = _.template('<option value="<%=team%>"><%=team%></option>', e.workflow);
+		var elem = _.template('<option value="<%=team%>"><%=team%></option>', e);
 		$('#teampicker').append($(elem));
 	});
 	var selected = getSelectedTeam();// || window.workflowstate.team;
@@ -171,6 +261,8 @@ function dialog(msg, type, level, title, editable, callback){
 
 /**汎用エラーダイアログ*/
 function error(msg, xhr){
+
+	/*
 	var m = msg;
 	if(typeof(msg) == "object"){
 		m = msg.message || msg.responseText;
@@ -179,6 +271,8 @@ function error(msg, xhr){
 	if(xhr){
 		m += "\n"+(xhr.statusText || "") + "\n" + (xhr.responseText||"")
 	}
+	*/
+	var m = msg + "\n" + xhrToString(xhr);
 	dialog(m,"ok",  "error","エラー");
 }
 /**汎用メッセージボックス*/
@@ -234,7 +328,7 @@ function onCardClicked(ev){
 		}
 		e.addClass('selected');		
 	}
-	console.log("card clicked:" + e);
+	FrICORE.trace("card clicked:" + e);
 	//validateAction();
 	return false;
 }
@@ -253,7 +347,7 @@ function renderCards(resp){
 				onCardClicked(e);
 			}));
 		});
-		console.log("fetched:actions");
+		FrICORE.trace("fetched:actions");
 	}
 	if(resp.hasOwnProperty("contacts")){
 		if(resp.contacts)
@@ -267,7 +361,7 @@ function renderCards(resp){
 				onCardClicked(e);
 			}));
 		});
-		console.log("fetched:contacts");
+		FrICORE.info("fetched:contacts");
 		
 	}
 	if(resp.hasOwnProperty("queries")){
@@ -280,7 +374,7 @@ function renderCards(resp){
 			}));
 		});
 
-		console.log("fetched:queries");
+		FrICORE.info("fetched:queries");
 	}
 	if(resp.hasOwnProperty("contexts")){
 		resp.contexts.forEach(function(c){
@@ -289,7 +383,7 @@ function renderCards(resp){
 			var t = _.template("<span  data-cardtype = 'context'><%=desc%></span><br>", c);
 			$("#contexts .panelcontent").append($(t));
 		});
-		console.log("fetched:contexts");
+		FrICORE.info("fetched:contexts");
 	}
 	if(resp.hasOwnProperty("informations")){
 		var ul = $("<ul/>");
@@ -301,7 +395,7 @@ function renderCards(resp){
 			}));
 		});
 		$("#informations .panelcontent").append(ul);
-		console.log("fetched:informations");
+		FrICORE.info("fetched:informations");
 		
 		adjustTimestamp();
 	}
@@ -316,16 +410,29 @@ function getDef(url, data, cb){
 	var ret = null;
 	$.ajax({url:url, data:(data || {}),  scriptCharset: 'utf-8', dataType: 'json'})
 	.done(function(resp, msg, xhr){
-		console.log(url + ":" + msg);if(cb)cb(resp);
+		FrICORE.info(url + ":" + msg);if(cb)cb(resp);
 		renderCards(resp);
 	}).fail(function(xhr, msg){
-		console.log(xhr + ":"+msg);	
+		FrICORE.error("シナリオファイルのロードに失敗しました。", xhr);	
 	}).always(function(){
 		dfd.resolve();
 	});
 	return dfd.promise();
 }
 
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  シナリオセット管理
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**シナリオセットをロード*/
+function loadCards(){
+	var defs = {};
+	reloadScenarioSet().done(function(){
+		var datadir = "workflow/scenario";
+	});
+}
 /**シナリオセットの選択が変更されたときの処理*/
 function onScenarioChanged(){
 	var selected = $("select.scenarioset").val();
@@ -406,8 +513,7 @@ function getActiveScenario(){
 /**選択されたシナリオセットを有効化*/
 function activateScenarioSet(){
 	var selected = $("select.scenarioset").val();
-	var active = getActiveScenarioNaand
-	me();
+	var active = getActiveScenarioName();
 	if(selected != active){
 		if(!confirm("シナリオセットを変更すると、進行中のフェーズが破棄され、ログイン中のユーザは切断されます。\n続行しますか?"))return;
 	}
@@ -419,7 +525,7 @@ function activateScenarioSet(){
 			});
 
 	}).fail(function(xhr){
-		error("シナリオセットの有効化に失敗しました。" + xhr.responseText);
+		error("シナリオセットの有効化に失敗しました。" + xhrToString(xhr));
 	});
 	
 }
@@ -466,11 +572,11 @@ function reloadScenarioSet(){
 		.done(function(){
 			adjustGroupList();
 			adjustUserList();
-			console.log("done");
+			FrICORE.info("done");
 		});
 		
 	}).fail(function (xhr,msg){
-		error(msg);
+		error(msg, xhrToString(xhr));
 	});
 
 }
@@ -496,10 +602,10 @@ function uploadScenarioSet(evt){
 			.done(function(resp, msg, xhr){
 				info("シナリオセットまたはシナリオデータをアップロードしました。");
 				reloadScenarioSet();
-				console.log("upload completed.file:" + name);
+				FrICORE.info("upload completed.file:" + name);
 			})
 			.fail(function(xhr){
-				console.log("failed to upload.");
+				FrICORE.error("failed to upload.", xhr);
 				error("アップロードに失敗しました。"+ xhr.responseText);
 			});
 	};
@@ -515,14 +621,9 @@ function downloadScenarioSet(){
 	window.open(url);
 }
 
-/**静的な定義データをロード*/
-function loadCards(){
-	var defs = {};
-	reloadScenarioSet().done(function(){
-		var datadir = "workflow/scenario";
-	});
-}
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//振り返り画面
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**振り返り画面のSVG要素のサイズを内容に合わせる(無駄な余白を出力させないため)*/
 function fitSVG(){
 	var xs = _.min($("svg").children("g,text"), function(e){return e.getBBox().x;}).getBBox()
@@ -662,16 +763,15 @@ function drawDiagram(arr, data){
 				if(!hidden && (exists || !hideInactive)){
 					pt.push("participant " + escape4vga(role.rolename));
 				}else{
-					console.log("participant " + role.rolename +" skipped.");
+					FrICORE.trace("participant " + role.rolename +" skipped.");
 				}
 			}else
-				console.log("warn: role not found: " + e);
+				FrICORE.info("warn: role not found: " + e);
 		});
 		
 		header = "sequenceDiagram\n" + pt.join("\n");
 
 		var s = arr;
-		
 		var str = s.join("\n");
 	
 		if(pt && pt.length >= 2){
@@ -691,13 +791,13 @@ function drawDiagram(arr, data){
 	window.dragger.init('#mermaidChart0');
 	$('#svgctrl').draggable();	
 	$('svg')[0].addEventListener('touchstart', function(e){
-		console.log("touch start");
+		FrICORE.trace("touch start");
 	});
 	$('svg')[0].addEventListener('touchmove', function(e){
-		console.log("touch move");
+		FrICORE.trace("touch move");
 	});
 	$('svg')[0].addEventListener('touchend', function(e){
-		console.log("touch end");
+		FrICORE.trace("touch end");
 	});
 }
 
@@ -728,7 +828,7 @@ Dragger.prototype.init = function(selector){
 		var currentScreen = {x:e.screenX, y:e.screenY};
 		var pos = tosvg	({x:currentOffset.x, y:currentOffset.y});
 		
-		console.log("("+ currentOffset.x  + "," + currentOffset.y + ")-(" +  pos.x + "," + pos.y + ")");
+		FrICORE.trace("("+ currentOffset.x  + "," + currentOffset.y + ")-(" +  pos.x + "," + pos.y + ")");
 		
 		
 		if($('#range-selection')){
@@ -778,7 +878,7 @@ Dragger.prototype.start = function(e){
 	if($('#range-selection')){
 		$('#range-selection').remove();
 	}
-	console.log("drag start");
+	FrICORE.trace("drag start");
 };
 /**ドラッグ終了時に呼ばれる*/
 Dragger.prototype.end = function(e){
@@ -787,14 +887,14 @@ Dragger.prototype.end = function(e){
 	this.dragTarget = null;
 	this.endEvent = e;
 	
-	console.log("drag stop");
+	FrICORE.trace("drag stop");
 };
 window.dragger = new Dragger('#mermaidChart0');
 /**SVG要素のマウスイベントハンドラ*/
 function svgmouseevent(e, msg){
 	var svg=tosvg({x:e.offsetX, y:e.offsetY});
 	var containerpos=$('#mermaidChart0').position();
-	console.log((msg||'') + '(' + e.buttons + '): ' + e.target.tagName + ', evt:('+e.offsetX + ","+e.offsetY + "), evt(svg):("+
+	FrICORE.trace((msg||'') + '(' + e.buttons + '): ' + e.target.tagName + ', evt:('+e.offsetX + ","+e.offsetY + "), evt(svg):("+
 			Math.round(svg.x) + ","+Math.round(svg.y) + "), svgcontainer:(" + 
 			Math.round(containerpos.left) + ","+ Math.round(containerpos.top) + ")");
 }
@@ -828,26 +928,35 @@ function updateui(){
 	balloon(".experimental",'実験的機能です。このバージョンでは正しく動作しない可能性があります。');
 	/**フェーズ中のみ利用可能なUI部品*/
 	balloon(".live.offline", 'この機能は演習フェーズ中のみ使用できます。');
+	
+	$(".feature").hide();
+	_.each(FRICORE.setting.features, e=>{
+		var str = ".feature-"+e;
+		$(str).show();
+	});
+	
+	
+	
 }
 
-//--------------------------------------------------------------------------
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //		初期化処理
-//--------------------------------------------------------------------------
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(function(){
 	showProductInfo();
 	//モード設定
 	var params = parseURL();
 	FRICORE.isadmin = params['isadmin'] ? true : false;
 	FRICORE.debug = params['debug'] ? true : false;
-	
+		this.MAX_LOG_LINES = 5;
+
 	FRICORE.params = params;
 	
-	console.log("start. admin="+(FRICORE.isadmin ? "true" : "false") + ",debug:" + (FRICORE.debug ? "true":"false"));
+	FrICORE.info("start. admin="+(FRICORE.isadmin ? "true" : "false") + ",debug:" + (FRICORE.debug ? "true":"false"));
 	
 	if(!FRICORE.debug)	$('.debugmenu').hide();
 	else	$('.debugmenu').show();
-
+	
 	//UI部品初期化
 	$('.picker').button({icons:{primary:'ui-icon-circle-plus'}});
 	$('select').select2({
@@ -965,6 +1074,8 @@ $(function(){
 	updateui();
 });
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**プルダウンリスト項目の書式化(ユーザ)*/
 function formatUserSelection(el){
 	if(!el.id)return el.text;
@@ -974,7 +1085,7 @@ function formatUserSelection(el){
 		var v = _.template($("#select2-user-template").html(), user);
 		return $(v);
 		}catch(t){
-			console.log(t);
+			FrICORE.error(t);
 			return el.text;
 		}
 	}
@@ -1001,7 +1112,7 @@ function formatActionSelection(el){
 				return $(v).css("color","orange");
 			}
 		}catch(t){
-			console.log(t);
+			FrICORE.error(t);
 			return el.text;
 		}
 	}
@@ -1016,7 +1127,7 @@ function formatStateSelection(el){
 			var v = _.template($("#select2-state-template").html(), state);
 			return $(v);
 		}catch(t){
-			console.log(t);
+			FrICORE.error(t);
 			return el.text;
 		}
 	}
@@ -1025,6 +1136,7 @@ function formatStateSelection(el){
 function surviveMark(tgt){
 	toggleMark(this);
 }
+/**イベント一覧; コンテキストメニュー生成*/
 function setContextMenu(tgt){
 	tgt.contextMenu({
 		selector:'tr',
@@ -1065,6 +1177,7 @@ function setContextMenu2(a){
 	});
 	return false;
 }
+/**イベント一覧; マークのON/OFFを制御*/
 function toggleMark(el){
 	if(el.hasClass('marked')){//マークが解除されたらイベントIDを削除
 		el.removeClass('marked');
@@ -1117,7 +1230,6 @@ function toggleMark(el){
 	}
 }
 
-
 /**定期的にワークフロー状態を更新*/
 function updateWorkflowInfoCallback(){
 	updateWorkflowInfo();
@@ -1127,6 +1239,8 @@ function updateWorkflowInfoCallback(){
  * 秒数を日:時:分:秒に書式化
  * TODO:時の処理にバグがある*/
 function formatSeconds(sec){
+
+	if(!sec)	return "";
 	var min = Math.floor(sec/60);
 	var second = Math.floor(sec % 60);
 	var hour = Math.floor(min/60);
@@ -1139,27 +1253,10 @@ function formatSeconds(sec){
 	return buff.join(":");
 }
 
-function summerizeWorkflowState(forAdmin){
-	var wf = forAdmin ? (getSelectedTeamWorkflow().workflow||{}) : FRICORE.workflowstate;
 
-	if(_.isEmpty(wf)){
-		return "シナリオが選択されていません。";
-	}
-	var setting = //FRICORE.setting.phases[FRICORE.workflowstate.phase-1];
-			_.findWhere(FRICORE.setting.phases,{phase:Number(wf.phase)});
-
-	var elapsed = wf.start != null  ? (new Date().getTime() - wf.start)/1000 : 0;
-
-	var dat = JSON.parse(JSON.stringify(wf));
-	dat.elapsed = elapsed;
-	dat.timelimit = setting ? setting.timelimit:null;
-	dat.scenario = FRICORE.activeScenario;
-	dat.rest = dat.timelimit - dat.elapsed;
-	
-	var txt = _.template($("#flowstatus-template").html(),dat);
-	return txt;
-}
-/****/
+/**
+一定間隔で画面を更新する処理。時刻情報の更新、サーバとの情報同期など
+*/
 function updateClockCallback(){
 		if(FRICORE.workflowstate && FRICORE.workflowstate.start > 0){
 			var txt = summerizeWorkflowState();
@@ -1172,14 +1269,30 @@ function updateClockCallback(){
 		}
 
 		if(!FRICORE.wfprocesses)return;
+
 		_.each(FRICORE.wfprocesses, function(proc){
-			if(proc.workflow.start>0){
-				var elapsed = (new Date().getTime() - proc.workflow.start)/1000;
+			if(proc.start>0){
+				var elapsed = (new Date().getTime() - proc.start)/1000;
 				_.find($('#processlist tr'), function(p){
-					var cur = $(p).find('td.assign-team:contains("'+proc.workflow.team+'")');
+					var cur = $(p).find('td.assign-team:contains("'+proc.team+'")');
 					if(cur.length != 0){
+
+						//TODO: 仮想時刻の考慮: コードが汚い。要リファクタリング
+						try{
+							if(isFeatureEnabled("virtualtime")){
+								elapsed = (new Date(proc.world.clock.time).getTime() 
+									- new Date(proc.world.clock.baseTime).getTime())/1000;
+							}
+						}catch(t){
+							FrICORE.error(t);
+						}
 						var txt = Math.floor(elapsed / 60) + ":" + Math.floor(elapsed % 60);
-						$(p).find('td.elapsed').text(txt);
+						if(isFeatureEnabled("virtualtime") && proc.world.paused)
+							txt += "(一時停止中)";
+							 
+						
+						//$(p).find('td.elapsed').text(txt );
+						$(p).find('.elapsed').text(txt);
 					}
 				})
 			}
@@ -1188,10 +1301,13 @@ function updateClockCallback(){
 /**定期的にワークフロー状態を更新*/
 function updateWorkflowInfo(){
 	if(!FRICORE.usersession){
-		warn("ログインしていません。");
+		popupWarning("ログインしていません。");
 		onOffline();
 		return;
 	}
+	
+	if(FRICORE.disableAutoRefresh)	return;//for debug
+	
 	var url = "workflow/diag/"+FRICORE.usersession.team + "/workflow";
 	if(!FRICORE.wfsession){onOffline();error("ログインしていません。");return;}
 	doRequest(url, "GET", {})
@@ -1200,15 +1316,16 @@ function updateWorkflowInfo(){
 		onOnline();
 	})
 	.fail(function(xhr){
-//  コンソールログがうるさいので
 	});
 	
 	if($('#facilitator-main').is(":visible") && FRICORE.isadmin && FRICORE.usersession){
-		if($('#processlist-autoupdate:checked').length != 0){
+		//if($('#processlist-autoupdate:checked').length != 0){
+		if(!FRICORE.disabAutoRefresh){
 			getProcess({},true);
 		}
-		if($('#wf-autoupdate:checked').length != 0){
-			updateWF();
+		//}
+		if($('#wf-autoupdate:checked').length != 0 && !FRICORE.disabAutoRefresh){
+				updateWF();
 		}
 	}
 }
@@ -1221,22 +1338,8 @@ function onError(xhr, silent){
 		str = xhr.responseJSON.message;
 	}
 	if(!silent)	error(str);
-	else warn(str);
+	else popupWarning(str);
 	return str;
-}
-/**控え目にエラー情報を表示*/
-function warn(str){
-//	if($('#warningarea') == str)return;//同じメッセージなら何もしない
-	$('#warningarea').text(str);
-	
-	if(!$('#statusbar').is(':visible')){
-		$('#statusbar').show();
-		$(window).trigger('resize');
-		window.setTimeout(hideStatusbar,10000);
-	}
-}
-function hideStatusbar(){
-	if($('#statusbar').is(':visible')){$('#statusbar').hide();$(window).trigger('resize');}
 }
 function showProductInfo(){
 	doRequest('sys/product.json', 'GET').done(function(resp, msg, xhr){
@@ -1258,6 +1361,10 @@ function showProductInfo(){
 	});
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 自動更新処理のためのタイマー
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var Timer =function(interval){
 	this.handlers = [];
 	this.interval = interval || 200;
@@ -1269,14 +1376,14 @@ Timer.prototype.addHandler = function(handler, interval){
 Timer.prototype.start = function(){
 	if(this.timerid){window.clearInterval(this.timerid);}
 	this.timerid = window.setInterval('processTimerProc()', this.interval);
-	console.log("timer started.interval=" + this.interval);
+	FrICORE.trace("timer started.interval=" + this.interval);
 };
 Timer.prototype.stop = function(){
 	if(this.timerid){
 		clearInterval(this.timerid);
 		this.timerid = null;
 	}
-	console.log("timer stopped.");
+	FrICORE.trace("timer stopped.");
 };
 /**タイマハンドラを実行して前回実行日時を更新*/
 function processTimerProc(){
@@ -1288,8 +1395,10 @@ function processTimerProc(){
 		}
 	});
 };
-
 var timer = new Timer();
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function selectRow(el){
 
@@ -1318,6 +1427,8 @@ function sortMembers(){
 	});
 	return ret;
 }
+/**新規アクション画面を表示する
+*/
 function showActionDialog(type, tgt, toaddr){
 	if(!FRICORE.usersession){
 		dialog("ログインしていません。", "ok", "warning");
@@ -1365,7 +1476,7 @@ function showActionDialog(type, tgt, toaddr){
 			el.state = isonline ? "":"(オフライン)";
 			//console.log(el.name + "is " + (el.isonline ? 'online' : 'offline'));
 			var e = $(_.template("<option  value = '<%=role%>' title='<%=rolename%><%=state%>\n<%=desc||''%>'><%=rolename%></option>", el));
-			if(!isonline){e.attr('disabled', true);}else{console.log(el.name + " is online");}
+			if(!isonline){e.attr('disabled', true);}else{FrICORE.info(el.name + " is online");}
 			if(!FRICORE.debug && (!el.hidden)){
 				to.append(e);
 				cc.append(e.clone());
@@ -1374,6 +1485,7 @@ function showActionDialog(type, tgt, toaddr){
 	}
 	if(injection){
 		var e = $("<option  value = 'ALL' title='チーム全員'>チーム全員</option>").appendTo(to);
+		$("<option  value = 'system' title='システム'>システム</option>").appendTo(to);
 	}
 	
 	var action = $('.set-action').find('select');action.empty();action.append('<option selected value=0></option>');
@@ -1393,13 +1505,13 @@ function showActionDialog(type, tgt, toaddr){
 					if(!el.hidden || FRICORE.debug)
 						action.append(a);
 					else
-						console.log("アクションは非表示" + el.name);
+						FrICORE.trace("アクションは非表示： " + el.name);
 				}else if(FRICORE.debug){
 					action.append(a);
 				}else if(el.hidden){
 	
 				}else{
-					console.log("アクションは利用不可" + el.name);
+					FrICORE.trace("アクションは利用不可: " + el.name);
 				}
 			});
 		}
@@ -1457,7 +1569,7 @@ function showActionDialog(type, tgt, toaddr){
 			replyChangeHandler(data);
 			var to = data.from.role;
 			if(!canSendTo(to)){//system, allなど特殊ユーザは宛先に指定できない
-				console.log("返信できないユーザが選択されたため、宛先から除外されました。"+to);
+				FrICORE.trace("返信できないユーザが選択されたため、宛先から除外されました。"+to);
 			}else{
 				$('.set-to select').val(to).trigger("change");
 			}
@@ -1514,7 +1626,6 @@ function isActionAvailable(act){
 	}
 	return ret;
 }
-
 
 /**ステート条件を演算子とステートの配列に分解
  * @return {condition:array,operator:operator}*/
@@ -1678,7 +1789,7 @@ function EvalEQ(memberStates, state){
 		    ret=false;
 		    break;
 		default:
-		    console.log("Logic Error "+logic);
+		    FrICORE.error("Logic Error "+logic);
 		}
 		while (buf[ic]!=null) {
 		    if (buf[ic].indexOf("(")>=0){
@@ -1721,6 +1832,7 @@ function EvalEQ(memberStates, state){
 		return ret;
 }
 
+/**所有ステートカードに対してステート条件を評価する。*/
 function evaluateStates(memberStates, condition, defaultOperation){
 	var fl=false;
 	if(condition != null) {
@@ -1745,16 +1857,18 @@ function evaluateStates(memberStates, condition, defaultOperation){
     }
 }
 
+/**ダイアログの入力エラー情報を表示*/
 function showInputError(sel, message){
 	var msg = '<span class="input-action-errormessage" ><br>'+message + '</span>';
 	$(sel).append(msg);
 	$(sel).addClass('input-action-error');
 }
+/**ダイアログの入力エラー情報をクリア*/
 function clearInputError(){
 	$('.action-input').removeClass('input-action-error');
 	$('.action-input').children('.input-action-errormessage').remove();
 }
-/**直前のチェック*/
+/**アクション実行直前のチェック*/
 function validateActionInput(){
 	clearInputError();
 	var action = $(".set-action>select").val();
@@ -1787,7 +1901,7 @@ function validateActionInput(){
 	}
 	return result;
 }
-
+/**新規アクションダイアログ; 返信情報が変更されたときの処理*/
 function replyChangeHandler(d){
 	if(!d){
 		$(".set-comment textarea").text("");	return;
@@ -1799,7 +1913,7 @@ function replyChangeHandler(d){
 	$(".set-comment textarea").val(msg);
 	var to = data.from.role;
 	if(!canSendTo(to)){//system, allなど特殊ユーザは宛先に指定できない
-		console.log("返信できないユーザが選択されたため、宛先から除外されました。"+to);
+		FrICORE.trace("返信できないユーザが選択されたため、宛先から除外されました。"+to);
 	}else{
 	//	$('.set-to select').val(to).trigger("change");
 	}
@@ -1815,13 +1929,13 @@ function makeReplyMessage(data){
 	var msg = _.template("\n>返信元イベント:\n\n>日時:<%=sentDate%>\n>From:<%=from%>\n>To:<%=to%>\n>件名:<%=subj%>\n>\n><%=message%>", el);
 }
 
-
+/**新規アクションダイアログ; アクションの選択が変更されたときの処理*/
 function actionChangeHandler(data){
 	var enableStates = true;
 	if(!data || !data.type){
 		enableStates =	false;
 		//TODO:戻すときはここを戻す
-	}else if(data.type=='action'){
+	}else if(data.type=='action' || data.type=='control'){
 		enableStates =	data.attach;
 	}else if(data.type=='share' || data.id == 'i0009'){//#17
 		
@@ -1830,7 +1944,7 @@ function actionChangeHandler(data){
 	}else if(data.type == 'talk'){
 		enableStates = false;
 	}else{
-		console.log("ERROR:invalid action type " + data.type);
+		FrICORE.error("ERROR:invalid action type " + data.type);
 	}
 	$(".set-state select").val([]).trigger('change');//選択をクリア
 	
@@ -1854,11 +1968,13 @@ function actionChangeHandler(data){
 		});
 		$(".set-to select").trigger("update");
 	}
+	if(data.hasOwnProperty("to"))
+		$(".set-to select").val(data.to);
 
 }
 
 function expandList(ev){
-	var dummy  = 0;
+	
 	var cc = $(ev).parent().next(".cccontent");
 	if(cc.is(":visible")){
 //		$(ev).text("(+)");
@@ -1895,13 +2011,13 @@ function loadHistory(all){
 			onLoadEvent(e);
 		});
 		$(window).trigger("resize");
-		console.log(resp.length + " events received.");
+		FrICORE.trace(resp.length + " events received.");
 	})
 	.fail(function(xhr){
 		var str = xhr.responseText || xhr.statusText;
 		if(xhr.responseJSON){str = xhr.responseJSON.message;}
-		error("履歴の取得に失敗しました。" + str);
-		console.log("failed.");
+		error("履歴の取得に失敗しました。" + str, xhr);
+		FrICORE.error(str);
 	});
 }
 
@@ -2030,7 +2146,7 @@ function doTrim(exec){
 	var trans = svg.createSVGPoint();trans.x=all.x-box.x;
 	var scale = all.width/box.width;
 	if(Math.abs(scale- svg.currentScale) < 0.01 || scale > 10000){ 
-		console.log("拡大率が許容範囲外です: " + scale);
+		FrICORE.error("拡大率が許容範囲外です: " + scale);
 		return;//
 	}
 	svg.currentScale = scale;
@@ -2124,7 +2240,7 @@ function doLogin(){
 	$.ajax({async:false,method:"post", dataType:'json', url:url, data:data})
 	.done(function(resp, msg, xhr){
 		FRICORE.wfsession = resp.sessionkey;
-		console.log("logged in.");
+		FrICORE.info("logged in.");
 		
 		$("#sessioninfo").html(
 			_.template("<%=username%>:<%=isadmin%>@<%=team%>", resp)
@@ -2184,10 +2300,10 @@ function doLogout(){
 		if(FRICORE.socket){FRICORE.socket.close();}
 		
 		updateLoginInfo();
-		console.log("logged out");		
+		FrICORE.info("logged out");		
 	})
 	.fail(function(xhr){
-		console.log("logout failed.");
+		FrICORE.error("logout failed.");
 	});
 }
 /**ファシリテータ画面:チーム参加者情報を表示*/
@@ -2203,19 +2319,30 @@ function loadContacts(team){
 				onCardClicked(e);
 			}));
 		});
-		console.log("fetched:contacts");
+		FrICORE.trace("fetched:contacts");
 	})
 	.fail(function(xhr){
 		var msg = xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText;
-		error("連絡先の取得に失敗しました。<br><br>" + msg);
+		error("連絡先の取得に失敗しました。<br><br>" + msg, xhr);
 	});
 	
 }
 
+function expandRecipient(to){
+	var ret = null;
+		if(to == "ALL")
+			ret = {name:"チーム全員",rolename:"チーム全員",desc:"チーム全員",team:FRICORE.usersession.team, role:"all"}
+		else if(to == "system")
+			ret = {name:"システム",rolename:"system",team:FRICORE.usersession.team, role:"system"};
+		else
+			ret = _.findWhere(FRICORE.members, {role:to});
+
+	return ret;
+}
 /**新規アクションダイアログの入力に従ってアクション要求を送信*/
 function requestAction(){
 
-	var url = "workflow/process/swsc_incident/0/act";//TODO:assign process id 
+	var url = "workflow/process/act"; 
 	var to = $(".set-to>select").val();
 	var cc = $(".set-cc>select").val();
 	var replyto = $(".set-reply-to>select").val();
@@ -2226,7 +2353,7 @@ function requestAction(){
 	var act = Object.assign(action);
 	if(act.hasOwnProperty("available")) delete act.available;
 	var data = {card:act,
-		to:(to == "ALL" ? {name:"チーム全員",rolename:"チーム全員",desc:"チーム全員",team:FRICORE.usersession.team, role:"all"} : _.findWhere(FRICORE.members, {role:to})),
+		to:expandRecipient(to), //(to == "ALL" ? {name:"チーム全員",rolename:"チーム全員",desc:"チーム全員",team:FRICORE.usersession.team, role:"all"} : _.findWhere(FRICORE.members, {role:to})),
 		cc:[],replyto:null
 	};
 	
@@ -2248,11 +2375,11 @@ function requestAction(){
 	
 	doRequest(url, "POST", JSON.stringify({action:data}), {contentType:"application/json"})
 		.done(function(resp, msg, xhr){
-			console.log("done:action "+resp);
+			FrICORE.info("done:action "+resp);
 		})
 		.fail(function(xhr){
 			var msg = xhr.responseJSON ? xhr.responseJSON : xhr.responseText;
-			error(msg);
+			error(msg, xhr);
 		});
 }
 /**汎用: RESTリクエストを送信
@@ -2280,12 +2407,12 @@ function doRequest(url, method, params, args, headers){
 
 	var ret = $.ajax(arg)
 	.done(function(resp, msg, xhr){
-		console.log(url + ":done.");
 		unblock();
+		FrICORE.trace(url + ":完了。");
 	})
 	.fail(function(xhr){
-		console.log(url + ":failed.\n" + xhr.responseText);
 		unblock();
+		FrICORE.error(url + ":失敗。\n", xhr);
 	});
 	
 	return ret;
@@ -2316,6 +2443,8 @@ function isFacilitator(){
  * TODO:オフセット、加速 
  */
 function formatDate(insec){
+	if(!insec) return "";
+
 	//省略時は時刻の起点を本日の12:00とする
  	var offset = window.FRICORE.params['timeoffset'] || new Date();
 	var acceleration = window.FRICORE.params['acceleration'] || 1;
@@ -2456,11 +2585,12 @@ function getProcess(params, select){
 
 	makePhaseChooser($('.assign-phase-container-all'), "all");
 
-	var url = "workflow/process/swsc_incident/";
-	var params = {"duration":3};
+	var url = "workflow/process/";
+	//var params = {"duration":3};
+	var params = {};
 	var re = doRequest(url, "GET", params)
 		.done(function(resp, msg, xhr){
-			console.log("done.");
+			FrICORE.trace("done.");
 			var selected = getSelectedTeam();
 			
 			var container = $("#processlist tbody");
@@ -2469,29 +2599,9 @@ function getProcess(params, select){
 			
 
 			for(var i = 0; i < dat.length; i ++){
-
-				var summary = {id:dat[i].id,name:dat[i].name,state:dat[i].state,created:formatDate(dat[i].created), 
-						team:dat[i].workflow.team, score:dat[i].workflow.score||''};
 				
-				if(dat[i].workflow){
-					summary.phase = dat[i].workflow.phase;
-					summary.operationlevel = dat[i].workflow.operationlevel;
-					summary.started = dat[i].workflow.start ? formatDate(new Date(dat[i].workflow.start)) : "";
-					summary.aborted = dat[i].workflow.state == "Aborted";
-					var tbl={'Started':'実行中','Aborted':'中断', '':'未開始',undefined:'不明'};
-					summary.state = tbl[dat[i].workflow.state||''];
-					summary.team = dat[i].workflow.team;
-					var s3 = hasState(dat[i].workflow, 3);
-					var s2 = hasState(dat[i].workflow, 2);
-
-					if(s3){
-						var dummy=0;
-					}
-					if(s2){
-						
-					}
-				}
-
+				var summary = makeWorkflowStatusInfo(dat[i]);
+				
 				var row = _.template($('#processlist-template').html(), summary);
 				var rr=$(row).data('processdata', dat[i]).appendTo(container);
 
@@ -2500,7 +2610,7 @@ function getProcess(params, select){
 				$(rr).find("select").on("click",function(e){e.stopPropagation()});
 				$(rr).find("input").on("click",function(e){e.stopPropagation()});
 				$(rr).find("button").on("click",function(e){e.stopPropagation()});
-				$(rr).find("a").on("click",function(e){console.log("tes");e.stopPropagation()});
+				$(rr).find("a").on("click",function(e){e.stopPropagation()});
 
 				$(rr).find(".ignoreclicked").on("click",function(e){e.stopPropagation()});
 				
@@ -2509,10 +2619,13 @@ function getProcess(params, select){
 					var selector = "input[type=radio][value="+(summary.phase)+"]";
 					rr.find(selector).prop('checked',true).trigger('change');
 				}
+				
+				adjustProcessList($(rr), summary);
+				
 			}
 
 			if(dat.length == 1){
-				selectTeam(dat[0].workflow.team);
+				selectTeam(dat[0].team);
 				updateWF();
 			}else if(select){
 				updateTeamPicker();
@@ -2522,10 +2635,56 @@ function getProcess(params, select){
 		})
 		.fail(function(xhr){
 			var msg =xhr.responseJSON ? xhr.responseJSON : xhr.responseText;
-			error(msg);
-			console.log("failed.");
+			error("演習状態の参照に失敗しました。", xhr);
+			FrICORE.error("failed."+ msg, xhr);
 		});
 }
+
+function summerizeWorkflowState(forAdmin){
+	var wf = forAdmin ? (getSelectedTeamWorkflow() ||{}) : FRICORE.workflowstate;
+
+	if(_.isEmpty(wf)){
+		return "シナリオが選択されていません。";
+	}
+	var dat = JSON.parse(JSON.stringify(wf));
+		
+	var txt = _.template($("#flowstatus-template").html(),makeWorkflowStatusInfo(dat));
+	return txt;
+}
+
+/**ファシリテータ画面: チーム一覧と概要メッセージ用のオブジェクトを生成*/
+function makeWorkflowStatusInfo(wf){
+	if(!wf){
+		FrICORE.error("WorkflowInstance is null.");
+	 	return {};
+	 }
+
+	var setting = _.findWhere(FRICORE.setting.phases,{phase:Number(wf.phase)});
+	
+	var summary = {state:wf.state,created:formatDate(wf.created), 
+			team:wf.team, score:wf.score||'', phase: wf.phase};
+	summary.elapsed = wf.start != null  ? (new Date().getTime() - wf.start)/1000 : 0;
+	summary.timelimit = setting ? setting.timelimit:null;
+	summary.scenario = FRICORE.activeScenario;
+	summary.rest = wf.timelimit - wf.elapsed;
+	summary.start = wf.start ? formatDate(new Date(wf.start)) : "";
+	summary.started = !!summary.start;
+	summary.aborted = wf.state == "Aborted";
+	summary.paused = wf.state == "Paused";
+	summary.time = wf.world ? formatDate(wf.world.time) : undefined;
+	summary.world = wf.world;
+	summary.stateText = stateToText(summary.state);
+	
+	return summary;
+}
+
+function stateToText(state){
+	if(!state)	return "N/A";
+	var tbl={'Started':'実行中', 'Suspended':'一時休止', 'Aborted':'中断', 'None':'未開始', '':'未開始',undefined:'不明', Paused : '一時停止'};
+	return tbl[state] || state;
+}
+
+
 
 function selectTeam(name){
 	var sel = $(_.find($("#processlist  td"), function(e){return $(e).text()==name}));
@@ -2534,21 +2693,16 @@ function selectTeam(name){
 	$(sel).click();
 	return $(sel).parent();
 }
+
 function abort(evt, all){
 	getCards();
 	getState();
-	assign(evt, true, all);
+	assign(evt.currentTarget, "abort", all);
 }
-function resumePhase(evt, all){
+/*function resumePhase(evt, team){
 	var url = "";
 	if(all){
-		url = "workflow/process/swsc_incident/all/reume";
-	}else{
-		var pid =  $(evt).parents("tr").find(".process-id").text();
-		if(!pid){
-			error("インスタンスが選択されていません。");return;
-		}
-		url = "workflow/process/swsc_incident/"+pid+"/reume";
+		url = "workflow/process/" + team + "/resume";
 	}
 	
 	doRequest(url).done(function(resp, stat, xhr){
@@ -2556,7 +2710,7 @@ function resumePhase(evt, all){
 	}).fail(function(xhr){
 		error("再開に失敗しました。", xhr.responseText);
 	});
-}
+}*/
 function storeAll(evt){
 	if(!FRICORE.wfprocesses){
 		alert("演習シナリオがロードされていません。");return;
@@ -2574,16 +2728,16 @@ function storeAll(evt){
 			a.download = name;
 			a.href = anchor;
 			a.click();
-			console.log("download link: " + anchor);
+			FrICORE.trace("download link: " + anchor);
 		}).fail(function(xhr){
-			console.log("failed to store workflow instance.");		
+			FrICORE.error("failed to store workflow instance.", xhr);		
 			error("状態の保存に失敗しました。", xhr.responseText);
 
 		});
  }
 function store(evt){
 	
-	var pid = $(evt).parents('tr').find('.process-id').text();
+	//var pid = $(evt).parents('tr').find('.process-id').text();
 	var team = $(evt).parents('tr').find('.assign-team').text();
 	var url = "workflow/diag/"+team + "/download";
 	var name = "workflow." + team + "."+new Date().toISOString() + ".json";
@@ -2601,12 +2755,12 @@ function restore(evt){
 		var url = "workflow/diag/all/upload";
 		doRequest(url, "POST", d,  {dataType:'json',contentType: "application/json"})
 			.done(function(resp, msg, xhr){
-				console.log("upload completed.");
+				FrICORE.info("upload completed.");
 				getProcess({},true);
 				info("状態を復元しました。");
 			})
 			.fail(function(xhr){
-				console.log("failed to upload.");
+				FrICORE.error("failed to upload.", xhr);
 				error("状態の復元に失敗しました。"+ xhr.responseText);
 			});
 	};
@@ -2615,57 +2769,46 @@ function restore(evt){
  }
  
  /**一覧で選択されたワークフロープロセスを開始または中断する*/
-function assign(evt, abort, all){
+function assign(evt, action, all){
 	
-	if(abort && !confirm("演習フェーズを中断しますか?"))return;
+	if(action == "abort" && !confirm("演習フェーズを中断しますか?"))return;
 	
 	var team = $(evt).parents('tr').find('.assign-team').text() || $(evt).parents('tr').find('.assign-team').find("input").val();
 	if(!team && !all){alert("グループを指定してください。");return;}
 	var phase= !all ? $(evt).parents('tr').find('.assign-phase:checked').val():
 		$(evt).parent().find('.assign-phase:checked').val();
 	
-	if(!abort && !(Number(phase)>0)){
+	if(action == "start" && !(Number(phase)>0)){
 		alert("開始するフェーズを選択してください。");
 		return;
 	}
 
 	if(all){
-		_.each(FRICORE.wfprocesses, function(proc){
-			assignProcess(proc.id, proc.workflow.team, phase, abort);
-		});
+		assignProcess("all", phase, action);
 		getProcess();
 	}else{
-		var id = $(evt).parents('tr').find('.process-id');
-		if(!id){
-			alert("演習シナリオの状態が不明です。");
-			return;
-		}
-		assignProcess(id.text(), team, phase, abort, true);
+		assignProcess(team, phase, action);
+		getProcess();
 	}
 }
-function assignProcess(id, team, phase, abort, select){
-	if(!id){
-		alert("error: process id not found.");
-		return;
-	}
-	var url = "workflow/process/swsc_incident/" + id + (abort ?  "/abort":"/start");
-	var params=abort ?  {"team":team} : {"team":team, "phase":phase};
-	doRequest(url, "POST", params)
+function assignProcess(team, phase, action, select){
+	var url = "workflow/process/" + team +  "/" + action;
+	var params={"team":team, "phase":phase};
+	doRequest(url, "GET", params)
 		.done(function(resp, msg, xhr){
 			if(select){
 				getProcess({},false);
 				selectProcess(team);
 			}
-			
-			//TODO:refresh 
+
 			updateWF();
 			
-			console.log(abort ? "process aborted." : "process assigned.");	
+			FrICORE.info(abort ? "process aborted." : "process assigned.");	
 		})
 		.fail(function(xhr){
 			var str = xhr.responseText || xhr.statusText;
 			if(xhr.responseJSON){str = xhr.responseJSON.message;}
-			error("失敗しました。" + str);
+			error("失敗しました。" + str, xhr);
 		});
 }
 function getProcessData(proc, name){
@@ -2689,7 +2832,7 @@ function getActionCards(evt){
 		processid =  id.text();
 	}
 	
-	var url = "workflow/process/swsc_incident/" + processid + "/cards";
+	var url = "workflow/process/cards";
 	$("#actions .panelcontent").empty();
 	doRequest(url, "GET")
 	.done(function(resp, msg, xhr){
@@ -2705,7 +2848,7 @@ function getActionCards(evt){
 	.fail(function(xhr){
 		var str = xhr.responseText || xhr.statusText;
 		if(xhr.responseJSON){str = xhr.responseJSON.message;}
-		error("アクションカードの読み込みに失敗しました。"+str);
+		error("アクションカードの読み込みに失敗しました。"+str, xhr);
 	});
 }
 function getState(team){
@@ -2724,7 +2867,7 @@ function getState(team){
 	.fail(function(xhr){
 		var str = xhr.responseText || xhr.statusText;
 		if(xhr.responseJSON){str = xhr.responseJSON.message;}
-		error("ステートカードの読み込みに失敗しました。"+str);
+		error("ステートカードの読み込みに失敗しました。", xhr);
 	});
 }
 function getQueries(evt){
@@ -2734,7 +2877,7 @@ function getQueries(evt){
 		alert("プロセスIDが見つかりません。");
 		return;
 	}
-	var url = "workflow/process/swsc_incident/" + id.text() + "/queries";
+	var url = "workflow/process/queries";
 	$("#queries .panelcontent").empty();
 	doRequest(url, "GET")
 	.done(function(resp, msg, xhr){
@@ -2750,11 +2893,11 @@ function getQueries(evt){
 	.fail(function(xhr){
 		var str = xhr.responseText || xhr.statusText;
 		if(xhr.responseJSON){str = xhr.responseJSON.message;}
-		error("失敗しました。"+str);
+		error("失敗しました。", xhr);
 	});
 }
 function refreshPresence(){
-	if(!FRICORE.usersession.team){ console.log("未ログインのためプレゼンス情報を更新できません。");return;}
+	if(!FRICORE.usersession.team){ FrICORE.error("未ログインのためプレゼンス情報を更新できません。");return;}
 
 	var url = "workflow/contacts/" + FRICORE.usersession.team;
 
@@ -2765,7 +2908,7 @@ function refreshPresence(){
 	.fail(function(xhr){
 		var str = xhr.responseText || xhr.statusText;
 		if(xhr.responseJSON){str = xhr.responseJSON.message;}
-		error("チームメンバ情報の読み込みに失敗しました。"+str);
+		error("チームメンバ情報の読み込みに失敗しました。", xhr);
 	});
 	
 }
@@ -2814,22 +2957,80 @@ function processSocketEvent(ev){
 		if(!ev.data)	return;
 
 		var data = JSON.parse(ev.data);
-		console.log("socket event received." + data.message);
+		FrICORE.trace("socket event received." + ev.data);
 
 		if(data.presence){
 			renderPresence(data.presence);
 		}else if(data.action){
-			onLoadEvent(data);
+		
+			if(data.level && (data.level & FRICORE.level.CONTROL)){
+				notify("(通知) ", data);
+				console.log("control message "+ data.action);
+			}else{
+				onLoadEvent(data);
+			}
 //			$(window).trigger("resize");
 		}
 	}else if(ev.type === "open"){
+		notify("(通知) サーバに接続しました。", data);
 		updateLoginInfo();
 	}else if(ev.type === "close"){
+		notify("(通知) サーバから切断されました。", data);
 		error("サーバとの接続が解除されました。");
+		
 		updateLoginInfo();
 	}
-	
 }
+/**一時的な通知メッセージを表示する*/
+function notify(msg, notif){
+	var str = msg;
+	if(notif && notif.message){
+		str += notif.message;
+	}
+	if(notif && notif.action){
+	 	str = [str, notif.action.name || "", notif.action.message || ""].join(" ");
+	 }
+	 popupWarning(str); 
+} 
+/**控え目にエラー情報を表示*/
+function popupWarning(str){
+//	if($('#warningarea') == str)return;//同じメッセージなら何もしない
+	$('#warningarea').text(str);
+	
+	if(!$('#statusbar').is(':visible')){
+		$('#statusbar').show();
+		$(window).trigger('resize');
+		window.setTimeout(hideStatusbar,10000);
+	}
+}
+function hideStatusbar(){
+	if($('#statusbar').is(':visible')){$('#statusbar').hide();$(window).trigger('resize');}
+}
+
+/*
+//未使用
+function onSpecialState(state){
+	switch(state){
+	case 1:
+		popupWarning("フェーズが開始されました。");
+		break;
+	case 2:
+		popupWarning("フェーズ終了イベントが発生しました。");
+		break;
+	case 3:
+		popupWarning("フェーズ中断イベントが発生しました。");
+		break;
+	default:
+		FrICORE.error("特殊なステート"+state);
+		break;
+	}
+}
+*/
+
+
+
+
+
 var MAX_MESSAGE_LEN = 80;//イベントリストに表示するメッセージの最大長
 /**イベントのメッセージを短縮した文字列を返す(ヘッダなし)*/
 function compressMessage(data){
@@ -2882,12 +3083,12 @@ function onLoadEvent(data, showHidden){
 	if(data.reply){
 		var exists = $('#event-list tr[data-eventid=' + data.reply.id + ']');
 		if(exists && exists.length>0){
-			console.log("重複メッセージを破棄(0):" + data.message);
+			FrICORE.trace("重複メッセージを破棄(0):" + data.message);
 			return;//重複
 		}
 	}
 	if(data.action && data.action.type == "alert"){
-		warn("システムからの警告:" + data.message);
+		popupWarning("システムからの警告:" + data.message);
 		return;
 	}
 	
@@ -2941,7 +3142,7 @@ function onLoadEvent(data, showHidden){
 			var current=_.findWhere(FRICORE.availableStates, {id:i});
 			if(!current){
 				if(org){
-					console.log('新しいステートカードを獲得:' + org.name);
+					FrICORE.trace('新しいステートカードを獲得:' + org.name);
 					FRICORE.availableStates.push(org);
 					if(org.type != 0){
 						//onSpecialState(org.type);
@@ -2950,7 +3151,7 @@ function onLoadEvent(data, showHidden){
 						effects.push(org);
 					}
 				}else{
-					console.log("不明なステートカード:" + i);
+					FrICORE.trace("不明なステートカード:" + i);
 				}
 			}
 			if(!org){
@@ -2972,18 +3173,18 @@ function onLoadEvent(data, showHidden){
 	if(data.id){
 		var exists = $('#event-list tr[data-eventid=' + data.id + ']');
 		if(exists && exists.length>0){
-			console.log("重複メッセージを破棄:" + data.message);return;//重複
+			FrICORE.trace("重複メッセージを破棄:" + data.message);return;//重複
 		}else{
 			tbl.append($(tr).clone());
 		}
     }else{
-    	console.log("重複メッセージを破棄(網張り)" + data.message);return;//重複
+    	FrICORE.trace("重複メッセージを破棄(網張り)" + data.message);return;//重複
     }
 	//2020.11.20 重複メッセージの処理
 	if(data.id){
 		var exists = $('#wfhistory tr[data-eventid=' + data.id + ']');
 		if(exists && exists.length>0){
-			console.log("重複メッセージを破棄(ファシリテータ画面):" + data.message);return;//重複
+			FrICORE.trace("重複メッセージを破棄(ファシリテータ画面):" + data.message);return;//重複
 		}else{
 			ftbl.append($(tr).clone());
 		}
@@ -3190,22 +3391,6 @@ function showActionCard(ev){
 function showReplyCard(ev){
 	var dummy = 0;
 }
-function onSpecialState(state){
-	switch(state){
-	case 1:
-		warn("フェーズが開始されました。");
-		break;
-	case 2:
-		warn("フェーズ終了イベントが発生しました。");
-		break;
-	case 3:
-		warn("フェーズ中断イベントが発生しました。");
-		break;
-	default:
-		console.log("特殊なステート"+state);
-		break;
-	}
-}
 function showRow(evt){
 	showEventDetail(evt);
 }
@@ -3213,10 +3398,10 @@ function showEventDetail(evt){
 	
 	var id = $(evt).data("eventid");
 	var d = FRICORE.isadmin ? 
-		_.findWhere(getSelectedTeamWorkflow().workflow.history, {id:id}) : 
+		_.findWhere(getSelectedTeamWorkflow().history, {id:id}) : 
 		_.findWhere(FRICORE.events, {id:id});
 
-	if(!d){console.log("!!no data binded.");return;}
+	if(!d){FrICORE.error("!!no data binded.");return;}
 	
 	var sentDate = new Date(d.sentDate).toLocaleString();
 	var replyDate = d.replyDate ? new Date(d.replyDate).toLocaleString() : "";
@@ -3261,14 +3446,14 @@ function showEventDetail(evt){
 			var el = _.template($("#state-template").html(), statecard);
 			$("#event-dialog").find(".event-state").append($(el));
 		}else{
-			console.log("statecard not owned.id:" + sid);
+			FrICORE.trace("statecard not owned.id:" + sid);
 		}
 	});
 	
 	var wf = FRICORE.workflowstate;
 	if(FRICORE.isadmin){
 		var team = getSelectedTeam();
-		wf = _.find(FRICORE.wfprocesses, function(e){return e.workflow.team == team;}).workflow;
+		wf = _.find(FRICORE.wfprocesses, function(e){return e.team == team;});
 	}
 	var pointkeys = _.keys(wf.pointchest);
 	_.each(pointkeys, function(k){
@@ -3296,7 +3481,7 @@ function updateLoginInfo(){
 	var info = FRICORE.usersession ? (FRICORE.usersession.username+ "("+FRICORE.usersession.userid+")" ) : "ログインしていません。";
 	document.title = [(window.versioninfo.CAPTION||""), info].join("--");
 	if(connected){
-		$("#loginuser").html();
+		$("#loginuser").html(info);
 	}else{
 		$("#loginuser").html("ログインしていません。");
 	}
@@ -3348,6 +3533,11 @@ function renderPresence(presence){
 function showWFStatus(){
 	if(!FRICORE.wfsession){error("ログオンしていません。");return;}
 
+	if(!isOnline()){
+		FrICORE.info("not online.");
+		return;
+	}
+	
 	var team = getSelectedTeam();
 	if(!team)return;
 
@@ -3363,8 +3553,8 @@ function showWFStatus(){
 		var str = _.template("<%=team%>; フェーズ:<%=phase>=0?phase:'未開始'%>; 状態:<%=state%>; 開始日時:<%=hasOwnProperty('start')?formatDate(new Date(start)):''%>; スコア:<%=score%>", stat);
 		m.append("<span>"+str + "</span><br>");
 		_.each(window.FRICORE.wfprocesses, function(e){
-			if(e.workflow && e.workflow.team == team)
-				e.workflow = resp;
+			if(e && e.team == team)
+				e = resp;
 		}, this);
 
 	})
@@ -3374,15 +3564,15 @@ function showWFStatus(){
 			str = xhr.responseJSON.message;
 		}
 		m.append("<span>"+str + "</span><br>");
-		console.log(xhr.responseText);
+		FrICORE.error("ワークフロー状態の参照に失敗しました。", xhr);
 	});
 	
-	url = "workflow/process/swsc_incident/"+pid+"/cards";
+	url = "workflow/process/cards";
 	doRequest(url, "GET", {all:true})
 	.done(function(resp, msg, xhr){
 		var c = $("#wfstatus").find(".content .actions").find("tbody");
 		c.empty();
-		var phase = _.find(FRICORE.wfprocesses, function(t){return t.workflow.team == team;}).workflow.phase;
+		var phase = _.find(FRICORE.wfprocesses, function(t){return t.team == team;}).phase;
 		
 		var inf = c.parents('div .ui-accordion-content').children('.empty');
 		if(!resp || resp.length == 0){	inf.html("表示情報がありません。");}else{inf.html('');}
@@ -3393,8 +3583,8 @@ function showWFStatus(){
 			window.FRICORE.allActions.push(e);
 			
 			if(e.type == "auto"){
-				if(getSelectedTeamWorkflow().workflow.autoActionHistory.hasOwnProperty(e.id)){
-					var fired  = getSelectedTeamWorkflow().workflow.autoActionHistory[e.id];
+				if(getSelectedTeamWorkflow().autoActionHistory.hasOwnProperty(e.id)){
+					var fired  = getSelectedTeamWorkflow().autoActionHistory[e.id];
 					e.fired = formatDate(new Date(fired));
 				}
 
@@ -3410,13 +3600,13 @@ function showWFStatus(){
 		var str = xhr.responseText;
 		if(xhr.responseJSON)	str = xhr.responseJSON.message;
 		m.append("<span>アクションカードの状態が不明です。" + str + "</span><br>");
-		console.log(xhr.responseText);
+		FrICORE.error("ワークフロー状態の参照に失敗しました。", xhr);
 	});
 
 	var url = 	"workflow/contacts/"+team;
 	doRequest(url, "GET", {"presence":true})
 	.done(function(resp, msg, xhr){
-		var phase = _.find(FRICORE.wfprocesses, function(t){return t.workflow.team == team;}).workflow.phase;
+		var phase = _.find(FRICORE.wfprocesses, function(t){return t.team == team;}).phase;
 		
 		var c = $("#wfstatus").find(".content .members").find("tbody");
 		c.empty();
@@ -3454,7 +3644,7 @@ function showWFStatus(){
 		var str = xhr.responseText;
 		if(xhr.responseJSON)	str = xhr.responseJSON.message;
 		m.append("<span>メンバーの状態が不明です。" + str + "</span>");
-		console.log(xhr.responseText);
+		FrICORE.error("メンバー状態の参照に失敗しました。", xhr);
 	});
 	getState(team);
 	
@@ -3481,7 +3671,7 @@ function showWFStatus(){
 		var str = xhr.responseText;
 		if(xhr.responseJSON)	str = xhr.responseJSON.message;
 		m.append("<span>応答カードが取得できません。" + str + "</span>");
-		console.log(xhr.responseText);
+		FrICORE.error("リプライデータの参照に失敗しました。", xhr);
 	});
 	
 	//ポイントカードを取得
@@ -3499,7 +3689,7 @@ function showWFStatus(){
 					var el = _.template("<tr><td><%=id%></td><td><%=name%> <%=description%></td><td><%=point%></td><td><%=state?state:''%></td><td><%=statecondition?statecondition : ''%></td><td><%=phase <=0 ? 'すべて': phase%></td><td><%=after == 0 ? '' : after%>~<%=before == 0 ? '' : before%></td></tr>",e);
 					var e =c.append(el);
 					
-					var wf = _.find(FRICORE.wfprocesses, function(e){return e.workflow.team == team;}).workflow;
+					var wf = _.find(FRICORE.wfprocesses, function(e){return e.team == team;});
 					_.each(_.keys(wf.pointchest), function(k){
 						var event = _.find(wf.history, function(ev){return ev.id == k;});
 						//ポイントが発行されたイベント
@@ -3513,7 +3703,7 @@ function showWFStatus(){
 		var str = xhr.responseText;
 		if(xhr.responseJSON)	str = xhr.responseJSON.message;
 		m.append("<span>応答カードが取得できません。" + str + "</span>");
-		console.log(xhr.responseText);
+		FrICORE.error("リプライデータの参照に失敗しました。", xhr);
 	});
 	
 	updateui();
@@ -3578,7 +3768,7 @@ function summerizeDiagramLine(data){
 
  /**イベントデータに紐づいたポイントカードを取得*/
  function extractPointCard(data){
-	var wf = getSelectedTeamWorkflow().workflow||FRICORE.workflowstate;
+	var wf = getSelectedTeamWorkflow()||FRICORE.workflowstate;
 
 	var p = wf.pointchest ? wf.pointchest[data.id] : [];
 	var names = _.map(p, function(e){return e.name;});
@@ -3595,7 +3785,7 @@ function makeDiagramLine(hist){
 	var fromIsVisible = validateRoleFilter(hist.from.role);
 	if(!toIsVisible || !fromIsVisible){
 		try{
-			console.log("イベント表示がフィルタされました。" + hist.from.role + "->"+hist.to.role);
+			FrICORE.trace("イベント表示がフィルタされました。" + hist.from.role + "->"+hist.to.role);
 		}catch(t){}
 		return null;
 	}
@@ -3607,7 +3797,7 @@ function makeDiagramLine(hist){
 	var online = $("#hide-detail").is(":checked");
 	var msg = summerizeDiagramLine(hist);
 	if(!hist.from || !hist.to){
-		console.log("DANGER!");
+		FrICORE.error("DANGER!");
 	}
 	var data = {from:escape4vga(hist.from.rolename),to:escape4vga(hist.to.rolename),sentDate:when,action:escape4vga(hist.action.name),message:msg, inf:statecards,statecards:statecards,pointcards:pointcards,id:hist.id};
 	var ccarr=[];
@@ -3715,14 +3905,14 @@ function processWFHistory(resp, renderDiagram){
 		if(data.id){
 			var exists = $('#wfhistory tr[data-eventid=' + data.id + ']');
 			if(exists && exists.length>0){	return;//重複
-				console.log("重複メッセージを破棄：" + data.message);
+				FrICORE.trace("重複メッセージを破棄：" + data.message);
 			}
 		}
 		
 		if(data.reply){
 			var exists = $('#wfhistory tr[data-eventid=' + data.reply.id + ']');
 			if(exists && exists.length>0){	return;//重複
-				console.log("重複メッセージ(リプライ)を破棄：" + data.message);
+				FrICORE.trace("重複メッセージ(リプライ)を破棄：" + data.message);
 			}
 		}
 		
@@ -3763,7 +3953,7 @@ function processWFHistory(resp, renderDiagram){
 		var wf = FRICORE.workflowstate;
 		if(FRICORE.usersession.isadmin){
 			var team = getSelectedTeam();
-			wf = _.find(FRICORE.wfprocesses, function(e){return e.workflow.team == team;}).workflow;
+			wf = _.find(FRICORE.wfprocesses, function(e){return e.team == team;});
 		}
 		
 		var pointkeys = _.keys(wf.pointchest);
@@ -3775,7 +3965,7 @@ function processWFHistory(resp, renderDiagram){
 					var pe = _.template("<span class='card list-card list-card-point' title='<%=description%>'><%=name%>: <%=point%>点</span>", p);
 					tr.find('.states').append($(pe));
 				})
-				console.log("got a point card." + data);
+				FrICORE.info("got a point card." + data);
 			}
 		});
 		
@@ -3822,7 +4012,7 @@ function showWFHistory(teamname, renderDiagram){
 		var str = xhr.responseText || xhr.statusText;
 		if(xhr.responseJSON){str = xhr.responseJSON.message;}
 		error("履歴の取得に失敗しました。" + str);
-		console.log("failed.");
+		FrICORE.error("履歴の参照に失敗しました。", xhr);
 	});
 }
 /**一覧から選択されているチームのワークフロー情報を取得し、表示領域に表示する。
@@ -3853,7 +4043,7 @@ function showWFSubpanel(urltmpl, selector, done, failed){
 	.fail(function(xhr){
 		var str = xhr.responseText || xhr.statusText;
 		if(xhr.responseJSON){str = xhr.responseJSON.message;}
-		console.log("failed.");
+		FrICORE.error("シナリオ状態の参照に失敗しました。", xhr);
 		$(selector).children('.content').children('.empty').html('データが取得できません。' + str);	return;
 
 		if(failed)	failed(xhr, str);
@@ -3870,7 +4060,7 @@ function showWFQueue(){
 			});
 		},
 		function(xhr, str){
-			error("キューの取得に失敗しました。"+str);
+			error("キューの取得に失敗しました。", xhr);
 		}
 	);
 }
@@ -3878,8 +4068,8 @@ function showWFQueue(){
 /**フェーズが開始されているか()*/
 function isActive(){
 	var wf = getSelectedTeamWorkflow();
-	if(!wf || !wf.workflow) return false;
-	return wf.workflow.state != "None";
+	if(!wf) return false;
+	return wf.state != "None";
 }
 /**ログイン中かどうか*/
 function isOnline(){
@@ -3897,7 +4087,7 @@ function showWFTrigger(){
 		function(resp, msg, xhr){
 			_.each(resp, function(e){
 				var wf = getSelectedTeamWorkflow();
-				var started = wf ? wf.workflow.start : 0;
+				var started = wf ? wf.start : 0;
 				var estim = new Date(started + e.elapsed*1000);
 				var data ={elapsed:e.elapsed,estim:estim, fireWhen:formatDate(new Date(e.fireWhen)),message:e.message,name:e.name, state:e.state,from:e.from, to:e.to, statecondition:e.statecondition};
 				var l = _.template($("#trigger-template").html(), data);
@@ -3913,7 +4103,6 @@ function showWFTrigger(){
 function updateWF(){
 	var team = getSelectedTeam();
 	if(!team)return;
-
 	showWFStatus();
 	showWFQueue();
 	showWFHistory();
@@ -3935,7 +4124,7 @@ function selectProcess(teamname){
 }
 /**ファシリテータから参加者へのメッセージ送信*/
 function sendMessage(msg, to, cc, actionid){
-	var url = "workflow/process/swsc_incident/0/act";
+	var url = "workflow/process/act";
 	var action = actionid || "i0001";//話し合い
 	var message = $(".set-comment>textarea").val();
 	
@@ -3944,11 +4133,11 @@ function sendMessage(msg, to, cc, actionid){
 
 	doRequest(url, "POST", JSON.stringify({action:data}), {contentType:"application/json"})
 	.done(function(resp, msg, xhr){
-		console.log("done:action "+resp);
+		FrICORE.trace("done:action "+resp);
 	})
 	.fail(function(xhr){
 		var msg = xhr.responseJSON ? xhr.responseJSON : xhr.responseText;
-		error(msg);
+		error(msg, xhr);
 	});
 }
 
@@ -3985,7 +4174,7 @@ function getSelectedProcess(){
 	return pid;
 }
 function getTeamWorkflow(team){
-	var wf = _.find(FRICORE.wfprocesses,function(e){return e.workflow.team==team;});
+	var wf = _.find(FRICORE.wfprocesses,function(e){return e.team==team;});
 	return wf ||{};
 }
 function getSelectedTeamWorkflow(){
@@ -4014,7 +4203,7 @@ function showNotificationDialog(to){
 
 function getAllActionCards(){
 	var pid = FRICORE.workflowstate ? FRICORE.workflowstate.pid : 0;
-	var url = "workflow/process/swsc_incident/"+pid+"/cards";
+	var url = "workflow/process/cards";
 	return doRequest(url, "GET", {all:true})
 	.done(function(resp, msg, xhr){
 		FRICORE.allActions =resp;
@@ -4022,7 +4211,7 @@ function getAllActionCards(){
 	.fail(function(xhr){
 		var str = xhr.responseText;
 		if(xhr.responseJSON)	str = xhr.responseJSON.message;
-		console.log(xhr.responseText);
+		FrICORE.error(xhr.responseText);
 	});
 }
 var helpwindow = null;
@@ -4121,7 +4310,7 @@ function refreshResource(){
 
 function loadResource(){
 	var name = $("#resource-picker").val();
-	if(!name){warn();return;}
+	if(!name){warn("no resource specified.");return;}
 	
 	doRequest("workflow/resource/result/"+name,"GET")
 	.then(function(resp, msg, xhr){
@@ -4138,7 +4327,7 @@ function storeResource(){
 	var seq = $("#chartdef").val();
 	var wf= getSelectedTeamWorkflow();
 
-	var data = {team:wf.workflow.team,	date: wf.workflow.start, scenario:FRICORE.scenario[FRICORE.activeScenario],sequence:seq};
+	var data = {team:wf.team,	date: wf.start, scenario:FRICORE.scenario[FRICORE.activeScenario],sequence:seq};
 	var name = data.scenario.name  + formatDateForFilename(new Date(data.date));
 	doRequest("workflow/resource/result/"+name,"POST", JSON.stringify(data), {processData:false, dataType:'json',contentType:"application/json"})
 	.then(function(resp, msg, xhr){
@@ -4163,8 +4352,61 @@ function changeTheme(name){
 	if(name)
 		$(name).prop("disabled", false);
 };
+function isOnline(){
+	return FRICORE.socket && FRICORE.socket.readyState == WebSocket.OPEN
+}
+
+function digestText(txt){
+	if(!txt)	return txt;
+	
+	var t = txt;
+	if(typeof(txt) == "string")
+		t = txt.split("\n").slice(0, FrICORE.MAX_LOG_LINES);
+	else
+		t = xhrToString(txt);
+	if(t.length > FrICORE.MAX_LOG_CHARS){
+		t = t.substring(0, FrICORE.MAX_LOG_CHARS - 3) + "...";
+	}
+	return t;
+	
+}
+function xhrToString(err){//TODO: coordinate console log
+//	if(err instanceof XMLHttpRequest){ << dont work correctly(:<)
+	if(!err)
+		return "";
+	else if(err instanceof String)
+		ret =  err;
+	else if(err.hasOwnProperty("responseJSON") && err.responseJSON){//恐らくXHR、サーバ側でハンドルされている例外
+		var json = err.responseJSON;
+		ret =  [err.status, json.kind, json.message].join(" ");
+		return ret;
+	}else if(err.hasOwnProperty("responseText") && err.responseText){//恐らくXHR、サーバ側でハンドルされていない例外
+		ret =  [err.statusText, err.responseURL || "<url unknown>", (err.responseText||"")].join(" ");
+		return ret;
+	}else if(err.hasOwnProperty("statusText") && err.statusText){//恐らくXHR、クライアント側の例外
+		return [err.status, err.statusText].join(" ");
+	}else if(err instanceof Error){
+		ret = err.name + " " + err.message + ": " + err.stack;
+		return ret;	
+	}else if(!err)
+		return "";
+	else
+		return err.toString();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 $( function() {
     $( "#help" ).tabs();
   } );
 
-  

@@ -69,14 +69,49 @@ public class Notifier{
     public void onError(Session session, Throwable cause) {
         System.out.println("error : " + session.getId() + ", " + cause.getMessage());
     }
-	protected void sendSystemNotification(Session to, String message)
+	public static void sendSystemNotification(String team, String message, int level, String state)
 			throws WorkflowException, IOException{
 		CardData c = CardData.find(CardData.Types.notification);
-		NotificationMessage notif = new NotificationMessage(0, c, 
+		NotificationMessage notif = new NotificationMessage(c, 
 				Member.TEAM, Member.SYSTEM, null, null);
 		notif.message = message;
+		notif.level = level;
+		
+		notif.sentDate = WorkflowService.getWorkflowInstance(team).getTime();
+		
+		if(state != null)notif.action.attachments = new String[] {state};
 		String str = new ObjectMapper().writeValueAsString(notif);
-		to.getAsyncRemote().sendText(str);
+		findMemberSessions(team).forEach((m, s)->{
+			s.getAsyncRemote().sendText(str);	
+		});
+		
+	}
+	
+	//move from WorkflowInstance
+	public static  NotificationMessage constructNotification(CardData data, Member to, Member from, Member[] cc, NotificationMessage replyTo) throws WorkflowException{
+		if(data.is(CardData.Types.talk)){
+		}else if(data.is(CardData.Types.notification)){
+		}else if(data.is(CardData.Types.action)){
+		}
+		NotificationMessage msg = new NotificationMessage(data, to, from, cc, replyTo);
+		return msg;
+	}
+	
+	//move from WorkflowInstance
+	public static NotificationMessage sendTeamNotification(String team, String message, int level, String[] states) {
+		CardData data = CardData.find(CardData.Types.notification);
+		NotificationMessage msg = constructNotification(data,  Member.TEAM, Member.SYSTEM, null, null);
+		msg.team = team;
+		msg.message = message;
+		msg.level = level;
+		msg.action.statecards = states;
+		//msg.level = level;
+		
+		msg.sentDate = WorkflowService.getWorkflowInstance(team).getTime();
+		
+		logger.info("システムからの通知メッセージを送信:" + msg.toString());
+		Notifier.dispatch(msg);
+		return msg;
 	}
 	/**WebSocketイベントハンドラ*/
 	@OnClose
@@ -147,7 +182,7 @@ public class Notifier{
 			recpts = findSessions(new Member[]{m.to, m.from});
 		}
 		
-		WorkflowInstance inst = WorkflowService.getWorkflowInstance(m.processId);
+		WorkflowInstance inst = WorkflowService.getWorkflowInstance(m.team);
 		if(inst == null){
 			logger.error("worklow instance vanished!");
 			return;
@@ -180,17 +215,12 @@ public class Notifier{
 		Session me  = findSession(m.from);
 		if(me != null)	
 			recpts.put(m.from.email, me);
-		if("auto".equals(m.action.type)){
-			logger.info("網張り");
-			
-		}
 
 		String body = m.toString();
 		for(String uid : recpts.keySet()){
 			logger.info("send message to client " + uid);
 			recpts.get(uid).getAsyncRemote().sendText(body);
 		}
-		
 	}
 	protected static Session findSession(final Member user){
 		Session me  = findSessions(new Member[]{user}).get(user.email);

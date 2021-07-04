@@ -1,4 +1,4 @@
-﻿{
+{
   "actions":[
     {
        "name":"通知",
@@ -37,6 +37,42 @@
        "hidden":true,
        "description":"システムからの警告メッセージ"
     },
-    
+    {
+       "name":"一時停止",
+       "type":"control",
+       "id":"system.pause",
+       "roles": ["facilitator"],
+       "to": "system",
+       "addstate":["system.paused"],
+       "description":"演習を一時停止します。(制御アクション)"
+    },
+    {
+       "name":"再開",
+       "type":"control",
+       "id":"system.resume",
+       "roles": ["facilitator"],
+       "to": "system",       
+		 "removestate":["system.paused"],
+		 "description":"演習を再開します。(制御アクション)"
+    },
+    {
+       "name":"中断",
+       "type":"control",
+       "id":"system.abort",
+       "roles": ["facilitator"],
+       "to": "system",       
+		 "addstate":["system.aborted"],
+		 "description":"演習を中断します。(制御アクション)"
+    },
+    {
+       "name":"コントロール",
+       "type":"control",
+       "id":"system.control",
+       "roles": ["facilitator"],
+       "to": "system",       
+		 "description":"任意のシステムステートを追加します。(未実装)",
+		 "attach":true
+		 
+    }
   ]
 }

@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.UnsupportedCharsetException;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -31,9 +32,22 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import javax.inject.Singleton;
+import javax.servlet.ServletContext;
+import javax.ws.rs.core.Context;
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
+
+import com.fasterxml.jackson.core.JacksonException;
+
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import tsurumai.workflow.WorkflowService;
 
 public class Util {
@@ -136,7 +150,8 @@ public class Util {
 		}
 		return ret;
 	}
-	public static String[] join(final String[] arr1, final String[] arr2){
+	/**配列を連結する*/
+	public static String[] concat(final String[] arr1, final String[] arr2){
 		String[] ret = new String[(arr1 == null ? 0 : arr1.length) + (arr2 == null ? 0 : arr2.length)];
 		int pos = 0;
 		if(arr1 != null){
@@ -158,11 +173,11 @@ public class Util {
 		return buff.toString();
 	}
 	/**int配列に値を追加**/
-	public static int[] put(final int[] arr1, final int val){
+	public static int[] concat(final int[] arr1, final int val){
 		return Util.join(arr1,new int[]{val});
 	}
-	public static String[] put(final String[] arr1, final String val){
-		return Util.join(arr1,new String[]{val});
+	public static String[] concat(final String[] arr1, final String val){
+		return Util.concat(arr1,new String[]{val});
 	}
 //	public static String arrayToString(Object[] arr){
 //		StringBuffer buff = new StringBuffer();
@@ -399,13 +414,15 @@ public class Util {
 			for(String line = null; (line = reader.readLine()) != null; )
 			try{
 				
+//				
+//				String str = encodeHash(line, EncodeMethod.MD5);
+//				System.out.println("encoded:"+str);
+//				boolean matched = matchHash(str, line+".");
+//				System.out.println(matched ? "matched.":"unmatched.");
+
+
+
 				
-				String str = encodeHash(line, EncodeMethod.MD5);
-				System.out.println("encoded:"+str);
-				boolean matched = matchHash(str, line+".");
-				System.out.println(matched ? "matched.":"unmatched.");
-
-
 			}catch(Throwable t){
 				t.printStackTrace();
 			}
@@ -457,5 +474,91 @@ public class Util {
 		}
 	}
 	
+	
+	
+	
+//	public static Logger getLogger(String name) {
+//		Logger logger = Logger.getLogger(name);
+//		return logger;
+//	}
+//	public static Logger getLogger() {return getLogger(defaultLoggerName);}
+//	public static String defaultLoggerName = "workshop";
+//
+//	public static String getCaller() {
+//		StackTraceElement[] st = new Throwable().getStackTrace();
+//		for(int i = 0; i < st.length; i ++) {
+//			if(st[i].getClassName().equals(Util.class.getName()))
+//				continue;
+//			return st[i].toString();
+//		}
+//		return "unknown";
+//	}
+//	/**次の形式でログを出力
+//	 * [enter] 呼び出し元スタック情報 (引数,...)*/
+//	public static void enter(Object... param) {
+//		info("enter:", param);
+//	}
+//	public static void enter() {
+//		info("enter:");
+//	}
+//	public static void info(String msg) {
+//		info(msg, new Object[0]);
+//	}
+//	public static void info(String msg, Object... params) {
+//		String str = String.format("%s %s (%s)", msg, getCaller(), join(params, ", "));
+//		getLogger().info(str);
+//	}
+//	public static void debug(String msg, Object...params) {
+//		
+//		String paramstr = join(params, ",");
+//	getLogger().debug(getCaller()  + "(" + paramstr + ") : " + msg);
+//	}
+//	public static void debug(String msg) {
+//		debug(msg, new Object[0]);
+//	}
+//
+//	public static void trace(String msg, Object...params) {
+//
+//		String paramstr = join(params, ",");
+//		getLogger().info(getCaller() + "(" + paramstr + ") : " + msg);
+//		
+//	}
+//	public static void trace(String msg) {
+//		trace(msg, new Object[0]);
+//	}
+//	public static void warn(String msg) {
+//		getLogger().error(getCaller() + ": " + msg);
+//	}
+//	public static void error(String msg, Throwable t) {
+//		getLogger().error(getCaller() + ": " + msg);
+//		if(t != null)	t.printStackTrace(System.err);
+//	}
+//	public static void error(String msg) {
+//		error(msg, null);
+//	}
+	/**配列を文字列化して返す*/
+	public static String join(Object[] arr, String sep) {
+		StringBuffer buff = new StringBuffer();
+		if(arr != null) {for(Object o : arr){
+			if(buff.length() != 0) buff.append(sep);
+			buff.append(o == null ? "" : o.toString());
+		}}
+		return buff.toString();
+	}
+//	@Singleton static ObjectMapper mapper = null;
+	static {
+		mapper = new ObjectMapper();
+        mapper.setDateFormat(new SimpleDateFormat("HH:mm:ss"));
+
+	}
+	public static String toJson(Object o) {
+		try {
+			if(o == null)return "";						
+			return mapper.writeValueAsString(o);
+		}catch (JacksonException e) {
+			ServiceLogger.getLogger().error("failed to map object to json", e);
+			return "[JSON ERROR]" + o.toString();
+		}
+	}
 }
 

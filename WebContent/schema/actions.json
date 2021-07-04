@@ -33,7 +33,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "action","share","notification","talk","auto"
+              "action","share","notification","talk","auto", "control"
             ],
             "default":"action",
             "title":"アクションの種類",
@@ -50,11 +50,7 @@
             ],
             "minLength": 1
           },
-          "attach": {
-            "title":"添付",
-            "description":"アクションにステートカードを添付することを許可する場合はtrueを指定します。省略値:false",
-            "type": "boolean"
-          },
+
           "roles": {
             "title":"所有ロール",
             "description":"このアクションを使用可能なロールのIDの配列を設定します。allを設定するとすべてのユーザが使用可能となります。(必須)",
@@ -77,12 +73,17 @@
             "type": "array",
             "optional": true,
             "items": {
-              "type": "number"
+              "type": "string"
             }
+          },
+          "attach": {
+            "title":"添付",
+            "description":"アクションにユーザが任意のステートカードを添付することを許可する場合はtrueを指定します。省略値:false",
+            "type": "boolean"
           },
           "phase": {
             "title":"フェーズ",
-            "description": "このアクションが利用可能なフェーズを設定します。フェーズ番号の配列を指定します。省略値：すべてのフェーズで使用可能",
+            "description": "このアクションが利用可能なフェーズの配列を指定します。省略値：すべてのフェーズで使用可能",
             "type": "array",
             "items": {
               "type": "number"
@@ -125,23 +126,6 @@
             "type":"array",
             "items": {
               "type":"string"
-            }
-          },
-          "timecondition":{
-            "title":"経過時間条件",
-            "description": "前提条件となるアクションを実行後に一定時間経過後にアクションの実行を許可するために使用します。省略値:なし(常に使用可能)",
-            "type":"array",
-            "items": {
-              "prerequisite":{
-                "title":"前提アクション",
-                "description":"アクションを実行するための前提条件となるアクションのIDを指定します。",
-                "type":"string"
-              },
-              "elapsed":{
-                "title":"経過時間",
-                "description":"条件となるアクション実行後の経過時間(秒)を指定します。",
-                "type":"number"
-              }
             }
           },
           "delay":{

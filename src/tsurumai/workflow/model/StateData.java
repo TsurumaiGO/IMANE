@@ -39,28 +39,42 @@ public class StateData{
 				this.name="ステート(" + i.toString() +")";
 		}
 	}
+	public interface SYSTEM_STATES{
+		public static String START = "system.started";
+		public static String PAUSE = "system.paused";
+		public static String ABORT = "system.aborted";
+	}
+	
+	/**ステートを一意に識別するID。*/
 	@XmlAttribute
 	public String id;
+	/**ステートの表示名。*/
 	@XmlAttribute
 	public String name;
-	//boolean fowardable;
 	@XmlAttribute
+	/**ステートの説明。*/
 	public String description;
 	@XmlAttribute
+	/**システムステートが設定された日時。*/
 	public Date when;
+	@Deprecated
+	/**ステートの種類。(廃止)*/
 	@XmlAttribute
 	public int type = 0;
-	/**固定(既定)のオブジェクト*/
+	/**固定(既定)のオブジェクト。*/
+	@Deprecated
 	@XmlAttribute
 	public boolean fixed = false;
 	
-	/**演出効果。href:相対URL、またはjavascript:スクリプトブロックを指定します。*/
+	/**演出効果。 href:相対URL、またはjavascript:スクリプトブロックを指定する。*/
+	@Deprecated
 	@XmlAttribute
 	public String effect;
-
+	/**カードのｈｔｍｌ要素にcssクラス名として展開される。カードにアイコンやスタイルを指定するために使用する。*/
 	@XmlAttribute
 	public String icon;
 
+	/**@deprecated not used.*/
 	public interface Type{
 		/**通常*/
 		public static final int NORMAL=0;
@@ -102,7 +116,7 @@ public class StateData{
 			return Arrays.asList(ret);
 //			return (Collection<StateData>)cached;
 		}catch(JsonProcessingException t){
-			throw new WorkflowException("JSONデータの処理に失敗しました。", HttpServletResponse.SC_NOT_FOUND, t);
+			throw new WorkflowException("JSONデータの処理に失敗しました。"+file, HttpServletResponse.SC_NOT_FOUND, t);
 		}catch(IOException t){
 			throw new WorkflowException("シナリオデータの読み込みに失敗しました。", HttpServletResponse.SC_NOT_FOUND, t);
 		}

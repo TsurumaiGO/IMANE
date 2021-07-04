@@ -22,17 +22,16 @@
         "uniqueItems": true,
         "minLength": 1
       },
-      "type": {
-        "title": "種類",
-        "description": "ステートカードの種類を示す整数を指定します。0:通常、1:フェーズ開始、2:フェーズ終了、3:フェーズ中断。表示の色分けに使用します。省略値:0",
-        "type": "number",
-        "default":0
-      },
       "name": {
         "title": "名前",
         "description": "ステートカードの任意の名前を指定します。省略値:なし",
         "type": "string"
       },
+			"description": {
+				"title": "説明",
+				"description": "ステートカードの説明を指定します。省略値: なし",
+				"type": "string"
+			},
 	    "effect":{
         "title":"演出効果",
 	    	"description":"ユーザがイベントを通じてステートカードを入手したときに再生される演出効果。\nhref:[htmlリソースへの相対パス]、またはjavascirpt:[スクリプトブロック]を指定します。",
@@ -45,7 +44,7 @@
       },
       "icon":{
         "title": "アイコン",
-        "description":"カードを表示する際に、html要素にclass値を付加します。Font Awesomeのアイコンを使用することを想定しています。",
+        "description":"カードを表示する際に、html要素に付与するclass属性値を設定します。",
         "type":"string"
       }
 

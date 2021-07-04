@@ -22,32 +22,49 @@ import tsurumai.workflow.util.Util;
 @XmlRootElement
 @JsonIgnoreProperties({"comment","","//","/*","*/","#","<!--","-->"})
 //@JsonInclude(JsonInclude.Include.NON_NULL)
-/**演習フェーズの定義を表現します。*/
+/**演習フェーズの定義を表現します。settings.jsonのオブジェクト表現です。*/
 public class PhaseData {
+	
+	/**1から始まるフェーズ番号。現在のバージョンでは1で固定。*/
 	@XmlAttribute
 	public int phase;
+	/**フェーズの説明。*/
 	@XmlAttribute
 	public String description;
+	/**このフェーズの制限時間。表示にのみ使用される。*/
 	@XmlAttribute
 	public int timelimit = 1200;
+	/**終了状態を示すステートカードのID。表示にのみ使用される。*/
 	@XmlAttribute
 	public int[] endstate;
 
-	@XmlAttribute
-	public String copyright;
-	@XmlAttribute
-	public String version;
-	@XmlAttribute
-	public String author;
-	@XmlAttribute
-	public String created;
-	@XmlAttribute
-	public String updated;
-
+//	/**シナリオデータの著作権情報。*/
+//	@XmlAttribute
+//	public String copyright;
+//	/**シナリオデータのバージョン情報。*/
+//	@XmlAttribute
+//	public String version;
+//	/**シナリオデータの作者。*/
+//	@XmlAttribute
+//	public String author;
+//	/**シナリオデータの作成日時。*/
+//	@XmlAttribute
+//	public String created;
+//	/**シナリオデータの更新日時。*/
+//	@XmlAttribute
+//	public String updated;
+//	/**フェーズ名。*/
+//	@XmlAttribute
+//	public String name;
+//
+//	/**有効にする追加機能名。*/
+//	@XmlAttribute
+//	public String[] features;
 
 	protected static CacheControl<List<PhaseData>> cache = new CacheControl<>();
 	protected static ServiceLogger logger = ServiceLogger.getLogger();
 
+	
 	public static void reload(final String file){
 		cache.reload(file);
 		logger.info("フェーズデータを再ロードしました。"+ file);
@@ -65,7 +82,7 @@ public class PhaseData {
 	/**フェーズ定義をロードする*/
 	public static synchronized List<PhaseData> load(final String path) throws WorkflowException{
 		try{
-			cache.reload(path);//
+			cache.reload(path);
 			String contents = Util.readAll(path);
 			ArrayList<PhaseData> ret = new ArrayList<>();
 			JSONArray arr  = new JSONObject(contents).getJSONArray("phases");
@@ -89,7 +106,6 @@ public class PhaseData {
 			throw new WorkflowException("フェーズの初期化に失敗しました。" , t);
 		}
 	}
-
 
 
 }

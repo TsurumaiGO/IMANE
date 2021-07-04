@@ -27,6 +27,7 @@
 <script type = "text/javascript" src = "js/lib/jquery.contextMenu.js"></script>
 
 <script type = "text/javascript" src = "js/fricore.js"></script>
+<script type = "text/javascript" src = "js/fricore.ext.js"></script>
 
 <!-- <script type = "text/javascript" src = "js/lib/svg.min.js"></script>-->
 
@@ -42,6 +43,9 @@
 	<span id = 'client-version'></span>;&nbsp;<span id='copyright'></span></div>
 
 <div id = "header">
+<div id = "popupctrl" class = "popupctrl fa fa-icon fa-info-circle" style = "cursor:hand;width:1em;height:1em;border:1px solid gray;"></div>
+<div  class = "logarea" style = "position:absolute;display:none;max-width:20em;max-height:5em;overflow:auto;background-color:white;border:1px solid gray;"></div>
+
 <h3 id ="loginuser" style = "display:inline-block">ログインしていません。</h3>
 
 <div id = "loginpanel" style = 'display:inline-block'>
@@ -55,7 +59,6 @@
 	</script>
 	<label for='userid'>ユーザID:</label>
 		<select class='role' onchange='onIDchanged()' style='width:12em'>
-
 
 			<option value='facilitator'>ファシリテータ</option>
 		</select>
@@ -72,30 +75,67 @@
 	<button onclick = "doLogout()" id  ="logoutbutton" class = "fa fa-icon fa-sign-out">ログアウト</button>
 	<span style='display:none' id = "sessioninfo"></span>
 
+</div>
+	
+	
+<div id = "headerctrl" class='menuicon' style='font-size:1em;'>
+	<div class = "menubar" style = "margin-right:2em;">
+		<div class = "menuitem fa fa-icon fa-bars"><a>ビュー</a>
+			<ul class = "submenu">
+				<li><a class = "fa fa-icon checkable checkgroup" href = "javascript:dashboard()">演習コンソール</a></li>
+				<li><a class = "fa fa-icon checkable checkgroup" href = "javascript:history()">振り返り</a></li>
+				<li><a class = "fa fa-icon checkable checkgroup" href = "javascript:wfview()">ファシリテータ用コンソール</a></li>
+			</ul>
+		</div>
+		<div class = "menuitem fa fa-icon fa-gear"><a>設定</a>
+			<ul class = "submenu">
+ 				<li><a>スキン</a>
+					<ul>
+					  <li><a class = "fa fa-icon checkable checkgroup" data-checkgroup = "skin" href="#" onclick="changeTheme()" title = "既定のスキン">既定</a></li>
+					  <li><a class = "fa fa-icon checkable checkgroup checked" data-checkgroup = "skin" href="#" onclick="changeTheme('#theme-fancy')" title = "明るい色調のスキン">ちょっとファンシー</a></li>
+					</ul>
+				</li>
+				<li><a>詳細設定(デバッグ用)</a>
+					<ul>
+					  <li><a class = "fa fa-icon checkable config-experimental" href = "javascript:FrICORE.toggleConfig('.config-experimental', 'experimental')" title = "実験的な機能を有効にします。">実験的機能</a></li>
+					  					  <li><a class = "fa fa-icon checkable config-debug" href = "javascript:FrICORE.toggleConfig('.config-debug', 'debug')" title = "デバッグ機能を有効にします。">デバッグ</a></li>
+  					  <li><a class = "fa fa-icon checkable config-autorefresh" href = "javascript:FrICORE.toggleConfig('.config-autorefresh', 'disableAutoRefresh')" title = "演習状態の自動更新を有効にします。">自動更新</a></li>
+					  <li><a class = "fa fa-icon checkable config-trace" href = "javascript:FrICORE.toggleConfig('.config-trace', 'trace')" title = "詳細なトレースを有効にします。">トレース</a></li>
+					</ul>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+
+	...
+	<a href='#' onclick='$("#configmenu").show()' class='fa fa-gear' > </a>
+		<ul id = "configmenu" class = "menu" style = "display:none">
+			<li>
+				<span class='fa fa-palette' style='font-size:1.5em' title='スキンを選択'>スキン</span>
+				<ul id="theme-picker"  style = "display:none;position:absolute;top:0;right:0;width:20em;z-index:1000"
+						onmouseleave='$(this).hide();' onclick='$(this).hide();'>
+					  <li><a href="#" onclick="changeTheme()" title = "既定のスキン">既定</a></li>
+					  <li><a href="#" onclick="changeTheme('#theme-fancy')" title = "明るい色調のスキン">ちょっとファンシー</a></li>
+				</ul>
+			</li>
+			<li><span class='fa fa-gear' style='font-size:1.5em' title='詳細設定'>詳細設定</span></li>
+		</ul>
+	
+	<a href='#' onclick='$("#headermenu").menu().show();'>
+	<span class='fa fa-bars' style='font-size:1.5em' title='ビューの切り替え'></span></a>
+	<ul id="headermenu"  style = "display:none;position:absolute;top:0;right:0;z-index:1000;width:20em;"
+		onmouseleave='$("#headermenu").hide();'
+		onclick='$("#headermenu").hide();'
+		>
+	  <li><a href="#" onclick="dashboard()"><span class="ui-icon ui-icon-contact"></span>演習コンソール</a></li>
+	  <li><a href="#" onclick="history()"><span class="ui-icon ui-icon-image"></span>振り返り</a></li>
+	  <li><a href="#" onclick="wfview()"><span class="ui-icon ui-icon-calculator"></span>ファシリテータ用コンソール</a></li>
+	</ul>
+</div>
 
 	
-	</div>
-	<div id = "headerctrl" class='menuicon'>
-
-		<a href='#' onclick='$("#theme-picker").menu().show();'>
-		<span class='fa fa-gear' style='font-size:1.5em' title='スキンを選択します。'></span></a>
-		<ul id="theme-picker"  style = "display:none;position:absolute;top:0;right:0;width:10em;z-index:1000"
-			onmouseleave='$(this).hide();' onclick='$(this).hide();'>
-		  <li><a href="#" onclick="changeTheme()" title = "既定のスキン">既定</a></li>
-		  <li><a href="#" onclick="changeTheme('#theme-fancy')" title = "明るい色調のスキン">ちょっとファンシー</a></li>
-		</ul>
-
-		<a href='#' onclick='$("#headermenu").menu().show();'>
-		<span class='fa fa-bars' style='font-size:1.5em' title='メニュー'></span></a>
-		<ul id="headermenu"  style = "display:none;position:absolute;top:0;right:0;z-index:1000"
-			onmouseleave='$("#headermenu").hide();'
-			onclick='$("#headermenu").hide();'
-			>
-		  <li><a href="#" onclick="dashboard()"><span class="ui-icon ui-icon-contact"></span>演習コンソール</a></li>
-		  <li><a href="#" onclick="history()"><span class="ui-icon ui-icon-image"></span>振り返り</a></li>
-		  <li><a href="#" onclick="wfview()"><span class="ui-icon ui-icon-calculator"></span>ファシリテータ用コンソール</a></li>
-		</ul>
-	</div>
+	
 
 <div id='statusbar' style='background-color:lightyellow;border:1px solid gray;margin:0;display:none;position:absolute;top:0'>
 <!-- 	<span style='margin-top: 0.1em;vertical-align:middle' class='ui-icon ui-icon-circle-close' onclick='hideStatusbar()'></span>
@@ -292,7 +332,7 @@
 
 
 
-<div id = "svgctrl" style = "display:none">
+<div id = "svgctrl" class = "debugmenu" style = "display:none">
 	<button onclick="zoomin()" title='チャートを10%拡大します。'>拡大</button>
 	<button onclick="zoomout()" title='チャートを10%縮小します。'>縮小</button>
 	<button onclick="trim()" title='チャートをドラッグして選択した範囲を拡大表示します。'>トリム</button>
@@ -331,7 +371,7 @@
 
 <div id = "wfview" class='main' style = "display:none;position:relative;top:0;width:99%;">
 	<div id  = "processlist" class='wrapper' style='width:100%;position:relative;'>
-	<h4 style = "display:none">演習シナリオ
+	<h4 class = "debugmenu" style = "display:none">演習シナリオ
 		<span class='ctrl '>
 			シナリオセット:<select class='scenarioset' style = 'width:10em;' onchange='onScenarioChanged()'></select>
 				<a class='fa fa-file-text-o icon' style='color:blue;' href='#' 
@@ -365,7 +405,7 @@
 		<table style="width:100%" class='tablesorter'>
 		<thead>
 		<tr onclick="showWFStatus()"><th>ID</th><th>チーム</th><th>名前</th><th>フェーズ</th>
-			<th>状態</th><th>スコア</th><th>開始</th><th>経過</th></tr>
+			<th>状態</th><th>スコア</th><th>開始</th><th class = "feature feature-virtualtime">演習時刻</th><th>経過</th></tr>
 		</thead>
 		<tbody>
 		</tbody>
@@ -567,31 +607,45 @@
 
 <!-- テンプレート -->
 <script type = "template" id = "processlist-template">
-<tr class='listitem-selectable <%-obj.started ? "process-running":""%> <%-obj.aborted ? "process-aborted" :"" %>' onclick='onSelectProcess(this)'>
+<tr class='listitem-selectable <%-obj.started ? "process-running":""%> <%-obj.aborted ? "process-aborted" :"" %>' <%-obj.paused ? "process-pausing" :"" %>' onclick='onSelectProcess(this)'>
 	<td class='process-id'><%-obj.id%></td>
 	<td class='assign-team'><%-obj.team%></td>
 	<td><%-obj.name == "_default_" ? "既定" : obj.name%></td>
-	<td><span class='assign-phase-container'>
+	<td><span class='assign-phase-container'>	</span>
 
-	</span>
-	<a class = 'fa fa-forward icon' style='color:green;' href='#' onclick='assign(this);return false;' title='フェーズ番号を選択して演習フェーズを開始します。'>開始</a>
-	<a class = 'fa fa-minus-circle icon' style='color:red; display:none' href='#' onclick='abort(this);return false;' title='演習フェーズを中断します。'>中断</a>
-	<a class = 'fa fa-play-circle icon' style='color:blue; display:none' href='#' onclick='resumePhase(this);return false;' title='演習フェーズを再開します。'>再開</a>
-	<a class='fa fa-download icon' style='color:blue; display:none' href='#' onclick='store(this);return false;' title='演習の状態を保存します。(未実装)'>状態を保存</a>
-	<!--<a class='fa fa-upload icon' href='#' onclick='$(this).next().click();return false;' title='保存したデータから演習の状態を復元します。'>状態を復元</a>-->
-	
-	<input type='file' style='display:none' class='ui-button ui-corner-all ui-widget' 
-		onchange='restore(this);$(this).val("");'></td>
-	<td><%-obj.state%></td>
+	<a class = 'fa fa-forward icon' style='color:green;' href='#' onclick='assign(this, "start");return false;' title='フェーズ番号を選択して演習フェーズを開始します。'>開始</a>
+	<a class = 'fa fa-play-circle icon feature feature-virtualtime btn-pause' style='color:blue;' title='演習フェーズを一時停止します。'>一時停止</a>
+	<a class = 'fa fa-minus-circle icon feature feature-virtualtime btn-abort' style='color:red;' title='演習フェーズを中断します。'>中断</a>
+	<a class='fa fa-download icon feature feature-virtualtime' style='color:blue;' href='#' onclick='store(this);return false;' title='演習の状態を保存します。'>状態を保存</a>
+	<a class='fa fa-upload icon feature feature-virtualtime' href='#' onclick='$(this).next().click();return false;' title='保存したデータから演習の状態を復元します。'>状態を復元</a>
+	<input type='file' style='display:none' class='ui-button ui-corner-all ui-widget' onchange='restore(this);$(this).val("");'></td>
+	<td><%-obj.stateText%></td>
 	<td><%-obj.score||''%></td>
-	<td><%-obj.started||''%></td>
-	<td class='elapsed'><%-obj.elapsed%></td>
+	<td><%-obj.start||''%></td>
+	<td class = "virtualtime feature feature-virtualtime"><%-obj.time%>
+		<div class = "clock-control togglemenu-container" style = "display:inline-block">
+			<a class = "fa fa-icon fa-clock-o togglemenu-button">.</a>
+			<div class = "togglemenu-target">
+			<label class = "ctrllabel" title = "演習の基準日時を指定します。"><input type = "datetime-local" class = "clock"></label><br>
+			<label class = "ctrllabel" title = "演習の進行速度を指定します。">速度：<input type = "range" max = "10" min = "0" step = "0.5" class = "slider-bar" value = "1">x
+			<input type = "number" class = "slider-digit" value = "1" max = "10" min = "0" step = "0.5" ></label>
+			</div>
+			<div class = "togglemenu-alt clock"></div>
+		</div>
+
+	</td>
+	<td>
+		<span class = "elapsed"><%-obj.elapsed%></span>
+	</td>
 </tr>
 </script>
 
 <script type = "template" id = "flowstatus-template">
 <%=team%>: シナリオ[<%=scenario == "_default_" ? "既定" : scenario%>] <%=phase!=0?("フェーズ" + Number(phase)):''%> ( 状態:<%=state%>)  
-開始:<%=hasOwnProperty("start")?formatDate(new Date(start)):""%> 制限時間:<%=formatSeconds(timelimit)%> 経過:<%=formatSeconds(elapsed)%> <%=rest>=0?("残り:"+formatSeconds(rest)):("超過:"+formatSeconds(-rest))%>  スコア:<%=score%>
+開始:<%=obj.start%> 
+制限時間:<%=formatSeconds(timelimit)%> 
+演習時間:<%-obj.time%> <%-obj.paused?" (一時停止中)":""%>
+経過:<%=formatSeconds(elapsed)%> <%=rest>=0?("残り:"+formatSeconds(rest)):("超過:"+formatSeconds(-rest))%>  スコア:<%=score%>
 </script>
 
 
@@ -800,5 +854,51 @@
 </div>
 
 <div id = 'svgcontainer2'></div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- feature-virtualtime -->
+<script type = "text/template" id = "tmpl-worldinfo">
+<div id = "<%-obj.name%>" class = "world">
+		<span class = "worldname"><%-obj.name%></span>
+		<span class = "worldinfo"></span>
+		@<span class = "clock"><%-new Date(obj.time).toLocaleTimeString()%></span>
+		<input class = "timescale" type = "range" list = "timeprogress" step = "0.1" min = "0" max = "5" oninput = onchangeslider(this) onchange = "onchangeslider(this)" value = "<%-obj.timescale || 0%>">
+		<div class = "infotip" style = "display:inline-block;vertical-align:middle;font-size:x-small;width:4em">x<%-obj.timescale%></div>
+		<datalist id = "timeprogress">
+		<option value = "0" label = "x0" />
+		<option value = "1" label = "x1"/>
+		<option value = "2"/>
+		<option value = "3"/>
+		<option value = "4"/>
+		<option value = "5" label = "x5"/>
+		</datalist>
+
+
+		<div class = "btn-s btn-init fa fa-icon fa-play-circle">initialize</div>
+		<div class = "btn-s btn-pause fa fa-icon fa-pause-circle btn-resume" title = "pause/resume">pause</div>
+</div>
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

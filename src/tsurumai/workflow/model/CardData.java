@@ -26,66 +26,13 @@ import tsurumai.workflow.WorkflowService;
 import tsurumai.workflow.util.ServiceLogger;
 import tsurumai.workflow.util.Util;
 import tsurumai.workflow.WorkflowException;
-/**アクションカードを表現します。*/
+/**アクションカードを表現します。
+ * */
 @JsonIgnoreProperties({"comment","","//","#"})
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 @XmlRootElement
-public class CardData{
-	//protected static String defaultDir;
-	//public static void setDefaultDirectory(final String def){defaultDir = def;}
-/*	public interface Types{
-		public static final String ACTION = "action";
-//		public static String APPROVALREQUEST = "approvalrequest";
-//		public static String APPROVAL = "approval";
-		public static final String TALK = "talk";
-		public static final String SHARE = "share";
-//		public static String INFORM= "inform";
-//		public static String QUERY= "query";
-//		public static String REPLY= "reply";
-		public static final String NOTIFICATION =  "notification";
-		public static final String AUTOACTION = "auto";
-		public static final String ALERT = "alert";
-	};*/
-	public enum Types{
-		action,
-		talk,
-		share,
-		notification,
-		auto,
-		alert,
-	};
-	public boolean is(Types t) {
-		try{
-			return this.type.equalsIgnoreCase(t.toString());
-		}catch (Throwable e) {return false;}
-	}
-	protected static ServiceLogger logger = ServiceLogger.getLogger();
-
-	public static void reload(final String file){
-		cache.reload(targetFile = file);
-		
-		Map<String, Collection<CardData>> def = //loadAll( WorkflowService.getContextRelativePath("sys"));
-				Util.dataExists("sys/actions.json") ?
-				loadAll(WorkflowService.getContextRelativePath("sys/actions.json"))
-				: new HashMap<>();
-		Map<String, Collection<CardData>> cust = loadAll(cache.getTargetFile());
-		String[] types1 = def.keySet().toArray(new String[def.keySet().size()]);
-		String[] types2 = cust.keySet().toArray(new String[cust.keySet().size()]);
-		Collection<String> types = Util.merge(types1,  types2);
-		Map<String, Collection<CardData>> all = new HashMap<>();
-
-		for(String t : types){
-			Collection<CardData> vals = Util.merge(cust.get(t), def.get(t));
-			all.put(t, vals);
-		}
-		logger.debug(String.format("アクションカード: 合計%d; カスタム%d; 既定%d", all.size() , cust.size(), def.size()));
-
-		cache.set(all);
-
-		logger.info("アクションデータを再ロードしました。" + file);
-
-	}
-	protected static CacheControl<Map<String, Collection<CardData>>> cache = new CacheControl<>();
+public class CardData implements Cloneable{
+	
 	/**アクションの種類。有効な値は{@link Types}のフィールドで定義されます。*/
 	@XmlAttribute
 	public String type;
@@ -102,7 +49,6 @@ public class CardData{
 	/**アクションの種類がautoのとき、アクションの同報先。*/
 	@XmlAttribute
 	public String[] cc;
-	
 	
 	/**アクションに付加される既定のメッセージ文字列。*/
 	@XmlAttribute
@@ -128,24 +74,29 @@ public class CardData{
 	/**アクションを実行可能なロールのID。*/
 	@XmlElement
 	public String[] roles;
-	/**アクションの宛先として指定可能なロールのID*/
+	/**アクションの宛先として指定可能なロールのID。*/
+	@Deprecated //恐らく未使用
 	@XmlAttribute
 	public String[] assignTo;
-	/**コメント*/
+	/**デフォルトのコメント。*/
 	@XmlAttribute
 	public String comment;
 	/**未使用*/
+	@Deprecated
 	@XmlAttribute
 	public String[] result;
 	/**アクションを使用可能なフェーズ*/
 	@XmlAttribute
 	public int[] phase;
-	/**アクションが実行可能となる条件(未使用?)*/
+	/**アクションが実行可能となる条件*/
+	@Deprecated
 	@XmlAttribute
 	public String[] prerequisite;
-	/**アクションにステートカードを添付可能かどうか*/
+	/**アクションに任意のステートカードを添付可能かどうか*/
 	@XmlAttribute
 	public boolean share;
+	
+	@Deprecated
 	@XmlElement
 	public Map<String, Object>timecondition;
 
@@ -155,10 +106,11 @@ public class CardData{
 	/**削除するステートのID*/
 	@XmlElement
 	public String[] removestate;
-	/**未使用?*/
+	/**未使用*/
+	@Deprecated
 	@XmlElement
 	public Map<String, String> extension;
-	/**添付するステートのID*/
+	/**添付するステートカードのID。*/
 	@XmlElement
 	public String[] attachments;
 	/**?*/
@@ -170,21 +122,22 @@ public class CardData{
 //	public int responseTime;
 //	@XmlAttribute
 //	public int cost;
-	/**キュー内での現在の評価順*/
+	/**キュー内での現在の評価順。*/
 	@XmlAttribute
-	public int curretorder = 0;
-	/**アクションの実行条件となるステート*/
+	public int currentorder = 0;
+	/**アクションの実行条件となるステート。*/
 	@XmlAttribute
 	public String[] statecondition;
-	/**trueなら非表示とする*/
+	/**trueなら演習画面に表示されない。内部的なフロー制御を行うためにアクションに使用する。*/
 	@XmlAttribute
 	public boolean hidden = false;
-	/**アクションの実行条件となるシステムステート*/
+	/**アクションの実行条件となるシステムステートのID。*/
 	@XmlAttribute
 	public String[] systemstatecondition;
+	/**自動アクションの場合、実行条件が成立してから実際に実行されるまでの待ち時間(秒)。*/
 	@XmlAttribute
 	public int delay = 5;
-	/**アイコン*/
+	/**カードのｈｔｍｌ要素にcssクラス名として展開される。カードにアイコンやスタイルを指定するために使用する。*/
 	@XmlAttribute
 	public String icon;
 	
@@ -192,16 +145,72 @@ public class CardData{
 	@XmlAttribute
 	public String[] recipients;
 	
-	/**トリガーイベントにステートカードを添付するときに使用する(out)*/
+	/**トリガーイベントにステートカードを添付するときに使用する。*/
 	@XmlAttribute
 	public String[] statecards;
 
-	/**中止系アクションのときに、中止するアクションのIDを指定。*/
+	/**中止系アクションのときに、中止するアクションのIDを指定。
+	 * @deprecated
+	 * */
 	@XmlAttribute
 	public String abortaction;
-	/**ステートカードを添付可能*/
+	
+	/**このアクションにステートカードの添付を許可するかどうかを示す。*/
 	@XmlAttribute
 	public boolean attach = false;
+
+	
+	/**デバッグ用*/
+	@XmlAttribute public boolean breakpoint = false;
+	
+	public enum Types{
+		action,
+		talk,
+		share,
+		notification,
+		auto,
+		alert,
+		control
+	};
+
+	public boolean is(Types t) {
+		try{
+			return this.type.equalsIgnoreCase(t.toString());
+		}catch (Throwable e) {return false;}
+	}
+	protected static ServiceLogger logger = ServiceLogger.getLogger();
+	
+	/**すべてのアクション定義を再ロードする*/
+	public static void reload(final String file){
+		cache.reload(targetFile = file);
+		
+		Map<String, Collection<CardData>> def = //loadAll( WorkflowService.getContextRelativePath("sys"));
+				Util.dataExists("sys/actions.json") ?
+				loadAll(WorkflowService.getContextRelativePath("sys/actions.json"))
+				: new HashMap<>();
+		Map<String, Collection<CardData>> cust = loadAll(cache.getTargetFile());
+		String[] types1 = def.keySet().toArray(new String[def.keySet().size()]);
+		String[] types2 = cust.keySet().toArray(new String[cust.keySet().size()]);
+		Collection<String> types = Util.merge(types1,  types2);
+		Map<String, Collection<CardData>> all = new HashMap<>();
+
+		for(String t : types){
+			Collection<CardData> vals = Util.merge(cust.get(t), def.get(t));
+			all.put(t, vals);
+		}
+		logger.debug(String.format("アクションカード: 合計%d; カスタム%d; 既定%d", all.size() , cust.size(), def.size()));
+
+		cache.set(all);
+
+		logger.info("アクションデータを再ロードしました。" + file);
+
+	}
+	/**現在アクティブなアクション定義を保持する。*/
+	protected static CacheControl<Map<String, Collection<CardData>>> cache = new CacheControl<>();
+	
+	
+	
+	
 	public CardData(){}
 	protected String generateId(){
 		String rand = UUID.randomUUID().toString();
@@ -269,7 +278,7 @@ public class CardData{
 			}
 			return ret;
 		}catch(JsonProcessingException t){
-			throw new WorkflowException("JSONデータの処理に失敗しました。", HttpServletResponse.SC_NOT_FOUND, t);
+			throw new WorkflowException("JSONデータの処理に失敗しました。"+t.getMessage(), HttpServletResponse.SC_NOT_FOUND, t);
 		}catch(IOException t){
 			throw new WorkflowException("シナリオデータの読み込みに失敗しました。", HttpServletResponse.SC_NOT_FOUND, t);
 		}
@@ -367,6 +376,14 @@ public class CardData{
 //		return this;
 //	}
 
+	/**インスタンスのコピーを作成する*/
+	@Override public CardData clone(){
+		String s = stringify(this);
+		CardData d = parse(s);
+		return d;
+	}
+	
+	
 	
 	public static void main(String[] args){
 		try{
