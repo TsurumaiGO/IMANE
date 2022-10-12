@@ -616,77 +616,114 @@ public class WorkflowInstance {
 		}
 	}
  
-	public String[] SplitElm(String str0){
-	    String str1,str2,str3;
-	    int flag=0;
-	    List<String> buf = new ArrayList<String>();
-	    int P0 = str0.indexOf(",");
-	    int P1 = str0.indexOf("(");
-        int P2 = str0.lastIndexOf(")");
-        while(P0>0) {
-        	if(P0<P1) {
-        		buf.add(str0.substring(0,P0));
-        		str0 = str0.substring(P0+1);
-        		flag = 0;
-        		P0=str0.indexOf(",");
-        		P1=str0.indexOf("(");
-        	}else {
-        		str1=null;
-        		if(P1>=0) {
-    		           str1 = str0.substring(0,P1+1);
-    		           str0 = str0.substring(P1+1);
-        		}
-        		P0 = str0.indexOf(",");
-        		P1 = str0.indexOf("(");
-        		P2 = str0.indexOf(")");
-        		if (P1<0&&P2<0) {
-        			buf.add(str0.substring(0,P0));
-        			str0 = str0.substring(P0+1);
-        			P0 = str0.indexOf(",");
-        		}else if(P1<P2) {
-        			str1 = str1+str0.substring(0,P1+1);
-        			str2 = str0.substring(P1+1,P2+1);
-        			str3 = str0.substring(P2+1);
-        			//if(P1>=0) {
-        					flag+=1;
-        			//}
-        			while(flag>0) {
-        				P1 = str2.indexOf("(");
-        				if(P1>=0) {
-        					str1 = str1 + str2.substring(0,P1+1);
-        					P2 = str3.indexOf(")");
-        					str2=str2.substring(P1+1)+str3.substring(0,P2+1);
-        					str3 = str3.substring(P2+1);
-        				}else {
-        					flag = 0;
-        					buf.add(str1+str2);
-        					P0 = str3.indexOf(",");
-        					if(P0 == 0) {
-        						str0 = str3.substring(P0+1);
-        						P0 = str0.indexOf(",");
-        					}else {
-        						str0 = null;
-        						P0 =-1;
-        					}
-        				}
-        			}
-        		}else {
-        			buf.add(str1+str0.substring(0,P2+1));
-        			str3 = str0.substring(P2+1);
-        			P0 = str3.indexOf(",");
-					if(P0 == 0) {
-						str0 = str3.substring(P0+1);
-						P0 = str0.indexOf(",");
-					}else {
-						str0 = null;
-						P0 =-1;
-					}
-        		}
-        	}
-         }
-        buf.add(str0);
+
+	
+	//改修１行目
+    public String[] SplitElm(String str0)  {
+        int p0 = str0.indexOf(",");
+        List<String> buf = new ArrayList<String>();
+        
+        while (p0 != -1) {
+            String str1;
+            List<Integer> P0 = new ArrayList<Integer>();
+            List<Integer> P1 = new ArrayList<Integer>();
+            List<Integer> P2 = new ArrayList<Integer>();
+            p0= str0.indexOf(",");
+            int p1 = str0.indexOf("(");
+            int p2 = str0.indexOf(")");
+
+            while( p0 !=-1){
+            	P0.add(p0);
+            	p0 = str0.indexOf(",",p0+1);
+            }
+            while( p1 !=-1){
+                P1.add(p1);
+                p1 = str0.indexOf("(",p1+1);
+            }
+            while( p2 !=-1){
+                P2.add(p2);
+                if( p2 != str0.lastIndexOf(")")){
+                    p2 = str0.indexOf(")",p2+1);
+                }else{
+                    p2 = -1;
+                }
+
+            }
+
+            Integer[] aP0 = P0.toArray(new Integer[P0.size()]);
+            Integer[] aP1 = P1.toArray(new Integer[P1.size()]);
+            Integer[] aP2 = P2.toArray(new Integer[P2.size()]);
+            
+            //【】対応エラー
+            if (aP1.length != aP2.length ) {
+            	System.out.println("カッコ対応エラー：条件式が不正です。 ");
+            };
+
+            
+            //【】が含まれる
+            if (aP1.length !=0){
+                //【】の方がコンマより前にある
+                if (aP0[0] > aP1[0]){
+                	int count = 0 ;
+	                int a = 0 ;
+	                int b = 0 ;
+	                while(count != -1){
+	                	if(aP1[a] < aP2[b]){
+	                		if(aP1.length > a+1){
+	                			a = a+1 ;
+	                			count = count +1 ;
+	                		}else{
+	                			b = a ;
+	                			count = -1;
+	                			}
+	                		}
+	                	else if(aP1[a] > aP2[b]){
+	                		if(count != 0){
+	                			b = b + count -1;
+	                			count = 0;
+	                		}else{
+	                			count = -1;
+	                			}
+	                		}
+	                	}
+	                str1 = str0.substring(0,aP2[b]+1);
+	                buf.add(str1);
+	                if( str0.length() != aP2[b]+1){
+	                	str0 = str0.substring(aP2[b]+1+1);
+	                }else{
+	                	str0 = null;
+	                }
+
+                //コンマが【】より前にある時、str0のコンマまでの部分をbufに追加
+                }else{
+                    str1 = str0.substring(0, aP0[0]);
+                    str0 = str0.substring(aP0[0]+1);
+                    buf.add(str1);                    
+                }
+            //コンマはあるけど【】がないとき、
+            }else{
+                str1 = str0.substring(0, aP0[0]);
+                str0 = str0.substring(aP0[0]+1);
+                buf.add(str1);
+
+            }
+            
+            //whileの処理の一番最後にp0の値を更新            
+            if (str0 != null){
+                p0 = str0.indexOf(",");
+            }else{
+                p0 = -1;
+            }
+        }
+        
+        //while文を抜けた後(p0=-1になった時)
+        if(str0 != null){
+            buf.add(str0);
+        }
         return buf.toArray(new String[buf.size()]);
-	}
+    }
+	//終わり
+    
 	public boolean memberEvalEQ(String userid,String state){
 	    String buf[];
 	    String logic;
