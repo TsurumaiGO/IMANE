@@ -616,7 +616,78 @@ public class WorkflowInstance {
 		}
 	}
  
-
+	/*public String[] SplitElm(String str0){
+	    String str1,str2,str3;
+	    int flag=0;
+	    List<String> buf = new ArrayList<String>();
+	    int P0 = str0.indexOf(",");
+	    int P1 = str0.indexOf("(");
+        int P2 = str0.lastIndexOf(")");
+        while(P0>0) {
+        	if(P0<P1) {
+        		buf.add(str0.substring(0,P0));
+        		str0 = str0.substring(P0+1);
+        		flag = 0;
+        		P0=str0.indexOf(",");
+        		P1=str0.indexOf("(");
+        	}else {
+        		str1=null;
+        		if(P1>=0) {
+    		           str1 = str0.substring(0,P1+1);
+    		           str0 = str0.substring(P1+1);
+        		}
+        		P0 = str0.indexOf(",");
+        		P1 = str0.indexOf("(");
+        		P2 = str0.indexOf(")");
+        		if (P1<0&&P2<0) {
+        			buf.add(str0.substring(0,P0));
+        			str0 = str0.substring(P0+1);
+        			P0 = str0.indexOf(",");
+        		}else if(P1<P2) {
+        			str1 = str1+str0.substring(0,P1+1);
+        			str2 = str0.substring(P1+1,P2+1);
+        			str3 = str0.substring(P2+1);
+        			//if(P1>=0) {
+        					flag+=1;
+        			//}
+        			while(flag>0) {
+        				P1 = str2.indexOf("(");
+        				if(P1>=0) {
+        					str1 = str1 + str2.substring(0,P1+1);
+        					P2 = str3.indexOf(")");
+        					str2=str2.substring(P1+1)+str3.substring(0,P2+1);
+        					str3 = str3.substring(P2+1);
+        				}else {
+        					flag = 0;
+        					buf.add(str1+str2);
+        					P0 = str3.indexOf(",");
+        					if(P0 == 0) {
+        						str0 = str3.substring(P0+1);
+        						P0 = str0.indexOf(",");
+        					}else {
+        						str0 = null;
+        						P0 =-1;
+        					}
+        				}
+        			}
+        		}else {
+        			buf.add(str1+str0.substring(0,P2+1));
+        			str3 = str0.substring(P2+1);
+        			P0 = str3.indexOf(",");
+					if(P0 == 0) {
+						str0 = str3.substring(P0+1);
+						P0 = str0.indexOf(",");
+					}else {
+						str0 = null;
+						P0 =-1;
+					}
+        		}
+        	}
+         }
+        buf.add(str0);
+        return buf.toArray(new String[buf.size()]);
+	}
+	*/
 	
 	//改修１行目
     public String[] SplitElm(String str0)  {
