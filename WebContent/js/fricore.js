@@ -1741,7 +1741,7 @@ function HasState(statecards,arg){
  * @param{string} defaultOperation デフォルトの演算
  * */
 
-
+/**改修前
 function SplitElm(str0){
 	    var buf=[];
 	    var str1,str2,str3;
@@ -1817,6 +1817,112 @@ function SplitElm(str0){
      return buf;
      
 }
+ * */
+ 
+ 	//改修１行目
+function SplitElm(str0){
+		var p0 = str0.indexOf(",");
+		var buf = [];
+        
+        while (p0 != -1) {
+            var str1;
+            var P0 = [];
+            var P1 = [];
+            var P2 = [];
+            p0= str0.indexOf(",");
+            var p1 = str0.indexOf("(");
+            var p2 = str0.indexOf(")");
+
+            while( p0 !=-1){
+            	P0.push(p0);
+            	p0 = str0.indexOf(",",p0+1);
+            }
+            while( p1 !=-1){
+                P1.push(p1);
+                p1 = str0.indexOf("(",p1+1);
+            }
+            while( p2 !=-1){
+                P2.push(p2);
+                if( p2 != str0.lastIndexOf(")")){
+                    p2 = str0.indexOf(")",p2+1);
+                }else{
+                    p2 = -1;
+                }
+
+            }
+
+            
+            //【】対応エラー
+            if (aP1.length != aP2.length ) {
+            	System.out.println("カッコ対応エラー：条件式が不正です。 ");
+            };
+
+            
+            //【】が含まれる
+            if (aP1.length !=0){
+                //【】の方がコンマより前にある
+                if (aP0[0] > aP1[0]){
+                	var count = 0 ;
+	                var a = 0 ;
+	                var b = 0 ;
+	                while(count != -1){
+	                	if(aP1[a] < aP2[b]){
+	                		if(aP1.length > a+1){
+	                			a = a+1 ;
+	                			count = count +1 ;
+	                		}else{
+	                			b = a ;
+	                			count = -1;
+	                			}
+	                		}
+	                	else if(aP1[a] > aP2[b]){
+	                		if(count != 0){
+	                			b = b + count -1;
+	                			count = 0;
+	                		}else{
+	                			count = -1;
+	                			}
+	                		}
+	                	}
+	                str1 = str0.substring(0,aP2[b]+1);
+	                buf.push(str1);
+	                if( str0.length() != aP2[b]+1){
+	                	str0 = str0.substring(aP2[b]+1+1);
+	                }else{
+	                	str0 = null;
+	                }
+
+                //コンマが【】より前にある時、str0のコンマまでの部分をbufに追加
+                }else{
+                    str1 = str0.substring(0, aP0[0]);
+                    str0 = str0.substring(aP0[0]+1);
+                    buf.push(str1);                    
+                }
+            //コンマはあるけど【】がないとき、
+            }else{
+                str1 = str0.substring(0, aP0[0]);
+                str0 = str0.substring(aP0[0]+1);
+                buf.push(str1);
+
+            }
+            
+            //whileの処理の一番最後にp0の値を更新            
+            if (str0 != null){
+                p0 = str0.indexOf(",");
+            }else{
+                p0 = -1;
+            }
+        }
+        
+        //while文を抜けた後(p0=-1になった時)
+        if(str0 != null){
+            buf.push(str0);
+        }
+        buf.push(str0);
+        return buf;
+}
+//終わり
+	
 function EvalEQ(memberStates, state){
 		var buf=[];
 		var logic;
@@ -1846,7 +1952,7 @@ function EvalEQ(memberStates, state){
 		    ret=false;
 		    break;
 		default:
-		    FrICORE.error("Logic Error "+logic);
+		    console.log("Logic Error "+logic);
 		}
 		while (buf[ic]!=null) {
 		    if (buf[ic].indexOf("(")>=0){
