@@ -1,22 +1,18 @@
 package tsurumai.workflow.util;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.LogManager;
 
 import javax.inject.Singleton;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.impl.Log4JLogger;
-import org.apache.log4j.Appender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Logger;
+//import org.apache.commons.logging.impl.Log4JLogger;
+//import org.apache.log4j.Appender;
+//import org.apache.log4j.FileAppender;
 
 
 /**ログ出力を制御する
@@ -35,14 +31,38 @@ public class ServiceLogger {
 			theInstance = new ServiceLogger();
 //			String loggerName = System.getProperty(LOGGER_NAME,"workshop");
 			theInstance.logger = LogFactory.getLog("workshop");
-
+			//if(theInstance.logger.) {
+			if(theInstance.logger != null) {
+				initJUL();
+			}
+				/* log4j2脆弱性対応のため
 				Appender a = ((Log4JLogger)theInstance.logger).getLogger().getAppender("file");
 				if(a instanceof FileAppender) {
+					theInstance.logger.info("カレントディレクトリ: " + java.nio.file.Path.of(".").toAbsolutePath());
 					FileAppender app =(FileAppender)a;
-					theInstance.logger.info("logging to: " + new File(app.getFile()).getAbsolutePath());
-				}
+					
+					String filepath = Path.of(app.getFile()).toAbsolutePath().toString();
+
+					String dir = Path.of(app.getFile()).toAbsolutePath().getFileName().toString();
+					if(!new File(filepath).canWrite()) {
+						String altpath = Path.of(System.getProperty("user.home"), "logs/workshop.log").toAbsolutePath().toString();
+						app.setFile(altpath);
+						theInstance.logger.warn("指定されたディレクトリにログを書き込めません。代替パスを設定します:" + altpath);
+						
+					}else
+						theInstance.logger.info("logging to: " + filepath);
+				}*/
 		}
 		return theInstance;
+	}
+	
+	protected static void initJUL() {
+        try(InputStream in = ServiceLogger.class.getClassLoader().getResourceAsStream("logging.properties")){
+            LogManager.getLogManager().readConfiguration( in );
+        }catch(IOException t){
+        	System.err.println("no logging.properties found.");
+        }
+		
 	}
 	public static final String LOGGER_NAME = "FrICORE.logger.name";
 //	private static Log logger = LogFactory.getLog(System.getProperty(LOGGER_NAME,"workshop"));

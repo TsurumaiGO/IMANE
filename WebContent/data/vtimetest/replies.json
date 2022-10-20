@@ -1,0 +1,139 @@
+{
+	"states": [
+		{
+			"phase": "1",
+			"reply": [
+				{
+					"actionid": "reply-virtualtime.start",
+					"statecondition": [
+						"virtualtime.start"
+					],
+					"name": "reply-virtualtime.start",
+					"to": "all",
+					"state": "virtualtime.start"
+				},
+				{
+					"actionid": "reply-virtualtime.checnpoint1",
+					"statecondition": [
+						"virtualtime.checnpoint1"
+					],
+					"name": "reply-virtualtime.checnpoint1",
+					"to": "all",
+					"state": "virtualtime.checnpoint1"
+				},
+				{
+					"actionid": "reply-virtualtime.checkpoint2",
+					"statecondition": [
+						"virtualtime.checkpoint2"
+					],
+					"name": "reply-virtualtime.checkpoint2",
+					"to": "all",
+					"state": "virtualtime.checkpoint2"
+				},
+				{
+					"actionid": "reply-virtualtime.checkpoint3",
+					"statecondition": [
+						"virtualtime.checkpoint3"
+					],
+					"name": "reply-virtualtime.checkpoint3",
+					"to": "all",
+					"state": "virtualtime.checkpoint3"
+				},
+				{
+					"actionid": "reply-virtualtime.checkpoint4",
+					"statecondition": [
+						"virtualtime.checkpoint4"
+					],
+					"name": "reply-virtualtime.checkpoint4",
+					"to": "all",
+					"state": "virtualtime.checkpoint4"
+				},
+				{
+					"actionid": "reply-virtualtime.checkpoint5",
+					"statecondition": [
+						"virtualtime.checkpoint5"
+					],
+					"name": "reply-virtualtime.checkpoint5",
+					"to": "all",
+					"state": "virtualtime.checkpoint5"
+				},
+				{
+					"actionid": "reply-virtualtime.end",
+					"statecondition": [
+						"virtualtime.end"
+					],
+					"name": "reply-virtualtime.end",
+					"to": "all",
+					"state": "virtualtime.end"
+				},
+				{
+					"actionid": "reply-invisible",
+					"statecondition": [
+						"invisible"
+					],
+					"name": "reply-invisible",
+					"to": "all",
+					"state": "invisible"
+				},
+				{
+					"actionid": "reply-injection.pause",
+					"statecondition": [
+						"injection.pause"
+					],
+					"name": "reply-injection.pause",
+					"to": "all",
+					"state": "injection.pause"
+				},
+				{
+					"actionid": "reply-injection.resume",
+					"statecondition": [
+						"injection.resume"
+					],
+					"name": "reply-injection.resume",
+					"to": "all",
+					"state": "injection.resume"
+				},
+				{
+					"actionid": "reply-auto.pause",
+					"statecondition": [
+						"auto.pause"
+					],
+					"name": "reply-auto.pause",
+					"to": "all",
+					"state": "auto.pause"
+				},
+				{
+					"actionid": "reply-auto.resume",
+					"statecondition": [
+						"auto.resume"
+					],
+					"name": "reply-auto.resume",
+					"to": "all",
+					"state": "auto.resume"
+				},
+				{
+					"actionid": "all",
+					"to": "all",
+					"name": "こちらの対応範囲外です。別のところにお問い合わせ下さい。",
+					"delay": 5,
+					"abort": true,
+					"type": "notfound"
+				},
+				{
+					"actionid": "all",
+					"to": "all",
+					"name": "空の応答",
+					"type": "null",
+					"delay": 0,
+					"abort": true
+				}
+			],
+			"message": [
+				{
+					"actionid": "8000",
+					"text": "えっ、なんですか。"
+				}
+			]
+		}
+	]
+}

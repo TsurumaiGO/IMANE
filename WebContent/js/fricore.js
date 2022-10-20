@@ -1,4 +1,4 @@
-
+ 
 //globals
 /**演習ワークフロー状態のコンテナ*/
 //window.FRICORE = {};
@@ -42,8 +42,8 @@ var FrICORE = function(){
 	/**デバッグ用プロパティ;トレース情報の出力ON/OFF*/
 	this.enableTrace = true;
 	/**デバッグ用プロパティ;演習状態の自動更新を無効にする*/
-	this.disabAutoRefresh = false;	
-	
+	this.disableAutoRefresh = false;	
+	this.skin = "#theme-fancy";
 	this.level = {
 		NORMAL:0,
 		TRACE:1,
@@ -53,14 +53,11 @@ var FrICORE = function(){
 		HIDDEN:0x10,
 		CONTROL:0x20
 	};
-	this.hoge = function(){
-		console.log("testes");
-	}
-	
-}
+};
+
 FrICORE.info = function(msg){
 	console.log("[info] " + digestText(msg.toString()));
-}
+};
 FrICORE.error = function(msg, xhr){
 	try{
 		console.error("[error] " + digestText(msg) + " " + xhrToString(xhr));
@@ -69,13 +66,23 @@ FrICORE.error = function(msg, xhr){
 		console.error("unknown error " + t);
 	}
 }
+FrICORE.warn = function(msg){
+	console.error("[warn] " + digestText(msg.toString()));
+};
 FrICORE.trace = function(msg){
 	if(this.enableTrace || this.debug)
-		FrICORE.info("[trace] " + msg);
-}
+		this.info("[trace] " + msg);
+};
+
 /**boolean型の設定プロパティを切り替える*/
 FrICORE.prototype.toggleConfig = function(classname, propertyname){
 	var checked = $(classname).data("checked");
+	this.applyConfig(classname, propertyname, checked);
+};
+
+/**設定項目をチェックメニュー項目に適用する*/
+FrICORE.prototype.applyConfig = function(classname, propertyname, val){
+	var checked = !val;
 	$(classname).data("checked",!checked)
 		.removeClass(checked ? "checked" : "").addClass(!checked ? "checked" : "");
 	if(this.hasOwnProperty(propertyname)){
@@ -83,8 +90,54 @@ FrICORE.prototype.toggleConfig = function(classname, propertyname){
 		FrICORE.info("config property changed: " + propertyname);
 	}else
 		FrICORE.warn("no config property found: " + propertyname);
+};
+
+/**ローカル設定を保存(試験的)*/
+FrICORE.prototype.saveConfig = function(){
 	
+	this.syncConfig(false);
+	var config = {debug:this.debug, 
+		experimental: this.experimental, 
+		enableTrace: this.enableTrace, 
+		disableAutoRefresh: this.disableAutoRefresh,
+		skin: this.skin
+	};
+	window.localStorage.setItem("FrICORE.config", JSON.stringify(config));
+};
+/**ローカル設定をロード(試験的)*/
+FrICORE.prototype.loadConfig = function(){
+	var config = JSON.parse(window.localStorage.getItem("FrICORE.config"));
+	if(!config){
+		config = {};
+		FrICORE.warn("local config data not found.");
+	}
+	 
+	this.debug = config.debug || false; 
+	this.experimental = config.experimental || false;
+	this.enableTrace = config.enableTrace || false;
+	this.disableAutoRefresh = config.disableAutoRefresh || false;
+	this.skin = config.skin;
+	this.syncConfig(true);
+};
+/**設定をビューに反映
+load : false:ビュー>ローカル、true:ローカル>ビュー
+*/
+FrICORE.prototype.syncConfig = function(load){
+	if(load){
+		changeTheme(this.skin || "");
+		this.applyConfig('.config-experimental', 'experimental', this.experimental);
+		this.applyConfig('.config-debug', 'debug', this.debug);
+		this.applyConfig('.config-autorefresh', 'disableAutoRefresh', this.disableAutoRefresh);
+		this.applyConfig('.config-trace', 'enableTrace', this.enableTrace);
+	}else{
+		this.skin = $(".theme-custom[disabled!=false]").prop("id");
+		this.experimental = $('.config-experimental').data("checked");
+		this.debug = $('.config-debug').data("checked");
+		this.disableAutoRefresh = $('.config-autorefresh').data("checked");
+		this.enableTrace = $('.config-trace').data("checked");
+	}
 }
+
 window.FRICORE = new FrICORE();
 
 var versioninfo={SERVER_VERSION:'unknown', SERVER_DESC:'unknown',
@@ -109,12 +162,12 @@ function parseStackTrace(base, err){
 	else if(typeof base == "string")
 		basepoint = base || "Function.getStackTrace";
 
-	var regex = new RegExp("[ ]+at " + base + " (.*)");
+	var regex = new RegExp("\\([ ]+at " + base + "\\) (.*)");
 	var buff = [];
 	for(var i = 0; i < arr.length; i ++){
 		var g = regex.exec(arr[i]);
-		if(!g) return "<no stack trace>";
-		if(g.length < 2)	return [];
+		if(!g) continue;
+		if(g.length < 2) continue;
 		buff.push({label:g[1],line:g[2]});
 	}
 	return buff.map(e=>{return "  " + e}).join("\n");
@@ -544,7 +597,7 @@ function reloadScenarioSet(){
 			var o = {name:"",description:"",author:"",copyright:"",version:"",created:"",modified:"",timelimit:-1};
 
 			//if(set.hasOwnProperty("error")){
-			if(set.hasOwnProperty("validationResult") && set.validationResult){
+			if(!set.hasOwnProperty("validationResult") && set.validationResult){
 				var setdesc = label + " : エラー\n" + set.validationResult;
 			}else{
 				var setdesc = _.template("シナリオセット:<%=name%>\n説明:<%=description%>\n作成者:<%=author%>\n著作権:<%=copyright%>\nバージョン:<%=version %>\n作成:<%=created%>\n更新:<%=modified%>", Object.assign(o,set));
@@ -944,6 +997,10 @@ function updateui(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(function(){
 	showProductInfo();
+	
+	FRICORE.loadConfig();
+	
+	
 	//モード設定
 	var params = parseURL();
 	FRICORE.isadmin = params['isadmin'] ? true : false;
@@ -2197,13 +2254,21 @@ function adjustUserList(){
 
 	$('#loginpanel select.role').empty();
 	var team = $('#loginpanel select.team').val();
-	var groupRoles = _.groupBy(window.FRICORE.contacts, function(e){return e.team;});
+	var teamRoles = _.groupBy(window.FRICORE.contacts, function(e){return e.team;});
 	var phase = 1;
-	var users = _.filter(groupRoles[team], function(e){return !isSystemUser(e, phase);}) ;
+	var users = _.filter(teamRoles[team], function(e){return !isSystemUser(e, phase);}) ;
 
 	$('#loginpanel select.role').append($("<option/>").val(null));	
 	_.each(users, function(e){
-		$('#loginpanel select.role').append($("<option/>").val(e.role).text(e.rolename).attr('title', e.email));
+		
+		
+		//$('#loginpanel select.role').append($("<option/>").val(e.role).text(e.rolename).attr('title', e.email));
+		//
+		var tmpl = _.template($("#userpicker-template").html());
+		var u = tmpl(e);
+		$('#loginpanel select.role').append(u);
+		
+		
 	});	
 	if(window.FRICORE.isadmin){
 		var admin = _.findWhere(users, {isadmin:true});
@@ -2620,6 +2685,7 @@ function getProcess(params, select){
 					rr.find(selector).prop('checked',true).trigger('change');
 				}
 				
+				//TODO: 現在時刻を表示
 				adjustProcessList($(rr), summary);
 				
 			}
@@ -2663,18 +2729,20 @@ function makeWorkflowStatusInfo(wf){
 	
 	var summary = {state:wf.state,created:formatDate(wf.created), 
 			team:wf.team, score:wf.score||'', phase: wf.phase};
-	summary.elapsed = wf.start != null  ? (new Date().getTime() - wf.start)/1000 : 0;
+	//summary.elapsed = wf.start != null  ? (new Date().getTime() - wf.start)/1000 : 0;
 	summary.timelimit = setting ? setting.timelimit:null;
 	summary.scenario = FRICORE.activeScenario;
-	summary.rest = wf.timelimit - wf.elapsed;
+	//summary.rest = wf.timelimit - wf.elapsed;
 	summary.start = wf.start ? formatDate(new Date(wf.start)) : "";
 	summary.started = !!summary.start;
 	summary.aborted = wf.state == "Aborted";
 	summary.paused = wf.state == "Paused";
 	summary.time = wf.world ? formatDate(wf.world.time) : undefined;
+	summary.elapsed = wf.start != null  && wf.world ? (wf.world.time - wf.start)/1000 : 0;
+	summary.rest = wf.timelimit - wf.elapsed;
 	summary.world = wf.world;
 	summary.stateText = stateToText(summary.state);
-	
+	summary.name = wf.activeScenario ? (wf.activeScenario.name || "") : "";
 	return summary;
 }
 
@@ -2690,7 +2758,9 @@ function selectTeam(name){
 	var sel = $(_.find($("#processlist  td"), function(e){return $(e).text()==name}));
 	$("#processlist  tr").removeClass('seleted');
 	$(sel).parent().addClass('selected');
-	$(sel).click();
+	if(sel.text() != name){//TODO；冗長な更新処理
+		$(sel).click();
+	}
 	return $(sel).parent();
 }
 
@@ -2919,6 +2989,7 @@ function parseURI(anchor){
 
 	return url;
 }
+/**未使用*/
 function send(){
 	if(!FRICORE.socket)	throw "not connected";
 	
@@ -3006,29 +3077,6 @@ function popupWarning(str){
 function hideStatusbar(){
 	if($('#statusbar').is(':visible')){$('#statusbar').hide();$(window).trigger('resize');}
 }
-
-/*
-//未使用
-function onSpecialState(state){
-	switch(state){
-	case 1:
-		popupWarning("フェーズが開始されました。");
-		break;
-	case 2:
-		popupWarning("フェーズ終了イベントが発生しました。");
-		break;
-	case 3:
-		popupWarning("フェーズ中断イベントが発生しました。");
-		break;
-	default:
-		FrICORE.error("特殊なステート"+state);
-		break;
-	}
-}
-*/
-
-
-
 
 
 var MAX_MESSAGE_LEN = 80;//イベントリストに表示するメッセージの最大長
@@ -4348,9 +4396,20 @@ function formatDateForFilename(date){
 }
 function changeTheme(name){
 	
-	$(".theme").prop("disabled", true);
-	if(name)
+	$(".theme-custom").prop("disabled", true);
+	$("[data-checkgroup=skin]").prop("disabled", "true");
+	
+	if(!name){
+		FrICORE.info("既定のスキンを選択しました。");
+	}
+	if(name && $(name).length > 0){
 		$(name).prop("disabled", false);
+		//TODO:対応するメニュー項目を変更
+		//$("[data-checkgroup=skin]").prop("disabled", "true");
+
+	}else{
+		FrICORE.warn("スキンが見つかりません:"+name);
+	}
 };
 function isOnline(){
 	return FRICORE.socket && FRICORE.socket.readyState == WebSocket.OPEN

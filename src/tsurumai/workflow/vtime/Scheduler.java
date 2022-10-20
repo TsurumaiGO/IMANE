@@ -20,7 +20,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tsurumai.workflow.util.ServiceLogger;
-import tsurumai.workflow.util.Util;
 
 /**仮想時刻に基づくタスクスケジューラ*/
 @XmlRootElement
@@ -90,13 +89,25 @@ public class Scheduler {
 	}
 	/**スケジュールタスクを登録する。*/
 	public Scheduler register(Task task) {
+		//TODO: ここで実行済み回数をリセットしなければならない？
 		if(taskPool.contains(task)) {
-			logger.warn("registering same schedule task, ignored." + task.toString());
+			logger.debug("スケジュールタスクは登録済:" + task.toString());
 			return this;
 		}
 		taskPool.add(task);
+		logger.info("スケジュールタスクを登録:" + task.toString());
 		return this;
 	}
+	
+	public Scheduler unregister(Task task) {
+		if(taskPool.contains(task)) {
+			taskPool.remove(task);
+			logger.info("スケジュールタスクを削除:" + task.toString());
+		}
+		return this;
+	}
+	
+	
 	/**スレッド停止のために内部で使用*/
 	synchronized void abort() {
 		this.abort = true;
@@ -136,8 +147,13 @@ public class Scheduler {
 					if(t.eval(this.vdm)) {
 						this.history.add(new TaskHistory(t, now));
 
-						if(!t.remains())
-							this.taskPool.remove(t);
+						if(!t.remains()){//TODO: 削除が効いていない？同期ずれ？
+							if(!this.taskPool.remove(t))
+								logger.debug("スケジュールタスクの要素が削除できない");
+							else
+								logger.debug("スケジュールタスクの要素を削除");
+							
+						}
 					}
 				}
 			

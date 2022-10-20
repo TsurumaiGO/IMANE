@@ -1,0 +1,115 @@
+{"actions": [
+    {
+        "id": "virtualtime.start",
+        "type": "auto",
+        "to": "all",
+        "from": "system",
+        "name": "テスト開始",
+        "description": "テスト開始",
+        "addstate": ["virtualtime.start"]
+    },
+    {
+        "id": "virtualtime.checnpoint1",
+        "type": "auto",
+        "to": "system",
+        "from": "system",
+        "name": "チェックポイント1",
+				"description": "演習開始から1分後に発火します。",
+        "addstate": ["virtualtime.checkpoint1"],
+        "delay": 60
+    },
+    {
+        "id": "virtualtime.checkpoint2",
+        "type": "auto",
+        "to": "system",
+        "from": "system",
+        "name": "チェックポイント2",
+				"description": "演習開始から2分後に発火します。",
+        "addstate": ["virtualtime.checkpoint2"],
+        "delay": 120
+    },
+    {
+        "id": "virtualtime.checkpoint3",
+        "type": "auto",
+        "to": "system",
+        "from": "system",
+        "name": "チェックポイント3",
+				"description": "演習開始から3分後に発火します。",
+        "addstate": ["virtualtime.checkpoint3"],
+        "delay": 180
+
+    },
+    {
+        "id": "virtualtime.checkpoint4",
+        "type": "auto",
+        "to": "system",
+        "from": "system",
+        "name": "チェックポイント4",
+				"description": "演習開始から4分後に発火します。",
+        "addstate": ["virtualtime.checkpoint4"],
+        "delay": 240
+    },
+    {
+        "id": "virtualtime.checkpoint5",
+        "type": "auto",
+        "to": "system",
+        "from": "system",
+        "name": "チェックポイント5",
+				"description": "演習時間5分後に発火します。",
+        "addstate": ["virtualtime.checkpoint5"],
+        "delay": 300
+    },
+    {"id": "virtualtime.end",
+        "type": "auto",
+        "to": "system",
+        "from": "system",
+        "name": "テスト終了",
+				"description": "演習開始から6分後に発火します。",
+        "addstate": ["virtualtime.end"],
+        "delay": 360
+    },
+
+
+    {
+        "id": "invisible",
+        "name": "不可視アクション",
+			"type": "action"
+    },
+    {
+        "id": "auto.pause",
+        "name":"自動アクションによる一時停止(実験的)",
+        "type": "auto", 
+        "from": "system",
+        "to": "system",
+				"systemstatecondition": ["fire.pause"],
+			"description": "ステートfire.pauseを立てると自動発火します。",
+        "addstate": ["system.paused"]
+        
+    },
+    {
+        "id": "auto.resume",
+        "name":"自動アクションによる再開(実験的)",
+        "from": "system",
+        "to": "system",
+        "type": "auto",
+        "systemstatecondition": ["fire.resume"],
+			"description": "ステートfire.resumeを立てると自動発火する定義ですが、現状の実装では発火しないはず(再開すると発火する？)。",
+        "removestate": ["system.paused"]
+    },
+    {
+    	"id": "auto.rerunnable",
+        "name":"再実行可能な自動アクション(実験的)",
+        "from": "system",
+        "to": "all",
+        "type": "auto",
+        "rerunstate": "rerunnable"
+    },{
+    	"id": "rerun",
+        "name":"再実行を有効にする(実験的)",
+        "type": "action",
+        "removestate": ["rerunnable"]
+    
+    }
+
+
+ ]}

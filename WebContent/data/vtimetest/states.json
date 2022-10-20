@@ -1,0 +1,57 @@
+[
+	{
+		"id": "virtualtime.start",
+		"name": "virtualtime.start"
+	},
+	{
+		"id": "virtualtime.checnpoint1",
+		"name": "virtualtime.checnpoint1"
+	},
+	{
+		"id": "virtualtime.checkpoint2",
+		"name": "virtualtime.checkpoint2"
+	},
+	{
+		"id": "virtualtime.checkpoint3",
+		"name": "virtualtime.checkpoint3"
+	},
+	{
+		"id": "virtualtime.checkpoint4",
+		"name": "virtualtime.checkpoint4"
+	},
+	{
+		"id": "virtualtime.checkpoint5",
+		"name": "virtualtime.checkpoint5"
+	},
+	{
+		"id": "virtualtime.end",
+		"name": "virtualtime.end"
+	},
+	{
+		"id": "invisible",
+		"name": "invisible"
+	},
+	{
+		"id": "injection.pause",
+		"name": "injection.pause"
+	},
+	{
+		"id": "injection.resume",
+		"name": "injection.resume"
+	},
+	{
+		"id": "fire.pause",
+		"name": "fire.pause"
+	},
+	{
+		"id": "fire.resume",
+		"name": "fire.resume"
+	},
+	{
+		"id": "rerunnable",
+		"name": "rerunnable"
+	}
+	
+	
+	
+]

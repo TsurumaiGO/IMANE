@@ -69,6 +69,7 @@ public class Notifier{
     public void onError(Session session, Throwable cause) {
         System.out.println("error : " + session.getId() + ", " + cause.getMessage());
     }
+	/**チーム全員宛のシステム通知を送信*/
 	public static void sendSystemNotification(String team, String message, int level, String state)
 			throws WorkflowException, IOException{
 		CardData c = CardData.find(CardData.Types.notification);
@@ -88,6 +89,7 @@ public class Notifier{
 	}
 	
 	//move from WorkflowInstance
+	/**通知メッセージを準備*/
 	public static  NotificationMessage constructNotification(CardData data, Member to, Member from, Member[] cc, NotificationMessage replyTo) throws WorkflowException{
 		if(data.is(CardData.Types.talk)){
 		}else if(data.is(CardData.Types.notification)){
@@ -98,6 +100,7 @@ public class Notifier{
 	}
 	
 	//move from WorkflowInstance
+	/**チーム全員宛の通知メッセージを送信*/
 	public static NotificationMessage sendTeamNotification(String team, String message, int level, String[] states) {
 		CardData data = CardData.find(CardData.Types.notification);
 		NotificationMessage msg = constructNotification(data,  Member.TEAM, Member.SYSTEM, null, null);

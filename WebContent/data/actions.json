@@ -6,10 +6,11 @@
         "from": "system",
         "name": "テスト開始",
         "description": "テスト開始",
-        "addstate": ["virtualtime.start"]
+        "addstate": ["virtualtime.start"],
+        "attachments": ["virtualtime.start"]
     },
     {
-        "id": "virtualtime.checnpoint1",
+        "id": "virtualtime.checkpoint1",
         "type": "auto",
         "to": "system",
         "from": "system",
@@ -66,6 +67,7 @@
         "name": "テスト終了",
 				"description": "演習開始から6分後に発火します。",
         "addstate": ["virtualtime.end"],
+        "attachments": ["virtualtime.end"],
         "delay": 360
     },
 
@@ -77,24 +79,42 @@
     },
     {
         "id": "auto.pause",
-        "name":"自動アクションによる一時停止",
+        "name":"自動アクションによる一時停止(実験的)",
         "type": "auto", 
         "from": "system",
         "to": "system",
-				"systemstatecondition": ["fire.pause"],
+			"systemstatecondition": ["fire.pause"],
 			"description": "ステートfire.pauseを立てると自動発火します。",
         "addstate": ["system.paused"]
         
     },
     {
         "id": "auto.resume",
-        "name":"自動アクションによる再開",
+        "name":"自動アクションによる再開(実験的)",
         "from": "system",
         "to": "system",
         "type": "auto",
         "systemstatecondition": ["fire.resume"],
 			"description": "ステートfire.resumeを立てると自動発火する定義ですが、現状の実装では発火しないはず(再開すると発火する？)。",
         "removestate": ["system.paused"]
+    },
+    {
+    	"id": "auto.rerunnable",
+        "name":"再実行可能な自動アクション(実験的)",
+        "from": "system",
+        "to": "all",
+        "type": "auto",
+        "description": "ステートrerunnableが立っていない場合に即時発火します。",
+        "addstate": ["rerunnable"],
+        "rerunstate": "rerunnable"
+    },{
+    	"id": "rerun",
+        "name":"再実行を有効にする(実験的)",
+        "type": "action",
+        "roles": ["all"],
+        "removestate": ["rerunnable"],
+        "description": "autoロールに対して実行すると自動アクションが再実行されます。"
+    
     }
 
 

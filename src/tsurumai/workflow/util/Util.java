@@ -10,9 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.UnsupportedCharsetException;
 import java.nio.file.Path;
@@ -32,20 +30,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import javax.inject.Singleton;
-import javax.servlet.ServletContext;
-import javax.ws.rs.core.Context;
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
-
 import com.fasterxml.jackson.core.JacksonException;
-
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tsurumai.workflow.WorkflowService;
@@ -411,21 +398,17 @@ public class Util {
 		try{
 
 			BufferedReader reader =new BufferedReader(new InputStreamReader(System.in));
-			for(String line = null; (line = reader.readLine()) != null; )
-			try{
-				
-//				
-//				String str = encodeHash(line, EncodeMethod.MD5);
-//				System.out.println("encoded:"+str);
-//				boolean matched = matchHash(str, line+".");
-//				System.out.println(matched ? "matched.":"unmatched.");
-
-
-
-				
-			}catch(Throwable t){
-				t.printStackTrace();
+			for(String line = null; (line = reader.readLine()) != null; ) {
+				try{
+					
+					System.out.println(line + " : " + (Util.isAbsolutePath(line) ? "absolute" : "relative"));
+					
+				}catch(Throwable t){
+					t.printStackTrace();
+				}
 			}
+			System.out.println("input path to test ");
+
 		}catch(Throwable t){
 			t.printStackTrace();
 		}
@@ -551,6 +534,9 @@ public class Util {
         mapper.setDateFormat(new SimpleDateFormat("HH:mm:ss"));
 
 	}
+	public static ObjectMapper getObjectMapper() {
+		return mapper;
+	}
 	public static String toJson(Object o) {
 		try {
 			if(o == null)return "";						
@@ -559,6 +545,11 @@ public class Util {
 			ServiceLogger.getLogger().error("failed to map object to json", e);
 			return "[JSON ERROR]" + o.toString();
 		}
+	}
+	public static boolean isAbsolutePath(String path) {
+		boolean ret = Path.of(path).isAbsolute();
+		return ret;
+
 	}
 }
 

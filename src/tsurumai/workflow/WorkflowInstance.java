@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -29,7 +30,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tsurumai.workflow.model.CardData;
 import tsurumai.workflow.model.Member;
-import tsurumai.workflow.model.PhaseData;
 import tsurumai.workflow.model.PointCard;
 import tsurumai.workflow.model.ReplyData;
 import tsurumai.workflow.model.ScenarioData;
@@ -38,8 +38,8 @@ import tsurumai.workflow.util.Pair;
 import tsurumai.workflow.util.ServiceLogger;
 import tsurumai.workflow.util.Util;
 import tsurumai.workflow.vtime.Task;
-import tsurumai.workflow.vtime.World;
 import tsurumai.workflow.vtime.Task.TaskListener;
+import tsurumai.workflow.vtime.World;
 @JsonIgnoreProperties({"comment","","//","#"})
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 
@@ -283,7 +283,6 @@ public class WorkflowInstance {
 		WorkflowInstance inst = new WorkflowInstance();
 		inst.team = team;
 		inst.initialize(basedir);
-		//inst.pid = pid;//TODO: 2019,9,4
 		return inst;
 	}
 	public static WorkflowInstance newInstance(String basedir, final String team){
@@ -445,7 +444,7 @@ public class WorkflowInstance {
 		//type:controlのアクション以外は拒否する
 		//TODO: ただし、自動アクションやリプライは停止するはずなので、意図した動作はしないかもしれない
 		if(this.getActiveScenario().isFeatureEnabled("virtualtime")) {
-			if(action.is(CardData.Types.control) && !this.isSuspending()) {
+			if(action.is(CardData.Types.control) && this.isSuspending()) {
 				rejectAction(action, from, to, cc,reply,  "演習が一時停止されています。");return;
 			}
 		}
@@ -556,7 +555,11 @@ public class WorkflowInstance {
 	public synchronized void processTriggerAction(){
 		CardData[] auto = CardData.findList(CardData.Types.auto);
 		for(CardData cur : auto){
-			if(autoActionHistory.containsKey(cur.id))continue;
+			
+			//2022.8 自動アクション複数回実行
+			//if(autoActionHistory.containsKey(cur.id))continue;
+			if(!this.isAutoActionExecutable(cur))continue;
+			
 			Member from = Member.getMemberByRole(this.team, cur.from == null ? Member.SYSTEM.role: cur.from);
 			Member to = Member.getMemberByRole(this.team, cur.to == null ? Member.TEAM.role  : cur.to);
 
@@ -572,13 +575,32 @@ public class WorkflowInstance {
 			if(!evaluateAutoAction(cur))
 				continue;
 			//2021.6.7 実行待機中のアクションを多重登録しないよう修正
-			if(!autoActionHistory.containsKey(cur.id) && !this.isActionPending(cur.id)){
-				logger.debug("自動アクションを受付:" + cur.name +  ":" + (cur.delay)+"秒後");
+			//TODO: 再実行判定が正しくない
+			if((!autoActionHistory.containsKey(cur.id) || 
+					cur.rerunstate != null) &&
+					!this.isActionPending(cur.id)){
+				logger.trace("自動アクションを受付:" + cur.name +  ":" + (cur.delay)+"秒後");
+				
 				List<Member> cc = Member.getMembers(this.team, cur.cc);
 				registerTrigger(cur, to, from, cc);
 			}
 		}
 	}
+	
+	/**自動アクションが実行可能かを評価する*/
+	protected synchronized boolean isAutoActionExecutable(CardData act) {
+		
+		if(act.rerunstate != null && act.rerunstate.length() != 0 &&  
+				!this.hasState(act.rerunstate)) {
+			logger.trace("自動アクションの再実行が有効:" + act.id);
+			return true;
+		}
+		
+		return !autoActionHistory.containsKey(act.id);
+	}
+	
+	
+	
 	class AutoActionTimer extends Timer {
 		String actionid;
 		AutoActionTimer(String actionid){
@@ -599,7 +621,9 @@ public class WorkflowInstance {
 		TimerTask handler = new TimerTask(){
 			@Override
 			public synchronized  void run() {
-				if(!autoActionHistory.containsKey(cur.id)){
+				//自動アクション複数実行対応
+				//if(!autoActionHistory.containsKey(cur.id)){
+				if(isAutoActionExecutable(cur)) {
 					logger.info("自動アクションを実行:" + cur.name);
 					acceptAction(cur,  from, to, cc.toArray(new Member[cc.size()]), null);
 					autoActionHistory.put(cur.id, WorkflowInstance.this.getTime());//new Date()); tag:virtualtime
@@ -618,20 +642,34 @@ public class WorkflowInstance {
 			
 			@Override
 			public void onExecuted(Task t, Date when) {
-				if(!autoActionHistory.containsKey(cur.id)){
+				//自動アクション複数実行対応
+				//if(!autoActionHistory.containsKey(cur.id)){
+				if(cur.rerunstate != null) {
+					int dammy = 0;
+				}
+				if(isAutoActionExecutable(cur)) {
 					logger.info("自動アクションを実行:" + cur.name);
 					acceptAction(cur,  from, to, cc.toArray(new Member[cc.size()]), null);
 					autoActionHistory.put(cur.id, WorkflowInstance.this.getTime());//new Date()); tag:virtualtime
 				}
 			}
 		};
+		
+		
+		if(cur.rerunstate != null) {//for debug
+			int dammy = 0;
+			
+		}
 		if(isActionPending(cur.id)) {
 			logger.debug("specified action are waiting to be execution." + cur.toString());
 			return;
 		}
 		
-		Task task = new Task(cur.id, this.getTime(this.getTime().getTime() + cur.delay * 1000)).addListener(l);
-		logger.info("registering new scedule task "+ task.toString());
+		Task task = new Task(cur.id, this.getTime(this.getTime().getTime() + cur.delay * 1000));
+		//TODO: 多重実行許可
+		//if(cur.rerunstate != null)			task.setMaxCount(10);//仮に
+		task.addListener(l);
+		//logger.trace("registering new schedule task "+ task.toString());
 		this.world.getScheduler().register(task);
 	}
 	
@@ -1524,6 +1562,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	public Map<String, Object> getSystemState(){
 		return this.systemState;
 	}
+	//TODO:仮想時刻機能を有効にすると正しいデータを取得できない
 	public TriggerEvent[] getTriggerEvent(){
 		return this.triggerEvents.toArray(new TriggerEvent[this.triggerEvents.size()]);
 	}

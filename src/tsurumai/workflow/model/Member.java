@@ -97,6 +97,7 @@ public class Member {
 	public boolean isadmin = false;
 	
 	/**このロールが入手済みのステートカードのIDのリストを保持する。演習中のみ有効。*/
+	//TODO: WorkflowInstance.memberStatesと同期すると、演習開始からステートカードをメンバに持たせることができる。
 	@XmlAttribute
 	public Set<String> availableStates = new HashSet<>();
 
@@ -105,17 +106,30 @@ public class Member {
 	public String icon;
 	
 	/**experimental*/
+	/**属するグループ(サブチーム)*/
 	@XmlAttribute
-	public String[] party;
-	/**experimental*/
-	@XmlAttribute
-	public String[] partyrole;
+	public String group;
+//	/**experimental*/
+//	@XmlAttribute
+//	public String[] groupRole;
 	
 	/**ログイン時のパスワード。未設定の場合は空文字でログイン可能。*/
 	@XmlTransient
 	public String passwd;
 	
 	
+
+	/**宛先に指定可能な特殊なロール*/
+	public interface SpecialRole{
+		/**全員*/
+		public String ALL = "all";
+		/**チームメンバ全員*/
+		public String TEAM = "team";
+		/**グループメンバ全員*/
+		public String GROUP = "group";
+		/**システム*/
+		public String SYSTEM = "system";
+	}
 	
 	protected javax.websocket.Session session;
 	
@@ -123,9 +137,10 @@ public class Member {
 		this.online = session == null ?  false : session.isOpen();this.session = session;return this;}
 	public Member(){}
 
-	public static Member SYSTEM = new Member(){{this.name=this.rolename="システム";this.desc="システム";this.system = new boolean[]{true, true,true,true};this.role="system";}};
-	public static Member ALL = new Member(){{this.name=this.rolename="全員";this.desc="全員";this.system = new boolean[]{true, true,true,true};this.role="systemall";}};
-	public static Member TEAM = new Member(){{this.name=this.rolename="チーム全員";this.desc="チーム全員";this.system = new boolean[]{true, true,true,true};this.role="all";}};
+	public static Member SYSTEM = new Member(){{this.name=this.rolename="システム";this.desc="システム";this.system = new boolean[]{true, true,true,true};this.role=SpecialRole.SYSTEM ;}};
+	public static Member ALL = new Member(){{this.name=this.rolename="全員";this.desc="全員";this.system = new boolean[]{true, true,true,true};this.role=SpecialRole.ALL;}};
+	public static Member TEAM = new Member(){{this.name=this.rolename="チーム全員";this.desc="チーム全員";this.system = new boolean[]{true, true,true,true};this.role=SpecialRole.TEAM;}};
+	public static Member GROUP = new Member(){{this.name=this.rolename="チーム全員";this.desc="グループ全員";this.system = new boolean[]{true, true,true,true};this.role=SpecialRole.GROUP;}};
 	
 	/**すべてのメンバのリストを取得する。<br>前回ロードしたcontacts.jsonファイルの内容を返す*/
 	public static Map<String,Member> loadAll() throws WorkflowException{

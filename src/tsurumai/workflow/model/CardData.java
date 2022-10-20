@@ -160,6 +160,11 @@ public class CardData implements Cloneable{
 	public boolean attach = false;
 
 	
+	/**空でない場合、このステートIDがシステムステートに存在するなら、自動アクションを再実行可能にする。*/
+	@XmlAttribute
+	public String rerunstate;
+	
+	
 	/**デバッグ用*/
 	@XmlAttribute public boolean breakpoint = false;
 	

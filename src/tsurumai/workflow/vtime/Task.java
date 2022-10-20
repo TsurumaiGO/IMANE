@@ -24,6 +24,8 @@ public class Task {
 	@XmlAttribute
 	public int getMaxCount() {return this.maxCount;}
 	int maxCount = 1;
+	public int setMaxCount(int count) {return this.maxCount = count;}
+	
 	
 	/**繰り返し実行間隔(ms)*/
 	@XmlAttribute
@@ -76,8 +78,9 @@ public class Task {
 		if(obj == null) return false;
 		Task task = (Task)obj;
 		if(!(task.name.equals(this.name)))return false;
-		if(!(task.notBefore != null && !task.notBefore.equals(this.notBefore)))return false;
-		if(task.interval != this.interval) return false;
+		//TODO:同期ずれで実行時間がずれてしまう
+		//if(!(task.notBefore != null && !task.notBefore.equals(this.notBefore)))return false;
+		//if(task.interval != this.interval) return false;
 		return true;
 		
 	}

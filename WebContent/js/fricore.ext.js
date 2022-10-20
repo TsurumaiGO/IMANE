@@ -384,10 +384,10 @@ $.prototype.clockticker = function(){
 	var tid = window.setInterval(()=>{
 		if(me.is(":focus"))
 			return;//入力中は値を更新しない
-		if(me.is("input"))
-			me.val(formatISOString(new Date()));
-		if(me.not("input"))
-			me.text(formatISOString(new Date()));
+		if(me.filter("input") && me.data("time"))
+			me.filter("input").val(formatISOString(me.data("time")));
+		if(me.not("input") && me.data("time"))
+			me.not("input").text(formatDate(me.data("time")));
 	},2000);
 	
 }
@@ -424,30 +424,53 @@ function inRangeOf(element, pos){
 /**メニューバー。クラスsubmenuを持つ子要素にはJQuery UIのmenuを適用*/
 $.prototype.menubar = function(){
 	var me = $(this);
-	me.find(".submenu").menu().hide();
+	var menu = me.find(".submenu").menu({
+		select:(evt, item)=>{
+			var item = $(evt.currentTarget);
+			var checkgroup = item.closest(".ui-menu").find(".checkable.checkgroup");
+			if(checkgroup.length > 0){
+				checkgroup.data("checked", false).removeClass("checked");
+			}
+			if(item.hasClass("checked")){
+				item.data("checked", false).removeClass("checked");
+			}else{
+				item.data("checked", true).addClass("checked");
+			}
+		}
+	}).hide();
 	$(document).on("click", e=>{
 		var pos = {x:e.clientX,	y:e.clientY}
 		if(!inRangeOf(me, pos)){
 			me.find(".submenu").hide();
 		}
 	});
-
-
 	// チェック付きメニュー項目	
 	//同一階層で.checkgroupクラスを持つ要素は単一選択チェックグループとして扱う
-	me.find(".checkable").on("click", e=>{
+/*
 		var item = $(e.currentTarget)
 		var checkgroup = item.closest(".ui-menu").find(".checkable.checkgroup");
 		if(checkgroup.length > 0){
-			checkgroup.data("checked", false).removeClass("checked fa-check");
+			checkgroup.data("checked", false).removeClass("checked fas fa-check");
 		}
 		if(item.hasClass("checked")){
-			item.data("checked", false).removeClass("checked fa-check");
+			item.data("checked", false).removeClass("checked fas fa-check");
 		}else{
-			item.data("checked", true).addClass("checked fa-check");
+			item.data("checked", true).addClass("checked fas fa-check");
 		}
-	});
-
+		*/
+	/*
+	me.select = function(item){
+		var checkgroup = item.closest(".ui-menu").find(".checkable.checkgroup");
+		if(checkgroup.length > 0){
+			checkgroup.data("checked", false).removeClass("checked").siblings("menu-icon").removeClass("fas fa-check");;
+		}
+		if(item.hasClass("checked")){
+			item.data("checked", false).removeClass("checked").siblings("menu-icon").removeClass("fas fa-check");
+		}else{
+			item.data("checked", true).addClass("checked").siblings("menu-icon").addClass("fas fa-check");
+		}
+	};
+	*/
 	//サブメニューの展開
 	me.find(".menuitem").on("click", evt =>{
 		var cur = $(evt.currentTarget);
@@ -467,38 +490,75 @@ $.prototype.menubar = function(){
 
 
 
+
+/**メンバ情報の配列からグループのメンバを抽出する
+@param members;ユーザ情報(object)の配列.nullならすべてのユーザを対象にする
+@param group;抽出するグループのIDの配列.nullなら自分が属するグループを対象にする
+
+*/
+
+function getGroupMembers(members, group){
+	var list = members ? members : FRICORE.members;
+	var grp = group ? group : FRICORE.usersession.group;
+	var team = FRICORE.usersession.team;
+	var ret = _.filter(list, {team:team, group:grp});
+	
+	return ret;	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**振り返り画面;シーケンス図でアクターが表示されたときに呼び出される。*/
-function onDrawActor(evt){
+function onDrawActor(e){
 	if(e.hasOwnProperty("detail")){
-		FRICORE.warn("no data attached to Actor SVG element.");
+		FrICORE.warn("no data attached to Actor SVG element.");
 		return;
 	}
 	
 	var data = e.detail;//アクターのボックス、アクターを結ぶラインを含むg要素の配列が返る。
-	var role = e.detail.attr("data-role");//ロール名が設定されている
+	var role =  data.role;//ロール名が設定されている
 	
 	//TODO: シーケンス図をカスタマイズする場合はここにコードを追加
-	FRICORE.trace("on draw actor "+ role);
+	FrICORE.trace("on draw actor "+ role);
 }
 /**振り返り画面;シーケンス図でメッセージ(イベント)が表示されたときに呼び出される。*/
-function onDrawMessage(evt){
+function onDrawMessage(e){
 	if(e.hasOwnProperty("detail")){
-		FRICORE.warn("no data attached to Actor SVG element.");
+		FrICORE.warn("no data attached to Actor SVG element.");
 		return;
 	}
 	
 	var data = e.detail;//アクターのボックス、アクターを結ぶラインを含むg要素の配列が返る。
-	var eid = e.detail.attr("id");//イベントIDが設定されている。
-	var eventdata = _.filter(FRICORE.events, {id:data.eid});
+	var eid = $(data).attr("id");//イベントIDが設定されている。
+	var eventdata = _.where(FRICORE.events, {id:data.eid});
 
 	//TODO: シーケンス図をカスタマイズする場合はここにコードを追加 
-	FRICORE.trace("on draw message: "+ eventdata || "");
+	FrICORE.trace("on draw message: "+ eventdata || "");
 
 }
 /**振り返り画面;シーケンス図でノートが表示されたときに呼び出される。*/
-function onDrawNote(evt){
+function onDrawNote(e){
 	if(e.hasOwnProperty("detail")){
-		FRICORE.warn("no data attached to Note SVG element.");
+		FrICORE.warn("no data attached to Note SVG element.");
 		return;
 	}
 	
@@ -508,8 +568,9 @@ function onDrawNote(evt){
 
 	//TODO: シーケンス図をカスタマイズする場合はここにコードを追加
 	
-	FRICORE.trace("on draw note: "+ eventdata || "");
+	FrICORE.trace("on draw note: "+ eventdata || "");
 }
+
 
 
 $(()=>{
@@ -526,6 +587,12 @@ $(()=>{
 	
 	//$("#popupctrl").on("click", onClickPopup);
 	$(".menubar").menubar();
+	
+	$(".menubutton").on("click", e=>{
+		var m = $(e.currentTarget).nextAll(".submenu").menu();
+		if(m.is(":visible"))m.hide();else m.show();
+		var dammy = 0;
+	});
 	
 	
 

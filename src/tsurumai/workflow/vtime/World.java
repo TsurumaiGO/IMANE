@@ -17,9 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tsurumai.workflow.NotificationMessage;
 import tsurumai.workflow.Notifier;
-import tsurumai.workflow.WorkflowException;
 import tsurumai.workflow.util.ServiceLogger;
-import tsurumai.workflow.util.Util;
 
 /**
 仮想時刻を持つスペースを表現する

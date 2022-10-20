@@ -6,9 +6,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import tsurumai.workflow.ProcessInstanceManager;
 import tsurumai.workflow.WorkflowException;
-import tsurumai.workflow.ProcessInstanceManager.Session;
 
 @XmlRootElement
 @JsonIgnoreProperties({"comment","","//","#"})

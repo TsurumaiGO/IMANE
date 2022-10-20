@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import tsurumai.workflow.model.CardData;
-import tsurumai.workflow.model.CardData.Types;
+//import tsurumai.workflow.model.CardData.Types;
 import tsurumai.workflow.model.Member;
 import tsurumai.workflow.model.ReplyData;
 import tsurumai.workflow.util.ServiceLogger;
@@ -90,9 +90,11 @@ public class NotificationMessage implements Cloneable{
 		this.message = constructMessage(action, replyTo);
 	}
 	protected static ServiceLogger logger = ServiceLogger.getLogger();
+	/**チーム全員宛の広報メッセージを準備*/
 	public static NotificationMessage makeBroadcastMessage(final String message, final CardData.Types actiontype){
 		return makeBroadcastMessage(message, actiontype, null);
-	}	
+	}
+	/**チーム全員宛の広報メッセージを準備*/
 	public static NotificationMessage makeBroadcastMessage(final String message, final CardData.Types actiontype, String actionid){
 		NotificationMessage ret = new NotificationMessage();
 		ret.action = CardData.find(actiontype).clone();

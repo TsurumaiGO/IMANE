@@ -33,7 +33,7 @@
             "minLength": 1
           },
           "order": {
-            "title":"表っ順",
+            "title":"表示順",
             "description": "役割の表示順を設定します。(若い順に左寄せ)",
             "type": "number"
           }
@@ -142,7 +142,7 @@
     },
     "teams":{
       "type":"array",
-      "title": "チームIDのリスト",
+      "title": "チーム情報のリスト",
 			"description": "チーム情報を指定します。contacts.jsonで定義されたチームに対応する必要があります。",
 			"properties": {
 				"id":{
@@ -158,6 +158,29 @@
        {"required": ["id","name"]}
       ]
     },
+    "groups":{
+      "type":"array",
+      "title": "グループ情報のリスト",
+			"description": "グループ情報を指定します。contacts.jsonで定義されたグループに対応する必要があります。",
+			"properties": {
+				"id":{
+					"type":"string",
+					"title": "グループID"
+				},
+				"name":{
+					"type":"string",
+					"title": "グループ名"
+				},
+				"icon":{
+					"type":"string",
+					"title": "グループメンバの表示スタイル(cssクラス名)。"
+				}
+			},
+      "items": [
+       {"required": ["id","name"]}
+      ]
+    },
+
     "features":{
       "type":"array",
       "title": "有効化する機能名",

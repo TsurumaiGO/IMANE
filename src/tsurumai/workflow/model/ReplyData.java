@@ -245,46 +245,9 @@ public class ReplyData{
 				logger.info(String.format("リプライは候補から除外されました(オーダーが非該当(%d,%d))。アクション %s:宛先:%s へのリプライ [%s]", order, e.order, actionid, to.role, e.name ));
 				continue;
 			}
-//2018.12.19	リファクタリング
-//			if(attachments != null && e.attachmentcondition != null && e.attachmentcondition.length() != 0/*e.attachmentcondition >0*/){
-//				boolean found = false;
-//				for(String s : attachments){
-//					if(s.equals(e.attachmentcondition)){	
-//						found = true;break;
-//					}
-//				}
-//				if(!found){
-//					logger.info(String.format("リプライは候補から除外されました(添付ステートカードが非該当)。アクション %s:添付ステートカード:%s へのリプライ [%s]", 
-//							actionid, String.valueOf(e.attachmentcondition), e.name ));
-//					continue;
-//				}else{
-//					logger.info(String.format("リプライ候補がヒット(添付ステートカードが非該当)。アクション %s:添付ステートカード:%s へのリプライ [%s]", 
-//							actionid, String.valueOf(e.attachmentcondition), e.name ));
-//					
-//				}
-//			}
+
 			if(!e.checkAttachmentCondition(attachments))
 				continue;
-
-			
-//
-//			if(to != null && !to.isSystemUser(phase)){
-//				logger.info(String.format("リプライは候補から除外されました(宛先が自動応答ユーザではありません)。アクション %s:宛先:%s へのリプライ [%s]",
-//						actionid, to.role, e.name ));
-//				continue;
-//			}
-//			
-//			if(to != null && !to.matches(e.to)){
-//				logger.info(String.format("リプライは候補から除外されました(宛先が非該当)。アクション %s:宛先:%s へのリプライ [%s]",
-//						actionid, to.role, e.name ));
-//				continue;
-//			}
-//			//fromが指定されていたら条件評価
-//			if(from != null && !from.matches(e.from)){
-//				logger.info(String.format("リプライは候補から除外されました(送信元が非該当)。アクション %s:送信元:%s へのリプライ [%s]",
-//						actionid, from.role , e.name ));
-//				continue;//TODO:???
-//			}
 			if(!e.checkRecipients(to, from, phase))
 				continue;
 			
@@ -491,7 +454,9 @@ public class ReplyData{
 	public static Collection<ReplyData> loadReply(final int phase, final String file) throws WorkflowException{
 			if(cache.load(file) != null && cache.get().containsKey(Integer.valueOf(phase))) 
 				return cache.get().get(Integer.valueOf(phase));
-
+			if(file == null) {
+				logger.warn("シナリオのロード元がnullです。" + file);
+			}
 			reload(file);
 			return cache.get().get(Integer.valueOf(phase));
 	}

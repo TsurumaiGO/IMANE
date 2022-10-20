@@ -1,8 +1,8 @@
 eclipse.preferences.version=1
 encoding//WebContent/css/fricore.css=UTF-8
-encoding//WebContent/data/actions.json=UTF-8
-encoding//WebContent/data/replies.json=UTF-8
-encoding//WebContent/data/states.json=UTF-8
+encoding//WebContent/data/vtimetest/actions.json=UTF-8
+encoding//WebContent/data/vtimetest/replies.json=UTF-8
+encoding//WebContent/data/vtimetest/states.json=UTF-8
 encoding//WebContent/sys=UTF-8
 encoding//WebContent/sys/actions.json=UTF-8
 encoding//WebContent/sys/replies.json=UTF-8

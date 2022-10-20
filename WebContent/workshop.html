@@ -3,24 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <title>FrICORE</title>
-<link href = "js/lib/themes/base/jquery-ui.min.css" rel = "stylesheet" type = "text/css"/>
+<link href = "js/lib/jquery-ui.min.css" rel = "stylesheet" type = "text/css"/>
 <link href = "css/select2.min.css" rel = "stylesheet" type = "text/css"/>
-
 <link href = "css/tablesorter.default.css" rel = "stylesheet" type = "text/css"/>
 <link href = "css/jquery.contextMenu.css" rel = "stylesheet" type = "text/css"/>
-<link href = "css/font-awesome.min.css" rel = "stylesheet" type = "text/css"/>
+<link href = "css/lib/font-awesome/css/all.css" rel = "stylesheet" type = "text/css"/>
 
 <link href = "image/blue/style.css" rel = "stylesheet" type = "text/css"/>
-<link rel = "stylesheet" type="text/css" href = "css/fricore.css" id = "theme-default">
-<link rel = "stylesheet" type="text/css" href = "css/custom.css" id = "theme-fancy" class="theme">
+<link rel = "stylesheet" type="text/css" href = "css/fricore.css" id = "theme-default" class = "theme">
+<link rel = "stylesheet" type="text/css" href = "css/custom.css" id = "theme-fancy" class="theme theme-custom" title="明るい色" disabled = false>
+<link rel = "stylesheet" type="text/css" href = "css/custom2.css" id = "theme-dark" class="theme theme-custom" title="暗い色" disabled = true>
  
 <script type = "text/javascript" src = "js/lib/mermaid.js"></script>
 <script type = "text/javascript" src = "js/lib/jquery-3.0.0.js"></script>
-<script type = "text/javascript" src = "js/lib/jquery-ui.min.js"></script>
+<script type = "text/javascript" src = "js/lib/jquery-ui.js"></script>
 <script type = "text/javascript" src = "js/lib/underscore.js"></script>
-<!-- <script type = "text/javascript" src = "js/lib/jquery.tablesorter.min.js"></script>-->
 <script type = "text/javascript" src = "js/lib/jquery.tablesorter.js"></script>
-<!--<script type = "text/javascript" src = "js/lib/jquery.tablesorter.widgets.js"></script>-->
 <script type = "text/javascript" src = "js/lib/jquery.quicksearch.js"></script>
 <script type = "text/javascript" src = "js/lib/select2.full.min.js"></script>
 <script type = "text/javascript" src = "js/lib/jquery.ui.position.js"></script>
@@ -39,7 +37,7 @@
 <body>
 
 
-<div id = 'product-info'><span id = 'server-desc'></span> <span id = 'server-version'> </span>;&nbsp;<span id = 'client-desc'></span>
+<div id = 'product-info' style = "height:1.3em;overflow-x:clip;font-size:small;"><span id = 'server-desc'></span> <span id = 'server-version'> </span>;&nbsp;<span id = 'client-desc'></span>
 	<span id = 'client-version'></span>;&nbsp;<span id='copyright'></span></div>
 
 <div id = "header">
@@ -76,39 +74,44 @@
 	<span style='display:none' id = "sessioninfo"></span>
 
 </div>
-	
+
+
+
 	
 <div id = "headerctrl" class='menuicon' style='font-size:1em;'>
-	<div class = "menubar" style = "margin-right:2em;">
-		<div class = "menuitem fa fa-icon fa-bars"><a>ビュー</a>
+	
+	<div class = "menubar">
+		<div class = "menuitem"><span class = "fas fa-bars"></span>ビュー
 			<ul class = "submenu">
-				<li><a class = "fa fa-icon checkable checkgroup" href = "javascript:dashboard()">演習コンソール</a></li>
-				<li><a class = "fa fa-icon checkable checkgroup" href = "javascript:history()">振り返り</a></li>
-				<li><a class = "fa fa-icon checkable checkgroup" href = "javascript:wfview()">ファシリテータ用コンソール</a></li>
+ 				<li class = "checkable checkgroup"><div onclick = "dashboard()">演習コンソール</div></li>
+				<li class = "checkable checkgroup"><div onclick = "history()">振り返り</div></li>
+				<li class = "checkable checkgroup"><div onclick = "wfview()">ファシリテータ用コンソール</div></li>
 			</ul>
 		</div>
-		<div class = "menuitem fa fa-icon fa-gear"><a>設定</a>
+		<div class = "menuitem"><span class = "fas fa-cog"></span>設定
 			<ul class = "submenu">
- 				<li><a>スキン</a>
+ 				<li><div>スキン</div>
 					<ul>
-					  <li><a class = "fa fa-icon checkable checkgroup" data-checkgroup = "skin" href="#" onclick="changeTheme()" title = "既定のスキン">既定</a></li>
-					  <li><a class = "fa fa-icon checkable checkgroup checked" data-checkgroup = "skin" href="#" onclick="changeTheme('#theme-fancy')" title = "明るい色調のスキン">ちょっとファンシー</a></li>
+					  <li><div class = "checkable checkgroup" data-checkgroup = "skin" onclick="changeTheme()" title = "既定のスキン">既定</div></li>
+					  <li><div class = "checkable checkgroup checked" data-checkgroup = "skin" onclick="changeTheme('#theme-fancy')" title = "明るい色調のスキン">ライト</div></li>
+					  <li><div class = "checkable checkgroup" data-checkgroup = "skin" onclick="changeTheme('#theme-dark')" title = "暗い色調のスキン">ダーク</div></li>
 					</ul>
 				</li>
-				<li><a>詳細設定(デバッグ用)</a>
+				<li class = 'debugmenu'><div>詳細設定(デバッグ用)</div>
 					<ul>
-					  <li><a class = "fa fa-icon checkable config-experimental" href = "javascript:FrICORE.toggleConfig('.config-experimental', 'experimental')" title = "実験的な機能を有効にします。">実験的機能</a></li>
-					  					  <li><a class = "fa fa-icon checkable config-debug" href = "javascript:FrICORE.toggleConfig('.config-debug', 'debug')" title = "デバッグ機能を有効にします。">デバッグ</a></li>
-  					  <li><a class = "fa fa-icon checkable config-autorefresh" href = "javascript:FrICORE.toggleConfig('.config-autorefresh', 'disableAutoRefresh')" title = "演習状態の自動更新を有効にします。">自動更新</a></li>
-					  <li><a class = "fa fa-icon checkable config-trace" href = "javascript:FrICORE.toggleConfig('.config-trace', 'trace')" title = "詳細なトレースを有効にします。">トレース</a></li>
+						<li><div class = "checkable config-experimental" onclick = "FRICORE.toggleConfig('.config-experimental', 'experimental')" title = "実験的な機能を有効にします。">実験的機能</div></li>
+						<li><div class = "checkable config-debug" onclick = "FRICORE.toggleConfig('.config-debug', 'debug')" title = "デバッグ機能を有効にします。">デバッグ</div></li>
+						<li><div class = "checkable config-autorefresh" onclick = "FRICORE.toggleConfig('.config-autorefresh', 'disableAutoRefresh')" title = "演習状態の自動更新を有効にします。">自動更新</div></li>
+						<li><div class = "checkable config-trace" onclick = "FRICORE.toggleConfig('.config-trace', 'enableTrace')" title = "詳細なトレースを有効にします。">トレース</div></li>
 					</ul>
 				</li>
 
 			</ul>
 		</div>
 	</div>
+</div>	
 
-	...
+	<!-- 
 	<a href='#' onclick='$("#configmenu").show()' class='fa fa-gear' > </a>
 		<ul id = "configmenu" class = "menu" style = "display:none">
 			<li>
@@ -119,7 +122,7 @@
 					  <li><a href="#" onclick="changeTheme('#theme-fancy')" title = "明るい色調のスキン">ちょっとファンシー</a></li>
 				</ul>
 			</li>
-			<li><span class='fa fa-gear' style='font-size:1.5em' title='詳細設定'>詳細設定</span></li>
+			<li><span class='fa fa-cog' style='font-size:1.5em' title='詳細設定'>詳細設定</span></li>
 		</ul>
 	
 	<a href='#' onclick='$("#headermenu").menu().show();'>
@@ -132,7 +135,9 @@
 	  <li><a href="#" onclick="history()"><span class="ui-icon ui-icon-image"></span>振り返り</a></li>
 	  <li><a href="#" onclick="wfview()"><span class="ui-icon ui-icon-calculator"></span>ファシリテータ用コンソール</a></li>
 	</ul>
-</div>
+	
+	--!>
+
 
 	
 	
@@ -599,38 +604,53 @@
 		</tbody>
 	</table>
 	</div>
+
+
+
+
 	
 </div>
 </div>
 
 
 
+<script type = "template" id = "userpicker-template">
+<option value = '<%-obj.role%>' 
+	title = '<%-(obj.name || "") + " " + (obj.rolename || "") + "(" + (obj.role || "") + ") <" + (obj.email || "") + ">"%>' 
+	class = '<%-"userlist " + (obj.icon || "")%>'><%-obj.rolename%></option>
+
+</script>
+
 <!-- テンプレート -->
 <script type = "template" id = "processlist-template">
-<tr class='listitem-selectable <%-obj.started ? "process-running":""%> <%-obj.aborted ? "process-aborted" :"" %>' <%-obj.paused ? "process-pausing" :"" %>' onclick='onSelectProcess(this)'>
+<tr class='listitem-selectable <%-obj.started ? "process-running":""%> <%-obj.aborted ? "process-aborted" :"" %> <%-obj.paused ? "process-pausing" :"" %>' onclick='onSelectProcess(this)'>
 	<td class='process-id'><%-obj.id%></td>
 	<td class='assign-team'><%-obj.team%></td>
 	<td><%-obj.name == "_default_" ? "既定" : obj.name%></td>
 	<td><span class='assign-phase-container'>	</span>
-
-	<a class = 'fa fa-forward icon' style='color:green;' href='#' onclick='assign(this, "start");return false;' title='フェーズ番号を選択して演習フェーズを開始します。'>開始</a>
-	<a class = 'fa fa-play-circle icon feature feature-virtualtime btn-pause' style='color:blue;' title='演習フェーズを一時停止します。'>一時停止</a>
-	<a class = 'fa fa-minus-circle icon feature feature-virtualtime btn-abort' style='color:red;' title='演習フェーズを中断します。'>中断</a>
-	<a class='fa fa-download icon feature feature-virtualtime' style='color:blue;' href='#' onclick='store(this);return false;' title='演習の状態を保存します。'>状態を保存</a>
-	<a class='fa fa-upload icon feature feature-virtualtime' href='#' onclick='$(this).next().click();return false;' title='保存したデータから演習の状態を復元します。'>状態を復元</a>
-	<input type='file' style='display:none' class='ui-button ui-corner-all ui-widget' onchange='restore(this);$(this).val("");'></td>
+	<span style = "white-space:nowrap">
+		<a class = 'fa fa-forward icon' style='color:green;' href='#' onclick='assign(this, "start");return false;' title='フェーズ番号を選択して演習フェーズを開始します。'>開始</a>
+		<a class = 'fa fa-play-circle icon feature feature-virtualtime btn-pause' style='color:blue;' title='演習フェーズを一時停止します。'>一時停止</a>
+		<a class = 'fa fa-minus-circle icon feature feature-virtualtime btn-abort' style='color:red;' title='演習フェーズを中断します。'>中断</a>
+	</span>
+	<span style = "white-space:nowrap" class = "experimental">
+		<a class='fa fa-download icon feature feature-virtualtime' style='color:blue;' href='#' onclick='store(this);return false;' title='演習の状態を保存します。'>状態を保存</a>
+		<a class='fa fa-upload icon feature feature-virtualtime' href='#' onclick='$(this).next().click();return false;' title='保存したデータから演習の状態を復元します。'>状態を復元</a>
+		<input type='file' style='display:none' class='ui-button ui-corner-all ui-widget' onchange='restore(this);$(this).val("");'>
+	</span>
+	</td>
 	<td><%-obj.stateText%></td>
 	<td><%-obj.score||''%></td>
 	<td><%-obj.start||''%></td>
-	<td class = "virtualtime feature feature-virtualtime"><%-obj.time%>
+	<td class = "virtualtime feature feature-virtualtime" data-time = "<%-obj.time%>">
 		<div class = "clock-control togglemenu-container" style = "display:inline-block">
-			<a class = "fa fa-icon fa-clock-o togglemenu-button">.</a>
 			<div class = "togglemenu-target">
-			<label class = "ctrllabel" title = "演習の基準日時を指定します。"><input type = "datetime-local" class = "clock"></label><br>
+			<label class = "ctrllabel" title = "演習の基準日時を指定します。"><input type = "datetime-local" class = "clock" data-time = "<%-obj.time%>"></label><br>
 			<label class = "ctrllabel" title = "演習の進行速度を指定します。">速度：<input type = "range" max = "10" min = "0" step = "0.5" class = "slider-bar" value = "1">x
-			<input type = "number" class = "slider-digit" value = "1" max = "10" min = "0" step = "0.5" ></label>
+			<input type = "number" class = "slider-digit" value = "1" max = "10" min = "0" step = "0.5"></label>
 			</div>
-			<div class = "togglemenu-alt clock"></div>
+			<div class = "togglemenu-alt clock" data-time = "<%-obj.time%>"></div>
+			<a class = "fa fa-icon fa-edit togglemenu-button"></a>
 		</div>
 
 	</td>
@@ -784,13 +804,13 @@
 
 	<li>説明:<%=hasOwnProperty("icon")?("class='fa fa-icon "+ icon + "'"):""%><%=hasOwnProperty("description")?description:""%></li>
 
-	<li <%=_.isEmpty(addStateAction)?'class="hidden"':''%>>次のアクションがシステムステートに追加します(addstate):
+	<li <%=_.isEmpty(addStateAction)?'class="hidden"':''%>>次のアクションでシステムステートに追加されます(addstate):<br>
 		<span><ul><%=formatActionCard(addStateAction)%></ul></span></li>
 
-	<li <%=_.isEmpty(removeStateAction)?'class="hidden"':''%>>次のアクションがシステムステートから削除します(removestate):
+	<li <%=_.isEmpty(removeStateAction)?'class="hidden"':''%>>次のアクションでシステムステートから削除されます(removestate):<br>
 		<span><ul><%=formatActionCard(removeStateAction)%></ul></span></li>
 
-	<li <%=_.isEmpty(attachmentAction)?'class="hidden"':''%>>次のアクションに添付されます(attachment):
+	<li <%=_.isEmpty(attachmentAction)?'class="hidden"':''%>>次のアクションに添付されます(attachment):<br>
 		<span><ul><%=formatActionCard(attachmentAction)%></ul></span></li>
 	<li <%=_.isEmpty(systemStateConditionAction)?'class="hidden"':''%>>次の自動アクションが実行されます(systemstatecondition):
 		<span><ul><%=formatActionCard(systemStateConditionAction)%></ul></span></li>
@@ -799,13 +819,14 @@
 	<li <%=_.isEmpty(addStateReply)?'class="hidden"':''%>>次のリプライがシステムステートに追加します(addstate):
 		<span><ul><%=addStateReply ? formatReplyCard(addStateReply):""%></ul></span></li>
 
-	<li <%=_.isEmpty(removeStateReply)?'class="hidden"':''%>>次のリプライがシステムステートから削除します(removestatestate):
-		<span><ul><%=removeStateReply?formatReplyCard(removeStateReply):""%></ul></span></li>
+	<li <%=_.isEmpty(removeStateReply)?'class="hidden"':''%>>次のリプライがシステムステートから削除します(removestatestate):<br>
+		<span><ul><%=removeStateReply?formatReplyCard(removeStateReply):""%></ul></span>
+	</li>
 
-	<li <%=_.isEmpty(attachmentReply)?'class="hidden"':''%>>次のリプライに添付されます(state):
+	<li <%=_.isEmpty(attachmentReply)?'class="hidden"':''%>>次のリプライに添付されます(state):<br>
 		<span><ul><%=attachmentReply?formatReplyCard(attachmentReply):""%></ul></span></li>
 
-	<li <%=_.isEmpty(stateConditionReply)?'class="hidden"':''%>>次のリプライが適用されます(statecondition):
+	<li <%=_.isEmpty(stateConditionReply)?'class="hidden"':''%>>次のリプライが適用されます(statecondition):<br>
 		<span><ul><%=stateConditionReply?formatReplyCard(stateConditionReply):""%></ul></span></li>
 </ul>
 </div>

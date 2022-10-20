@@ -1,10 +1,11 @@
 [
 	{
 		"id": "virtualtime.start",
-		"name": "virtualtime.start"
+		"name": "virtualtime.start",
+		"effect": "href:effects/start.html"
 	},
 	{
-		"id": "virtualtime.checnpoint1",
+		"id": "virtualtime.checkpoint1",
 		"name": "virtualtime.checnpoint1"
 	},
 	{
@@ -25,7 +26,8 @@
 	},
 	{
 		"id": "virtualtime.end",
-		"name": "virtualtime.end"
+		"name": "virtualtime.end",
+		"effect": "href:effects/end.html"
 	},
 	{
 		"id": "invisible",
@@ -46,5 +48,12 @@
 	{
 		"id": "fire.resume",
 		"name": "fire.resume"
+	},
+	{
+		"id": "rerunnable",
+		"name": "rerunnable"
 	}
+	
+	
+	
 ]

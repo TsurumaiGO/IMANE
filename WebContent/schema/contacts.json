@@ -76,36 +76,42 @@
             "type": "string",
             "minLength": 1
           },
+          "group": {
+            "title":"グループID",
+            "description":"グループIDを指定します。(実験的)",
+            "type": "string",
+            "minLength": 1
+          },
           "icon":{
             "title": "アイコン",
             "description":"カードを表示する際に、html要素にclass値を付加します。Font Awesomeのアイコンを使用することを想定しています。",
             "type":"string"
           },
-					"availableStates":{
-						"title": "所有ステートカード",
-						"description": "所有するステートカードのIDのリスト。",
-						"type": "array",
-						"items": {
-							"required": ["string"]
-						}
-
-					},
-					"party":{
-						"title": "パーティ",
-						"description": "メンバが属する集団。複数可。",
-						"type":"array",
-						"items": {
-							"required": ["string"]
-						}
-					},
-					"partyrole":{
-						"title": "パーティロール",
-						"description": "パーティ内のロール。複数可。",
-						"type":"array",
-						"items": {
-							"required": ["string"]
-						}
+				"availableStates":{
+					"title": "所有ステートカード",
+					"description": "所有するステートカードのIDのリスト。",
+					"type": "array",
+					"items": {
+						"required": ["string"]
 					}
+
+				},
+				"party":{
+					"title": "パーティ",
+					"description": "メンバが属する集団。複数可。(試験的)",
+					"type":"array",
+					"items": {
+						"required": ["string"]
+					}
+				},
+				"partyrole":{
+					"title": "パーティロール",
+					"description": "パーティ内のロール。複数可。(試験的)",
+					"type":"array",
+					"items": {
+						"required": ["string"]
+					}
+				}
 					
         }
       }

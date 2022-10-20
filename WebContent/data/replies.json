@@ -13,11 +13,11 @@
 					"state": "virtualtime.start"
 				},
 				{
-					"actionid": "reply-virtualtime.checnpoint1",
+					"actionid": "reply-virtualtime.checkpoint1",
 					"statecondition": [
 						"virtualtime.checnpoint1"
 					],
-					"name": "reply-virtualtime.checnpoint1",
+					"name": "reply-virtualtime.checkpoint1",
 					"to": "all",
 					"state": "virtualtime.checnpoint1"
 				},

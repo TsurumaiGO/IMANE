@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,6 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -48,20 +48,23 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 //import com.fasterxml.jackson.core.JsonFactory;
 //import com.fasterxml.jackson.core.JsonGenerator;
 //import com.fasterxml.jackson.core.json.JsonGeneratorImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import tsurumai.workflow.model.CardData;
 import tsurumai.workflow.model.Member;
 import tsurumai.workflow.model.PhaseData;
 import tsurumai.workflow.model.PointCard;
 import tsurumai.workflow.model.ReplyData;
+import tsurumai.workflow.model.ScenarioData;
 import tsurumai.workflow.model.SessionData;
 import tsurumai.workflow.model.StateData;
+import tsurumai.workflow.model.ValidationResult;
+import tsurumai.workflow.model.ValidationResultSet;
 import tsurumai.workflow.util.ServiceLogger;
 import tsurumai.workflow.util.Util;
 import tsurumai.workflow.vtime.WorldService;
@@ -92,9 +95,13 @@ public class WorkflowService extends Application implements ServletContextListen
 	
 	
 	/**URL相対パスをローカルパスに変換する
+	 * フルパスの場合はそのまま返す
 	 * @param relative 相対URL
 	 * */
 	public static String getContextRelativePath(final String relative){
+		if(Util.isAbsolutePath(relative))
+			return relative;
+		
 		if(context != null )
 			return context.getRealPath(relative);
 		else{
@@ -127,6 +134,9 @@ public class WorkflowService extends Application implements ServletContextListen
 		context = sce.getServletContext();//ctx;
 		Notifier.setContext(context);
 
+		logger.info("コンテキストルートのパス: " + context.getRealPath("."));
+		logger.info("カレントディレクトリ: " + java.nio.file.Path.of(".").toAbsolutePath());
+		
 		String basedir = System.getProperty("scenarioBase", context.getRealPath("data"));
 		if(!new File(basedir).exists())
 			throw new RuntimeException("シナリオデータの配備先が存在しません:" + basedir);
@@ -166,129 +176,16 @@ public class WorkflowService extends Application implements ServletContextListen
 		initializeProcesses();
 
 	}
-	public PhaseData getActiveScenario() {
-		List<PhaseData> p = PhaseData.loadAll();
-//TODO:
-		return null;
-	}
-	/**シナリオデータの検証結果*/
-	class ValidationResult{
-		public String label;
-		protected Throwable error;
-		public String getError(){return error == null ? "" : error.toString();}
-		public ValidationResult(){}
-		public Map<String, String> params;
-		public  boolean isValid(){return error == null;}
-		public ValidationResult(final String label, final Throwable t, Map<String, String> params){this.label = label;this.error = t;this.params = params;}
-		public ValidationResult(final String label, Map<String, String> params){this(label,null, params);}
+//	public PhaseData getActiveScenario() {
+//		List<PhaseData> p = PhaseData.loadAll();
+////TODO:
+//		return null;
+//	}
 
-	}
-	/**シナリオセットの検証結果を表現する*/
-	class ValidationResultSet extends ArrayList<ValidationResult>{
-		private static final long serialVersionUID = 1L;
-		public ValidationResultSet(){}
-		String name = "";
-		public ValidationResultSet(final String name){this.name = name;}
-		public boolean isValid(){
-			for(ValidationResult r : this){
-				if(!r.isValid()) return false;
-			}
-			return true;
-		}
-		public String toString(){
-			StringBuffer buff  = new StringBuffer();
-			for(Iterator<ValidationResult> i = this.iterator(); i.hasNext();){
-				ValidationResult r = i.next();
-				if(!r.isValid()){
-					buff.append(r.label + ":無効:" + r.error.toString() + "\n");
-				}
-			}
-			if(buff.length() == 0)
-				return (name != null ? name : "null")+ ":有効";
-			return buff.toString();
-		}
-	}
-	/**シナリオセットの検証処理を実装する*/
-	interface ScenarioValidator{
-		public Map<String, String> validate();
-	}
-	/**選択されたシナリオデータをロードしてテストする*/
-	protected ValidationResultSet validateScenarioSet(final String dir) throws WorkflowException{
-		//String scenario = getScenarioDirectory();
-		ValidationResultSet result = new ValidationResultSet();
-		Map<String, ScenarioValidator> validators = new HashMap<String, ScenarioValidator>(){{
-			put("リプライ", new ScenarioValidator() {
-				@Override public Map<String, String>  validate() {
-					Collection<ReplyData> reps = ReplyData.loadReply(-1, dir+ File.separator + "replies.json");
-					Map<String, String> ret = new HashMap<>();
-					ret.put("count", reps== null ? "0" : String.valueOf(reps.size()));
-					return ret;
-					}});
-			put("アクション", new ScenarioValidator() {
-				@Override public Map<String, String>  validate()  {
-					Collection<CardData> actions = CardData.flatten(CardData.loadAll(dir + File.separator + "actions.json").values());
-					Map<String, String> ret = new HashMap<>();
-					ret.put("count", actions == null ? "0" : String.valueOf(actions.size()));
-					ret.put("actions", String.valueOf(CardData.findList(CardData.Types.action, dir+ File.separator + "actions.json").length));
-					ret.put("autoaction",String.valueOf(CardData.findList(CardData.Types.auto, dir + File.separator + "actions.json").length));
-					return ret;
-					}});
-			put("ステート", new ScenarioValidator() {
-				@Override public Map<String, String>  validate()  {
-					Collection<StateData> states = StateData.loadAll(dir+ File.separator + "states.json");
-					Map<String, String> ret = new HashMap<>();
-					ret.put("count", states== null ? "0" : String.valueOf(states.size()));
-					return ret;
-					}});
-			put("フェーズ", new ScenarioValidator() {
-				@Override public Map<String, String>  validate()  {
-					List<PhaseData> phases = PhaseData.load(dir + File.separator + "setting.json");
-					Map<String, String> ret = new HashMap<>();
-					ret.put("count", phases == null ? "0" : String.valueOf(phases.size()));
-					return ret;
-					}});
-			put("ポイント", new ScenarioValidator() {
-				@Override public Map<String, String>  validate()  {
-					PointCard[] points = PointCard.loadAll(dir+ File.separator + "points.json");
-					Map<String, String> ret = new HashMap<>();
-					ret.put("count", points == null ? "0" : String.valueOf(points.length));
-					return ret;
-					}});
-			put("メンバ", new ScenarioValidator() {
-				@Override public Map<String, String>  validate() {
-					Map<String, Member> members = Member.loadAll(dir + File.separator + "contacts.json");
-					Map<String, String> ret = new HashMap<>();
-					ret.put("count",  members == null ? "0" : String.valueOf(members.size()));
-					return ret;
-					}});
-		}};
-
-		logger.info("シナリオデータを検証します。 " + dir);
-		for(String key : validators.keySet()){
-			try{
-				Map<String, String> params = validators.get(key).validate();
-				params.put("basedir", dir);
-				result.add(new ValidationResult(key, params));
-				logger.info("シナリオデータを検証しました。" + key + "@" + dir + ":" + result.toString());
-				
-			}catch(Throwable t){
-				result.add(new ValidationResult(key, t, null));
-				logger.error("シナリオデータの検証に失敗しました。"  + key + "@" + dir + ":" + result.toString());
-			}
-		}
-		return result;
-	}
-	/**シナリオセットを検証する*/
-	protected Collection<ValidationResult>  validateScenarioSet(){
-		String dir = getScenarioDirectory();
-		return validateScenarioSet(dir);
-	}
 	/**ユーザIDに対応するセションデータを取得する*/
 	public static SessionData getSessionByUserId(final String userId){
 		try{
-			//TODO:修正中
-			//for(ProcessInstanceManager m : sessionCache.values()){
-			//if(m.session.getUserName().equalsIgnoreCase(userId))
+
 			for(ProcessInstanceManager.Session session : sessionCache.values()){
 				if(session.getUserName().equalsIgnoreCase(userId))
 					return new SessionData(session, null, null, null);//context.getRealPath("data"));
@@ -313,12 +210,6 @@ public class WorkflowService extends Application implements ServletContextListen
 				throw new WorkflowException("ログインしていません。", HttpServletResponse.SC_UNAUTHORIZED,true);
 			}
 			
-			//TODO:修正中
-//			ProcessInstanceManager mgr = sessionCache.get(skey);
-//			if (mgr != null && mgr.session != null && mgr.session.validate()) {
-//				return mgr;
-//			}
-			//ProcessInstanceManager.Session s = sessionCache.get(skey);
 			
 			ProcessInstanceManager mgr = ProcessInstanceManager.getSession();
 			ProcessInstanceManager.Session session = sessionCache.get(skey);
@@ -332,9 +223,7 @@ public class WorkflowService extends Application implements ServletContextListen
 		}
 	}
 	protected SessionData getSessionData() throws WorkflowSessionException{
-		//TODO:修正中
 		ProcessInstanceManager mgr  = ProcessInstanceManager.getSession();
-		//SessionData s = new SessionData(mgr.session, request.getHeader(AUTH_HEADER), null, null);// context.getRealPath("data"));
 		ProcessInstanceManager.Session session = sessionCache.get(request.getHeader(AUTH_HEADER));
 		SessionData s = new SessionData(session, request.getHeader(AUTH_HEADER), null, null);// context.getRealPath("data"));
 
@@ -365,11 +254,8 @@ public class WorkflowService extends Application implements ServletContextListen
 			
 			ProcessInstanceManager.Session session = mgr.login(sv, userid, passwd, asAdmin);
 			String skey = Util.random();
-			//TODO: ProcessInstanceManagerがシングルトンなので、明らかにおかしくなるはずなのだが
-			//SessionData ret = new SessionData(mgr.session, skey, passwd, null);
 			sessionCache.put(skey, session);
 			SessionData ret = new SessionData(session, skey, passwd, null);
-			//newSession(skey, mgr);
 			logger.info("user " + userid + " logged in as " + skey);
 			return ret;
 		}catch(WorkflowException t){
@@ -762,47 +648,111 @@ public class WorkflowService extends Application implements ServletContextListen
 		}
 	}
 
-//	/**ワークフロープロセスを削除する。
-//	 * <p class = "interface">
-//	 * DELETE /process/{app}/{id}
-//	 * </p>
-//	 * @param app アプリケーション名
-//	 * @param id ワークフロープロセスのID
-//	 * 
-//	 * */
-//	@Path("/process/{app}/{id}")
-//	@DELETE
-//	public void delete(@PathParam("app") String app, @PathParam("id") long id) throws WorkflowException{
-//		try {
-//			logger.enter(app, id);
-//			ProcessInstanceManager mgr = getSession();
-//			mgr.getProcessInstance(id);
-//		} finally {
-//			exit();
-//		}
-//
-//	}
-//
-//	
-	
-	
-	public static String readAll(final String path) throws IOException {
-		return Util.readAll(path);
-	}
-	
-
 	/**シナリオセットのリストを返します。
 	 * シナリオセットはシナリオデータ格納先ディレクトリ配下に配置します。
 	 * 格納先ディレクトリ直下は"_default_"という名前の既定のシナリオセットとして処理されます。
 	 * 格納先ディレクトリ配下のサブディレクトリがそれぞれ1つのシナリオセットとして処理されます。ディレクトリ名がそのままシナリオ名となります。
 	 * 
 	 * <p class = "interface">GET diag/scenario</p>
-	 * @return シナリオの検証結果を格納した{@link Response} 
+	 * @return シナリオ名とシナリオデータのハッシュテーブル 
 	 * */
 	@GET
 	@Path("diag/scenario")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response /*HashMap<String, Collection<PhaseData>>*/ listScenarios() throws WorkflowException{
+
+	
+	public Hashtable<String, ScenarioData> listScenarios() throws WorkflowException{
+		Hashtable<String, ScenarioData> ret = new Hashtable<>();
+		try {
+			Hashtable<String, ScenarioData> scenarios = ScenarioData.loadAll(false);
+			scenarios.keys().asIterator().forEachRemaining((k->{
+				ScenarioData cur = (ScenarioData) scenarios.get(k);
+				
+				String name = cur.name == null || cur.name.length() == 0 ? k.toString() : cur.name;
+				
+				//TODO: 恐らくデフォルトシナリオが正しく処理されていない
+				String dir = context.getRealPath("data") + ("_default_".equals(k) ? "" : (File.separator + k));
+				
+				ValidationResultSet validationResult = validateScenarioSet(dir);
+				
+				//TODO: シナリオが同名の場合に上書きされてアクティブなシナリオがなくなる場合がある
+				cur.validationResult = validationResult;
+				cur.active = k.equals(activeScenario);
+//				ret.put(name, cur);
+				ret.put(k, cur);//TODO: こうか？？
+			}));
+			
+
+			//TODO： activeプロパティが更新されないまま返却されている
+			//scenarios.entrySet().forEach(e -> {
+//			ret.entrySet().forEach(e -> {
+//				Object key = e.getKey();
+//				e.getValue().active = key.equals(activeScenario);
+//			});
+			
+
+			return ret;
+		}catch(Throwable t){
+			logger.error("シナリオセットの処理に失敗しました。", t);
+			throw new WorkflowException("シナリオセットのロードに失敗しました。", t);
+		}
+		
+	}
+
+	/***
+	 * @deprecated 
+	 * */
+	public Response listScenarios_back() throws WorkflowException{
+	
+		//TODO: シナリオデータのロード処理を新ロジックに移行
+		Response r = _listScenarios_new();
+		Response rr = _listScenarios();
+
+		return r;
+		
+		//return _listScenarios();
+	
+	}
+	
+	public Response _listScenarios_new() throws WorkflowException{		
+
+		JSONObject ret = new JSONObject();
+		Hashtable<?,?> scenarios = ScenarioData.loadAll(false);
+		scenarios.keys().asIterator().forEachRemaining((k->{
+			ScenarioData cur = (ScenarioData) scenarios.get(k);
+			
+			String name = cur.name == null || cur.name.length() == 0 ? k.toString() : cur.name;
+			
+			String dir = context.getRealPath("data") + ("_default_".equals(k) ? "" : (File.separator + k));
+			ValidationResultSet validationResult = validateScenarioSet(dir);
+			
+			cur.validationResult = validationResult;
+			cur.active = name.equals(activeScenario);
+			try {
+				ret.put(name , new JSONObject(Util.getObjectMapper().writeValueAsString(cur)));
+			}catch (IOException t) {
+				logger.error("シナリオセットをロードできません。", t);
+			}
+			
+		}));
+
+		try{
+			String s = ret.toString();
+			return Response.ok(s).build();
+		}catch(Throwable t){
+			logger.error("シナリオセットの処理に失敗しました。", t);
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity("シナリオセットのロードに失敗しました。").build();
+		}
+	}
+
+	
+	
+	/***
+	 * @deprecated 
+	 * */
+	public Response _listScenarios() throws WorkflowException{		
+
+		
 		String dir = context.getRealPath("data");
 		String[] dirs = new File(dir).list(new FilenameFilter() {
 			@Override
@@ -851,6 +801,8 @@ public class WorkflowService extends Application implements ServletContextListen
 			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity("シナリオセットのロードに失敗しました。").build();
 		}
 	}
+	
+	
 	/**指定された名前のシナリオを活性化します。
 	 * <p class ="interface">
 	 * POST diag/scenario
@@ -1015,6 +967,15 @@ public class WorkflowService extends Application implements ServletContextListen
 			throw new ScenarioException("シナリオセットの検証に失敗しました。", name, t);
 		}
 	}
+	/**選択されたシナリオデータをロードしてテストする
+	 * @parma dir シナリオ名
+	 * */
+	protected ValidationResultSet validateScenarioSet(final String name) throws WorkflowException{
+		String  dir = java.nio.file.Path.of(name).isAbsolute() ? name : getContextRelativePath(name);
+		ValidationResultSet res = ValidationResultSet.validateScenarioSet(dir);
+		return res;
+	}
+	
 	/**指定されたディレクトリにあるjsonファイルを検証します。*/
 	protected JSONArray validateJsonData(final String dir){
 		String[] required = {"contacts.json","actions.json","replies.json","states.json","setting.json", "points.json"};

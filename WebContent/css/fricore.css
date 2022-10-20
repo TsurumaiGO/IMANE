@@ -68,7 +68,9 @@ input[type=checkbox]{
 }
 /**実験的機能*/
 .experimental{
-	opacity:0.3;
+	/*opacity:0.3;*/
+	display:none;
+	
 }
 /**フェーズ中のみ利用可能なUI部品*/
 .live{
@@ -182,9 +184,9 @@ top:0;
 right:5px;
 width:15em;
 }
-.ui-menu-item>a{
+/*.ui-menu-item>a{
 display:block;
-}
+}*/	
 .subpanel{
 	border:1px solid lightgray;
 	background-color:#fffeff;
@@ -516,21 +518,21 @@ vertical-align:middle;
 #processlist td:nth-child(1){display:none;}
 #processlist th:nth-child(2){width:8em;}
 #processlist td:nth-child(2){width:8em;}
-#processlist th:nth-child(3){width:8em;}
-#processlist td:nth-child(3){width:8em;}
-#processlist th:nth-child(4){width:18em;}
-#processlist td:nth-child(4){width:18em;}
-#processlist th:nth-child(5){width:6em;}
-#processlist td:nth-child(5){width:6em;}
+#processlist th:nth-child(3){width:12em;}
+#processlist td:nth-child(3){width:12em;}
+#processlist th:nth-child(4){width:4em;}
+#processlist td:nth-child(4){width:4em;}
+#processlist th:nth-child(5){width:4em;}
+#processlist td:nth-child(5){width:4em;}
 #processlist th:nth-child(6){width:6em;}
 #processlist td:nth-child(6){width:6em;}
-#processlist th:nth-child(7){width:12em;}
-#processlist td:nth-child(7){width:12em;}
-#processlist th:nth-child(8){width:12em;}
-#processlist td:nth-child(8){width:12em;}
+#processlist th:nth-child(7){width:6em;}
+#processlist td:nth-child(7){width:6em;}
+#processlist th:nth-child(8){width:10em;}
+#processlist td:nth-child(8){width:10em;}
 
-#processlist th:nth-child(9){width:15em;}
-#processlist td:nth-child(9){width:15em;}
+#processlist th:nth-child(9){width:4em;}
+#processlist td:nth-child(9){width:4em;}
 
 
 
@@ -895,14 +897,18 @@ input[type="range"] {
 .clickable:hover{
 	text-decoration: underline;
 }
-.checkable[data-checked=true]::before{
-	content:"*";
+
+.checkable.checked{
+	font-weight:bold;
 }
-.checkable[data-checked=true]::checked{
+.blueteam{
 	color:blue;
+	font-weight:normal;
 }
-
-
+.redteam{
+	color:red;
+	font-weight:normal;
+}
 
 .blink{
   animation: blinktarget 1s infinite alternate;

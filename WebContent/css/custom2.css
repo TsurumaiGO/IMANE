@@ -1,0 +1,73 @@
+.selected tr td{
+	background-color:#fce0fa;
+}
+table.tablesorter{
+background-color: white;}
+
+table.tablesorter thead tr>th{
+background-color:black;
+color:white;
+}
+
+table.tablesorter tbody tr.odd> td{background-color:white;}
+table.tablesorter tbody tr.even> td{
+background-color:#fef5ff;
+}
+table.tablesorter .selected td{
+background-color:lightgreen;
+}
+.selected tbody tr td{
+background-color:#feefff;
+}
+
+
+#event-list table tbody tr td{
+	white-space:nowrap !important;
+	text-overflow: ellipsis;
+	overflow-x: hidden;
+}
+#event-list table tbody tr.selected td{
+	text-overflow: unset;
+	overflow-x:auto;
+	white-space:normal !important;
+	background-color:#fce0fa !important;
+}
+#event-list table tbody tr.selected .list-card{
+	text-overflow: unset;
+	overflow-x:auto;
+	white-space:normal !important;
+}
+#event-list table tbody tr td .replyTo{
+	display:none;
+}
+#event-list table tbody tr.selected td .replyTo{
+	display:inherit;
+}
+
+
+#wfhistory table tbody tr td{
+	white-space:nowrap !important;
+	text-overflow: ellipsis;
+	overflow-x: hidden;
+	max-width: inherit;
+}
+
+#wfhistory  table tbody tr.selected td{
+	text-overflow: unset;
+	overflow-x:auto;
+	white-space:normal !important;
+	background-color:#fce0fa !important;
+}
+#wfhistory  table tbody tr.selected .list-card{
+	text-overflow: unset;
+	overflow-x:auto;
+	white-space:normal !important;
+}
+#wfhistory table tbody tr td .replyTo{
+	display:none;
+}
+#wfhistory table tbody tr.selected td .replyTo{
+	display:inherit;
+}
+
+
