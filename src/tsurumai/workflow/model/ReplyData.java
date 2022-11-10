@@ -166,7 +166,9 @@ public class ReplyData{
 	@XmlAttribute
 	public String evalator;
 	
-	
+	/*成功確率の定義。 2022/11/03　追加 */
+    @XmlAttribute
+	public double probability = 1.0 ;
 	
 	@XmlTransient
 
@@ -237,8 +239,8 @@ public class ReplyData{
 				continue;
 			}
 			
-			if(order >= 5){
-				logger.error("オーダーが5を超えました(バグ)。", new Throwable());
+			if(order >= 50){
+				logger.error("オーダーが50を超えました(バグ)。", new Throwable());
 				return ret;
 			}
 			if(order != 0 && e.order != order){

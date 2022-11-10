@@ -136,7 +136,7 @@ public class CardData implements Cloneable{
 	public String[] systemstatecondition;
 	/**自動アクションの場合、実行条件が成立してから実際に実行されるまでの待ち時間(秒)。*/
 	@XmlAttribute
-	public int delay = 5;
+	public int delay = 0;
 	/**カードのｈｔｍｌ要素にcssクラス名として展開される。カードにアイコンやスタイルを指定するために使用する。*/
 	@XmlAttribute
 	public String icon;

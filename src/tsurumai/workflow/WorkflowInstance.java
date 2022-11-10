@@ -580,6 +580,10 @@ public class WorkflowInstance {
 					cur.rerunstate != null) &&
 					!this.isActionPending(cur.id)){
 				logger.trace("自動アクションを受付:" + cur.name +  ":" + (cur.delay)+"秒後");
+				//2022.11.09 自動アクション受付時にrerunstateをadd
+				if(cur.rerunstate != null) {
+					addState(cur.rerunstate,  new Date(), "gyoza");
+				}
 				
 				List<Member> cc = Member.getMembers(this.team, cur.cc);
 				registerTrigger(cur, to, from, cc);
@@ -623,11 +627,12 @@ public class WorkflowInstance {
 			public synchronized  void run() {
 				//自動アクション複数実行対応
 				//if(!autoActionHistory.containsKey(cur.id)){
-				if(isAutoActionExecutable(cur)) {
+				//2022.11.09 自動アクション実行前にrerunかを判定しない
+				//if(isAutoActionExecutable(cur)) {
 					logger.info("自動アクションを実行:" + cur.name);
 					acceptAction(cur,  from, to, cc.toArray(new Member[cc.size()]), null);
 					autoActionHistory.put(cur.id, WorkflowInstance.this.getTime());//new Date()); tag:virtualtime
-				}
+				//}
 			}
 		};
 		AutoActionTimer tm = new AutoActionTimer(cur.id);tm.schedule(handler, cur.delay*1000);
@@ -647,11 +652,12 @@ public class WorkflowInstance {
 				if(cur.rerunstate != null) {
 					int dammy = 0;
 				}
-				if(isAutoActionExecutable(cur)) {
+				//2022.11.09 自動アクション実行前にrerunかを判定しない
+				//if(isAutoActionExecutable(cur)) {
 					logger.info("自動アクションを実行:" + cur.name);
 					acceptAction(cur,  from, to, cc.toArray(new Member[cc.size()]), null);
 					autoActionHistory.put(cur.id, WorkflowInstance.this.getTime());//new Date()); tag:virtualtime
-				}
+				//}
 			}
 		};
 		
@@ -1275,6 +1281,11 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 			}catch(Throwable t){
 				logger.error(rep.name + ":リソース制約条件の解析に失敗しました。リプライ定義を確認してください。." + rep.toString(), t);
 			}
+		}
+		//確率演算
+		if (!evaluateProbability(rep.probability)) {
+			logger.info(rep.name + "条件を満たしているが確率で失敗");
+			return false ;
 		}
 
 		logger.info("リプライを確定しました。" + rep.name + ":"+rep.toString());
@@ -1970,7 +1981,14 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		
 	}
 
-	
+	//成功確率の計算　2022/11/03
+	public boolean evaluateProbability(double p) {
+		if (p > Math.random()) {
+			return true ;
+		}else{
+			return false ;
+		}
+    }
 	
 
 	
