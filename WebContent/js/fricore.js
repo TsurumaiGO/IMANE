@@ -1852,7 +1852,7 @@ function EvalEQ(memberStates, state){
 		var ret,elm;
 		var str0;
 		var ic;
-		resultt = true;
+		result = true;
 		str0=state.trim();  //すべての空白を除く
 		str0=str0.toUpperCase(); //すべて大文字に変換する
 		
