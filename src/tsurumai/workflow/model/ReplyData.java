@@ -169,6 +169,15 @@ public class ReplyData{
 	/*成功確率の定義。 2022/11/03　追加 */
     @XmlAttribute
 	public double probability = 1.0 ;
+    
+    //攻撃パスの判定　　2022/12/20　追加
+    @XmlAttribute
+	public int attackpath = 0 ;
+    @XmlAttribute
+	public int target ;
+    
+    
+    
 	
 	@XmlTransient
 

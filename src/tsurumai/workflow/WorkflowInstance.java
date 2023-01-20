@@ -50,7 +50,8 @@ class OperationLevelDef implements Comparable<OperationLevelDef>{
 	
 	/**フェーズ開始からの経過時間(秒)**/public int time;
 	/**操業レベル*/public int level;
-
+	
+	
 	//降順でソート
 	@Override
 	public int compareTo(OperationLevelDef o) {
@@ -112,6 +113,17 @@ class TriggerEvent{
 @JsonIgnoreProperties({"comment","","//","#"})
 @XmlRootElement
 public class WorkflowInstance {
+	//追加：単位行列・接続行列の作成
+	public static int elem = 17 ;
+	public static int[] fw = new int[2];
+	public static int[][] C = new int[elem][elem];
+	public static int[][] C0 =new int[elem][elem];
+	public static int[][] D = new int[elem][elem];
+	public static int[][] D_inf = new int[elem][elem];
+	public static int[][] B = new int[elem][elem];
+	public static int[][] eye = new int [elem][elem];
+		
+	
 	public WorkflowInstance() {}
 	protected OperationStateDef[] operationStateDef = new OperationStateDef[0];
 	static ServiceLogger logger =  ServiceLogger.getLogger();
@@ -134,6 +146,31 @@ public class WorkflowInstance {
 		logger.info("システムステートを追加します。" + s.toString());
 		systemState.put(state, data);
 		onAddState(state, msgid);
+
+		//addstate関数に入れるもの
+		String ATK = "ATK";
+		String CON = "CON";
+		String VUL = "VUL";
+		String INF = "INF";
+		String add = "add";
+		String str = state.substring(0, 3);
+		String asset_number = state.substring(3,5);
+		if(str.equals(ATK)){
+			D_calculate(asset_number, add);
+		}else if(str.equals(CON)){
+			C_calculate(asset_number, add);
+		}else if(str.equals(VUL)){
+			B_calculate(asset_number,add);
+		}else if(str.equals(INF)){
+			D_inf_calculate(asset_number,add);
+		}
+
+		//感染型の処理を追加
+		if(str.equals(INF) || str.equals(CON) || str.equals(VUL)){
+			INF_calculate();
+		}
+
+
 	}
 	/**指定されたシステムステートが登録されているか*/
 	protected synchronized boolean hasState(String stateid){
@@ -168,6 +205,33 @@ public class WorkflowInstance {
 			logger.info("システムステートを削除します。" + s.toString());
 			systemState.remove(state);
 			onRemoveState(state);
+
+			//removestate関数に入れるもの
+			String ATK = "ATK";
+			String CON = "CON";
+			String VUL = "VUL";
+			String INF = "INF";
+			String remove = "remove";
+			String str = state.substring(0, 3);
+			String asset_number = state.substring(3,5);
+			if(str.equals(ATK)){
+				D_calculate(asset_number, remove);
+			}else if(str.equals(CON)){
+				C_calculate(asset_number, remove);
+			}else if(str.equals(VUL)){
+				B_calculate(asset_number,remove);
+			}else if(str.equals(INF)){
+				D_inf_calculate(asset_number,remove);
+			}
+
+			//感染型の処理を追加
+			if(str.equals(CON) || str.equals(VUL)){
+				INF_calculate();
+			}
+
+
+
+
 		}else{
 			logger.info("指定されたシステムステートは割り当てられていません。" + s.toString());
 		}
@@ -280,6 +344,7 @@ public class WorkflowInstance {
 	 * @param team チームID
 	 * */
 	public static WorkflowInstance newInstance(String basedir, final String team, long pid){
+		
 		WorkflowInstance inst = new WorkflowInstance();
 		inst.team = team;
 		inst.initialize(basedir);
@@ -316,7 +381,203 @@ public class WorkflowInstance {
 	/**フェーズを開始*/
 	public void start(int phase){
 		logger.info("start:" +this.toString());
+		
+		int i,j;
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				C[i][j] = 0;
+				C0[i][j] = 0;
+				D[i][j] = 0;
+				D_inf[i][j] = 0;
+				B[i][j] = 0;
+				eye[i][j] = 0;
+			}
+		}
 
+		//単位行列eye
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				if (i == j) {
+					eye[i][j] = 1;
+				}
+			}
+		}      
+
+		//接続行列C0の対角成分以外の接続を設定
+		C0[0][0] = 1;
+		C0[1][0] = 1;
+		C0[2][0] = 1;
+
+		C0[0][1] = 1;
+		C0[1][1] = 1;
+		C0[2][1] = 1;
+		C0[3][1] = 1;
+		C0[4][1] = 1;
+		C0[5][1] = 1;
+		C0[6][1] = 1;
+		C0[7][1] = 1;
+		C0[8][1] = 1;
+		C0[9][1] = 1;
+		C0[10][1] = 1;
+
+		C0[0][2] = 1;
+		C0[1][2] = 1;
+		C0[2][2] = 1;
+		C0[3][2] = 1;
+
+		C0[0][3] = 1;
+		C0[1][3] = 1;
+		C0[2][3] = 1;
+		C0[3][3] = 1;
+		C0[4][3] = 1;
+		C0[5][3] = 1;
+		C0[6][3] = 1;
+		C0[7][3] = 1;
+		C0[8][3] = 1;
+		C0[9][3] = 1;
+		C0[10][3] = 1;
+
+		C0[1][4] = 1;
+		C0[3][4] = 1;
+		C0[4][4] = 1;
+		C0[5][4] = 1;
+		C0[6][4] = 1;
+		C0[7][4] = 1;
+		C0[8][4] = 1;
+		C0[9][4] = 1;
+		C0[10][4] = 1;
+
+		C0[1][5] = 1;
+		C0[3][5] = 1;
+		C0[4][5] = 1;
+		C0[5][5] = 1;
+		C0[6][5] = 1;
+		C0[7][5] = 1;
+		C0[8][5] = 1;
+		C0[9][5] = 1;
+		C0[10][5] = 1;
+
+		C0[1][6] = 1;
+		C0[3][6] = 1;
+		C0[4][6] = 1;
+		C0[5][6] = 1;
+		C0[6][6] = 1;
+		C0[7][6] = 1;
+		C0[8][6] = 1;
+		C0[9][6] = 1;
+		C0[10][6] = 1;
+
+		C0[1][7] = 1;
+		C0[3][7] = 1;
+		C0[4][7] = 1;
+		C0[5][7] = 1;
+		C0[6][7] = 1;
+		C0[7][7] = 1;
+		C0[8][7] = 1;
+		C0[9][7] = 1;
+		C0[10][7] = 1;
+
+		C0[1][8] = 1;
+		C0[3][8] = 1;
+		C0[4][8] = 1;
+		C0[5][8] = 1;
+		C0[6][8] = 1;
+		C0[7][8] = 1;
+		C0[8][8] = 1;
+		C0[9][8] = 1;
+		C0[10][8] = 1;
+
+		C0[1][9] = 1;
+		C0[3][9] = 1;
+		C0[4][9] = 1;
+		C0[5][9] = 1;
+		C0[6][9] = 1;
+		C0[7][9] = 1;
+		C0[8][9] = 1;      
+		C0[9][9] = 1;
+		C0[10][9] = 1;
+
+
+		C0[1][10] = 1;
+		C0[3][10] = 1;
+		C0[4][10] = 1;
+		C0[5][10] = 1;
+		C0[6][10] = 1;
+		C0[7][10] = 1;
+		C0[8][10] = 1;
+		C0[9][10] = 1;
+		C0[10][10] = 1;
+		C0[11][10] = 1;
+		C0[12][10] = 1;
+		C0[13][10] = 1;
+		C0[14][10] = 1;
+		C0[15][10] = 1;
+
+		C0[10][11] = 1;
+		C0[11][11] = 1;
+		C0[12][11] = 1;
+		C0[13][11] = 1;
+		C0[14][11] = 1;
+		C0[15][11] = 1;
+
+		C0[10][12] = 1;
+		C0[11][12] = 1;
+		C0[12][12] = 1;
+		C0[13][12] = 1;
+		C0[14][12] = 1;
+		C0[15][12] = 1;
+
+		C0[10][13] = 1;
+		C0[11][13] = 1;
+		C0[12][13] = 1;
+		C0[13][13] = 1;
+		C0[14][13] = 1;
+		C0[15][13] = 1;
+		C0[16][13] = 1;
+
+		C0[10][14] = 1;
+		C0[11][14] = 1;
+		C0[12][14] = 1;
+		C0[13][14] = 1;
+		C0[14][14] = 1;
+		C0[15][14] = 1;
+
+		C0[10][15] = 1;
+		C0[11][15] = 1;
+		C0[12][15] = 1;
+		C0[13][15] = 1;
+		C0[14][15] = 1;
+		C0[15][15] = 1;
+		C0[16][15] = 1;
+
+		C0[13][16] = 1;
+		C0[14][16] = 1;
+		C0[15][16] = 1;
+		C0[16][16] = 1;
+
+		//C0 = C　にする
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				C[i][j] = C0[i][j];
+			}
+		}
+
+		D[0][0] = 1;
+		B[0][0] = 1;
+		//fwの位置を設定
+		fw[0] = 1;
+		fw[1] = 10;
+		//確認のため出力
+		System.out.print("C["+"\r\n");
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				System.out.print( C[i][j] + ",");
+			}
+			System.out.print("\r\n");
+		}
+		System.out.print("]" + "\r\n");    
+
+		
 		this.clearAutoActionTimers();
 		this.state = State.STARTED;
 		this.phase = phase;
@@ -596,7 +857,7 @@ public class WorkflowInstance {
 		
 		if(act.rerunstate != null && act.rerunstate.length() != 0 &&  
 				!this.hasState(act.rerunstate)) {
-			logger.trace("自動アクションの再実行が有効:" + act.id);
+			//logger.trace("自動アクションの再実行が有効:" + act.id);
 			return true;
 		}
 		
@@ -1282,15 +1543,65 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 				logger.error(rep.name + ":リソース制約条件の解析に失敗しました。リプライ定義を確認してください。." + rep.toString(), t);
 			}
 		}
+		
 		//確率演算
 		if (!evaluateProbability(rep.probability)) {
 			logger.info(rep.name + "条件を満たしているが確率で失敗");
 			return false ;
 		}
-
+		
+		//攻撃パスの判定
+		if(rep.attackpath == 1) {
+			if (!evaluateAttackPath("CB",0,rep.target,"ATK")) {
+				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
+				return false ;
+			}
+		}else if(rep.attackpath == 2) {
+			if (!evaluateAttackPath("C",0,rep.target,"ATK")) {
+				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
+				return false ;
+			}
+		}else if(rep.attackpath == 3) {
+			if (!evaluateAttackPath("CDBf",0,rep.target,"ATK")) {
+				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
+				return false ;
+			}
+		}else if(rep.attackpath == 4) {
+			if (!evaluateAttackPath("CDf",0,rep.target,"ATK")) {
+				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
+				return false ;
+			}
+		}else if(rep.attackpath == 5) {
+			if (!evaluateAttackPath("CDfa",0,rep.target,"ATK")) {
+				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
+				return false ;
+			}
+		}else if(rep.attackpath == 6) {
+			if (!evaluateAttackPath("CB",0,rep.target,"INF")) {
+				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
+				return false ;
+			}
+		}else if(rep.attackpath == 7) {
+			if (!evaluateAttackPath("C",0,rep.target,"INF")) {
+				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
+				return false ;
+			}
+		}else if(rep.attackpath == 8) {
+			if (!evaluateAttackPath("CB",rep.target,rep.target,"INF")) {
+				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
+				return false ;
+			}
+		}else if(rep.attackpath == 9) {
+			if (!evaluateAttackPath("C",rep.target,rep.target,"INF")) {
+				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
+				return false ;
+			}
+		}
+		
 		logger.info("リプライを確定しました。" + rep.name + ":"+rep.toString());
 		return true;
 	}
+	
 	/**リプライの決定処理で使用するコールバックインタフェース*/
 	public interface Validatable<T1, T2> {
 		/**
@@ -1520,7 +1831,8 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 				if(rep.reply.abort || isLastAction(rep)){
 				//アクションキューから削除
 					actionQueue.remove(n);
-					logger.info("キューからアクションを削除しました。"+n.action.name + ":"+toString());
+					//2022/12/17 分かりにくいから一旦削除
+					//logger.info("キューからアクションを削除しました。"+n.action.name + ":"+toString());
 				}else{
 					n.action.currentorder ++;
 					logger.info("アクションに後続リプライがあるためキューに残します。"+ n.action.name + ":" + toString());
@@ -1989,11 +2301,340 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 			return false ;
 		}
     }
-	
 
+	//C行列の要素を変える関数　2022/12/20
+	public void C_calculate(String asset_number, String change){
+		int i,j;
+		int as =Integer.parseInt(asset_number,10);
+		String add = "add";
+		String remove = "remove";
+
+		if(change.equals(add)){
+			for(i=0; i < elem; i++){
+				C[i][as] = 0;
+				C[as][i] = 0;
+			}
+		}else if(change.equals(remove)){
+			for (i=0; i < elem; i++) {
+				if(C0[as][i] != 0) {  
+					C[as][i] = 1;
+				}
+				if(C0[i][as] != 0 ){
+					C[i][as] = 1;
+				}
+			}
+		}
+		//結果確認(接続行列C)
+		System.out.print("C["+"\r\n");
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				if (j==elem){
+					System.out.print( C[i][j] );
+				}else{
+					System.out.print( C[i][j] + ",");
+				}
+			}
+			System.out.print("\r\n");
+		}
+		System.out.print("]" + "\r\n");
+		
+	}
+
+	//D行列の要素を変える関数　2022/12/20
+	public void D_calculate(String asset_number, String change){
+		int i,j;
+		String add = "add";
+		String remove = "remove";
+		int as =Integer.parseInt(asset_number,10);
+
+		if(change.equals(add)){
+			D[as][as] = 1;
+		}else if(change.equals(remove)){
+			D[as][as] = 0;
+		}
+
+		//結果確認(陥落行列D)
+		System.out.print("D["+"\r\n");
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				System.out.print( D[i][j] + ",");
+			}
+			System.out.print("\r\n");
+		}
+		System.out.print("]" + "\r\n");
+	}
+
+	//B行列の要素を変える関数　2022/12/20
+	public void B_calculate(String asset_number, String change){
+		int i,j;
+		String add = "add";
+		String remove = "remove";
+		int as =Integer.parseInt(asset_number,10);
+
+		if(change.equals(add)){
+			B[as][as] = 1;
+		}else if(change.equals(remove)){
+			B[as][as] = 0;
+		}
+
+		//結果確認(脆弱性行列B)
+		System.out.print("B["+"\r\n");
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				System.out.print( B[i][j] + ",");
+			}
+			System.out.print("\r\n");
+		}
+		System.out.print("]" + "\r\n");
+	}
+
+	//D_inf行列の要素を変える関数　2022/12/20
+	public void D_inf_calculate(String asset_number, String change){
+		int i,j;
+		String add = "add";
+		String remove = "remove";
+		int as =Integer.parseInt(asset_number,10);
+
+		if(change.equals(add)){
+			D_inf[as][as] = 1;
+		}else if(change.equals(remove)){
+			D_inf[as][as] = 0;
+		}
+
+		//結果確認(陥落行列D_inf)
+		System.out.print("D_inf["+"\r\n");
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				System.out.print( D_inf[i][j] + ",");
+			}
+			System.out.print("\r\n");
+		}
+		System.out.print("]" + "\r\n");
+	}
 	
+	//感染拡大の計算(B,C,D_infの行列の要素が変化する度に計算)　2022/12/20
+	public void INF_calculate(){
+		int i,j,k,n;
+		String attack_state ;
+		int[][] step = new int[elem][1];
+		int[][] r = new int[elem][1];
+		int[][] RE = new int[elem][elem];
+		int[][] R = new int[elem][elem];
+		int[][] R0 = new int[elem][elem];
+		int[][] R1 = new int[elem][elem];
+
+		for(i=0; i<elem ; i++){
+			step[i][0] = 1 ;
+		}
+
+		//R0,R = (B+D_inf)*C
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				for(k=0; k < elem; k++){
+					R0[i][j] += (B[i][k]+D_inf[i][k] )* C[k][j];
+				}
+				R[i][j] = R0[i][j];
+			}
+		}
+
+		//for n=1 to elem-1
+		// R=(R+eye(elem))*(B+D_inf)*C
+		//→R=RE*R0
+		for(n=1; n <elem; n ++){
+			for(i=0; i < elem; i++){
+				for(j=0; j < elem; j++){
+					RE[i][j] = (R[i][j] + eye[i][j] );
+				}
+			}
+			for(i=0; i < elem; i++){
+				for(j=0; j < elem; j++){  
+					for(k=0; k < elem; k++){
+						if(k==0){
+							R[i][j] = RE[i][k] * R0[k][j];
+						}else{
+							R[i][j] += RE[i][k] * R0[k][j];
+						}
+					}
+				}
+			}
+		}
+
+		//③R=R*D
+		//④R=R*u
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				for(k=0; k < elem; k++){
+					if(k==0){
+						R1[i][j] = R[i][k] * D_inf[k][j];
+					}else{        
+						R1[i][j] += R[i][k] * D_inf[k][j];
+					}
+				}
+			}
+		}
+
+		for(i=0; i < elem; i++){
+			for(k=0; k < elem; k++){
+				if(k==0){
+					r[i][0] = R1[i][k]* step[k][0];
+				}else{
+					r[i][0] += R1[i][k]* step[k][0];
+				}      
+			}
+		}
+
+		//攻撃対象が攻撃可能かを判定する
+		for(i=1; i<elem; i++){
+			//新しく感染した機器をステート追加
+			if (r[i][0]!=0 && D_inf[i][i]==0){
+				attack_state = "INF" + String.format("%02d",i) ;
+				addState(attack_state,  new Date(), "ikura");
+			}
+		}
+	}
 	
-	
-	
+  //attackpath の計算
+	public boolean evaluateAttackPath(String str,int from, int to, String attacktype){
+		int i,j,k,n,result;
+		int[][] target = new int[1][elem];
+		int[][] step = new int[elem][1];
+		int[][] r = new int[elem][1];
+		int[][] RE = new int[elem][elem];
+		int[][] R1 = new int[elem][elem];
+		int[][] R = new int[elem][elem];
+		int[][] BR = new int[elem][elem];
+		String attack_state = attacktype + String.format("%02d",to) ;
+		step[from][0] = 1 ;
+		target[0][to] = 1 ;
+
+		/*フィッシング等、内部者の過失によってネットワーク内部の機器を侵害された場合、侵害された機器からインターネットまでの道の途中にあるFWは攻撃者の通信を通してしまうため、
+    	攻撃パスの判定中はそのFWを攻撃済みのものとして扱う */
+		int [] fw0 = new int [fw.length];
+		if(str.contains("f")){
+			if(fw.length!=0) {
+				for(i =1 ; i <= fw.length ; i ++){
+					//元のFWの状態を保存
+					fw0[i-1] =D[fw[i-1]][fw[i-1]] ;
+
+					if(i == fw.length){
+						for(j = fw[i-1]; j < elem; j++){
+							if(D[j][j] == 1 ){
+								//D行列のFWの対角成分を1にする
+								D[fw[i-1]][fw[i-1]] = 1;
+								break;
+							}
+						}
+					}else{
+						for(j = fw[i-1]; j < fw[i]+1; j++){
+							if(D[j][j] == 1 ){
+								//D行列のFWの対角成分を1にする
+								D[fw[i-1]][fw[i-1]] = 1;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		//R = C or C*D
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				if(str.contains("D")){
+					for(k=0; k < elem; k++){
+						R[i][j] += C[i][k]*D[k][j];
+					}
+				}else{
+					R[i][j] = C[i][j];
+				}				
+			}
+		}
+
+		//for n=1:elem-1
+		// R=(R+eye(elem))*C
+		for(n=1; n <elem; n ++){
+			for(i=0; i < elem; i++){
+				for(j=0; j < elem; j++){
+					RE[i][j] = (R[i][j] + eye[i][j] );
+				}
+			}
+			for(i=0; i < elem; i++){
+				for(j=0; j < elem; j++){     
+					for(k=0; k < elem; k++){
+						if(k==0){
+							if(str.contains("D")){
+								R1[i][j] = RE[i][k] * D[k][j];
+								R[i][j] = R1[i][k] * C[k][j];
+							}else{
+								R[i][j] = RE[i][k] * C[k][j];
+							}							
+						}else{
+							if(str.contains("D")){
+								R1[i][j] += RE[i][k] * D[k][j];
+								R[i][j] += R1[i][k] * C[k][j];
+							}else{
+								R[i][j] += RE[i][k] * C[k][j];
+							}							
+						}
+					}
+				}
+			}
+		}
+
+		//BR=B*R or R
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				if(str.contains("B")){
+					for(k=0; k < elem; k++){
+						if(k==0){
+							BR[i][j] = B[i][k] * R[k][j];
+						}else{        
+							BR[i][j] += B[i][k] * R[k][j];
+						}
+					}
+				}else{
+					BR[i][j] = R[i][j];
+				}
+			}
+		}
+
+		//r=BR*v 
+		for(i=0; i < elem; i++){
+			for(k=0; k < elem; k++){
+				if(k==0){
+					r[i][0] = BR[i][k]* step[k][0];
+				}else{
+					r[i][0] += BR[i][k]* step[k][0];
+				}      
+			}
+		}
+
+		if(str.contains("f")){
+			if(fw.length !=0) {
+				//fwのD行列をもとに戻す
+				for(i =1;i<=fw.length; i++) {
+					D[fw[i-1]][fw[i-1]] = fw0[i-1];
+				}
+			}
+		}
+
+		result =0;
+		for(k=0; k < elem; k++){
+			result += target[0][k] * r[k][0];
+		}
+		if(str.contains("a")){
+			result = result * D[to][to];
+		}
+
+		//攻撃対象が攻撃可能かを判定する
+		if (result==0){
+			return false;
+		}else{
+			if(!str.contains("a")){
+				addState(attack_state,  new Date(), "ikura");
+			}
+			return true;
+		}
+	}
 	
 }
