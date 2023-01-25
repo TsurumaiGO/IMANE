@@ -130,6 +130,15 @@ public class StateData{
 		}
 		return null;
 	}
+	public static String getStateID(String id){
+		Collection<StateData> all = loadAll();
+		for(Iterator<StateData> i = all.iterator(); i.hasNext();){
+			
+			StateData cur = i.next();
+			if(cur.id.contains(id))return cur.id;
+		}
+		return null;
+	}
 	protected static ServiceLogger logger = ServiceLogger.getLogger();
 
 	public static void reload(final String file){

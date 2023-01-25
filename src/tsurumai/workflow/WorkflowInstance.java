@@ -115,13 +115,16 @@ class TriggerEvent{
 public class WorkflowInstance {
 	//追加：単位行列・接続行列の作成
 	public static int elem = 17 ;
-	public static int[] fw = new int[2];
 	public static int[][] C = new int[elem][elem];
 	public static int[][] C0 =new int[elem][elem];
 	public static int[][] D = new int[elem][elem];
 	public static int[][] D_inf = new int[elem][elem];
 	public static int[][] B = new int[elem][elem];
 	public static int[][] eye = new int [elem][elem];
+	int fwI ;
+	int fw0 ;
+	int vpn ;
+	int ra ;
 		
 	
 	public WorkflowInstance() {}
@@ -153,23 +156,30 @@ public class WorkflowInstance {
 		String VUL = "VUL";
 		String INF = "INF";
 		String add = "add";
-		String str = state.substring(0, 3);
-		String asset_number = state.substring(3,5);
-		if(str.equals(ATK)){
-			D_calculate(asset_number, add);
-		}else if(str.equals(CON)){
-			C_calculate(asset_number, add);
-		}else if(str.equals(VUL)){
-			B_calculate(asset_number,add);
-		}else if(str.equals(INF)){
-			D_inf_calculate(asset_number,add);
+		
+		if(state.contains("/")) {
+			try {
+				//state="ゾーン名orFW/機器ID(X01など)/ATKorCONorINForVUL"
+				String[] str = state.split("/");
+				int asset_number = Integer.parseInt(str[1].substring(str[1].length()-2),10);
+				if(str[2].equals(ATK)){
+					D_calculate(asset_number, add);
+				}else if(str[2].equals(CON)){
+					C_calculate(asset_number, add);
+				}else if(str[2].equals(VUL)){
+					B_calculate(asset_number,add);
+				}else if(str[2].equals(INF)){
+					D_inf_calculate(asset_number,add);
+				}
+		
+				//感染型の処理を追加
+				if(str[2].equals(INF) || str[2].equals(CON) || str[2].equals(VUL)){
+					INF_calculate();
+				}
+			}catch(Throwable t){
+				logger.warn("攻撃パス判定に関わるステートである場合、ステートの入力ルールを満たしているか確認してください：" + state.toString());
+			}
 		}
-
-		//感染型の処理を追加
-		if(str.equals(INF) || str.equals(CON) || str.equals(VUL)){
-			INF_calculate();
-		}
-
 
 	}
 	/**指定されたシステムステートが登録されているか*/
@@ -206,31 +216,35 @@ public class WorkflowInstance {
 			systemState.remove(state);
 			onRemoveState(state);
 
-			//removestate関数に入れるもの
-			String ATK = "ATK";
-			String CON = "CON";
-			String VUL = "VUL";
-			String INF = "INF";
-			String remove = "remove";
-			String str = state.substring(0, 3);
-			String asset_number = state.substring(3,5);
-			if(str.equals(ATK)){
-				D_calculate(asset_number, remove);
-			}else if(str.equals(CON)){
-				C_calculate(asset_number, remove);
-			}else if(str.equals(VUL)){
-				B_calculate(asset_number,remove);
-			}else if(str.equals(INF)){
-				D_inf_calculate(asset_number,remove);
+			if(state.contains("/")) {
+				try {
+					//state="ゾーン名orFW/機器ID(X01など)/ATKorCONorINForVUL"
+					String[] str = state.split("/");
+					int asset_number = Integer.parseInt(str[1].substring(str[1].length()-2),10);
+					//removestate関数に入れるもの
+					String ATK = "ATK";
+					String CON = "CON";
+					String VUL = "VUL";
+					String INF = "INF";
+					String remove = "remove";
+					if(str[2].equals(ATK)){
+						D_calculate(asset_number, remove);
+					}else if(str[2].equals(CON)){
+						C_calculate(asset_number, remove);
+					}else if(str[2].equals(VUL)){
+						B_calculate(asset_number,remove);
+					}else if(str[2].equals(INF)){
+						D_inf_calculate(asset_number,remove);
+					}
+		
+					//感染型の処理を追加
+					if(str[2].equals(CON) || str[2].equals(VUL)){
+						INF_calculate();
+					}
+				}catch(Throwable t){
+					logger.warn("攻撃パス判定に関わるステートである場合、ステートの入力ルールを満たしているか確認してください：" + state.toString());
+				}
 			}
-
-			//感染型の処理を追加
-			if(str.equals(CON) || str.equals(VUL)){
-				INF_calculate();
-			}
-
-
-
 
 		}else{
 			logger.info("指定されたシステムステートは割り当てられていません。" + s.toString());
@@ -383,6 +397,9 @@ public class WorkflowInstance {
 		logger.info("start:" +this.toString());
 		
 		int i,j;
+		String state_elem;
+		
+		//行列を初期化
 		for(i=0; i < elem; i++){
 			for(j=0; j < elem; j++){
 				C[i][j] = 0;
@@ -401,7 +418,8 @@ public class WorkflowInstance {
 					eye[i][j] = 1;
 				}
 			}
-		}      
+		}
+		
 
 		//接続行列C0の対角成分以外の接続を設定
 		C0[0][0] = 1;
@@ -411,22 +429,19 @@ public class WorkflowInstance {
 		C0[0][1] = 1;
 		C0[1][1] = 1;
 		C0[2][1] = 1;
-		C0[3][1] = 1;
-		C0[4][1] = 1;
-		C0[5][1] = 1;
-		C0[6][1] = 1;
-		C0[7][1] = 1;
-		C0[8][1] = 1;
-		C0[9][1] = 1;
-		C0[10][1] = 1;
 
 		C0[0][2] = 1;
 		C0[1][2] = 1;
 		C0[2][2] = 1;
 		C0[3][2] = 1;
-
-		C0[0][3] = 1;
-		C0[1][3] = 1;
+		C0[4][2] = 1;
+		C0[5][2] = 1;
+		C0[6][2] = 1;
+		C0[7][2] = 1;
+		C0[8][2] = 1;
+		C0[9][2] = 1;
+		C0[10][2] = 1;
+		
 		C0[2][3] = 1;
 		C0[3][3] = 1;
 		C0[4][3] = 1;
@@ -437,7 +452,7 @@ public class WorkflowInstance {
 		C0[9][3] = 1;
 		C0[10][3] = 1;
 
-		C0[1][4] = 1;
+		C0[2][4] = 1;
 		C0[3][4] = 1;
 		C0[4][4] = 1;
 		C0[5][4] = 1;
@@ -447,7 +462,7 @@ public class WorkflowInstance {
 		C0[9][4] = 1;
 		C0[10][4] = 1;
 
-		C0[1][5] = 1;
+		C0[2][5] = 1;
 		C0[3][5] = 1;
 		C0[4][5] = 1;
 		C0[5][5] = 1;
@@ -457,7 +472,7 @@ public class WorkflowInstance {
 		C0[9][5] = 1;
 		C0[10][5] = 1;
 
-		C0[1][6] = 1;
+		C0[2][6] = 1;
 		C0[3][6] = 1;
 		C0[4][6] = 1;
 		C0[5][6] = 1;
@@ -467,7 +482,7 @@ public class WorkflowInstance {
 		C0[9][6] = 1;
 		C0[10][6] = 1;
 
-		C0[1][7] = 1;
+		C0[2][7] = 1;
 		C0[3][7] = 1;
 		C0[4][7] = 1;
 		C0[5][7] = 1;
@@ -477,7 +492,7 @@ public class WorkflowInstance {
 		C0[9][7] = 1;
 		C0[10][7] = 1;
 
-		C0[1][8] = 1;
+		C0[2][8] = 1;
 		C0[3][8] = 1;
 		C0[4][8] = 1;
 		C0[5][8] = 1;
@@ -487,7 +502,7 @@ public class WorkflowInstance {
 		C0[9][8] = 1;
 		C0[10][8] = 1;
 
-		C0[1][9] = 1;
+		C0[2][9] = 1;
 		C0[3][9] = 1;
 		C0[4][9] = 1;
 		C0[5][9] = 1;
@@ -498,7 +513,7 @@ public class WorkflowInstance {
 		C0[10][9] = 1;
 
 
-		C0[1][10] = 1;
+		C0[2][10] = 1;
 		C0[3][10] = 1;
 		C0[4][10] = 1;
 		C0[5][10] = 1;
@@ -541,6 +556,7 @@ public class WorkflowInstance {
 		C0[13][14] = 1;
 		C0[14][14] = 1;
 		C0[15][14] = 1;
+		C0[16][14] = 1;
 
 		C0[10][15] = 1;
 		C0[11][15] = 1;
@@ -564,9 +580,65 @@ public class WorkflowInstance {
 
 		D[0][0] = 1;
 		B[0][0] = 1;
-		//fwの位置を設定
-		fw[0] = 1;
-		fw[1] = 10;
+
+		fwI = 2;
+		fw0 = 10;
+		vpn = 3;
+		ra = 2;
+		/*
+		try {
+			//internetからの通信を通すfwの位置を設定	
+			state_elem = "FW_INTERNET/";
+			String state_FW = StateData.getStateID(state_elem);
+			if(state_FW != null){
+				String[] str = state_FW.split("/");
+				fwI = Integer.parseInt(str[1].substring(str[1].length()-2),10);
+				logger.info("FW_INTERNETの位置を" + fwI + "に設定しました。");
+			}
+		}catch(Throwable t) {
+			logger.error("FW_INTERNETの位置が解析出来ませんでした。",t);
+		}
+		
+		try {
+			//internetからの通信を通さないfwの位置を設定	
+			state_elem = "FW_0/";
+			String state_FW0 = StateData.getStateID(state_elem);
+			if(state_FW0 != null){
+				String[] str = state_FW0.split("/");
+				fw0 = Integer.parseInt(str[1].substring(str[1].length()-2),10);
+				logger.info("FW_INTERNETの位置を" + fw0 + "に設定しました。");
+			}
+		}catch(Throwable t) {
+			logger.error("FW_INTERNETの位置が解析出来ませんでした。",t);
+		}
+
+		try {		
+			//vpnの位置を設定
+			state_elem = "VPN/";
+			String state_VPN = StateData.getStateID(state_elem);
+			if(state_VPN != null){
+				String[] str = state_VPN.split("/");
+				vpn = Integer.parseInt(str[1].substring(str[1].length()-2),10);
+				logger.info("VPNの位置を" + vpn + "に設定しました。");
+			}
+		}catch(Throwable t) {
+			logger.error("VPNの位置が解析出来ませんでした。",t);
+		}
+		
+		try {	
+			//remoteaccessの位置を設定
+			state_elem = "REMOTEACCESS/";
+			String state_REMOTEACCESS = StateData.getStateID(state_elem);
+			if(state_REMOTEACCESS != null){
+				String[] str = state_REMOTEACCESS.split("/");
+				ra = Integer.parseInt(str[1].substring(str[1].length()-2),10);
+				logger.info("REMOTEACCESSの位置を" + ra + "に設定しました。");
+			}
+		}catch(Throwable t) {
+			logger.error("REMOTEACCESSの位置が解析出来ませんでした。",t);
+		}
+		*/
+				
 		//確認のため出力
 		System.out.print("C["+"\r\n");
 		for(i=0; i < elem; i++){
@@ -1543,60 +1615,34 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 				logger.error(rep.name + ":リソース制約条件の解析に失敗しました。リプライ定義を確認してください。." + rep.toString(), t);
 			}
 		}
+				
+		//攻撃パスの判定
+		if(rep.attackpath != null) {
+			try {
+				String[] pathelem = rep.attackpath.split("/");
+				int pathelem1;
+				int pathelem2;
+				pathelem1 = Integer.parseInt(pathelem[1].substring(pathelem[1].length()-2),10);
+				pathelem2 = Integer.parseInt(pathelem[2].substring(pathelem[2].length()-2),10);
+				if (!evaluateAttackPath(pathelem[0],pathelem1,pathelem2)) {
+					logger.info(rep.name + ":パスの条件を満たしていないので失敗");
+					return false ;
+				}
+			}catch(Throwable t) {
+				logger.error(rep.name + ":attackpath要素の解析が不可能なため、攻撃パス演算を行いません。attackpathの入力ルールに反していないか確認してください。" + rep.toString(),t);
+			}
+		}
 		
 		//確率演算
-		if (!evaluateProbability(rep.probability)) {
-			logger.info(rep.name + "条件を満たしているが確率で失敗");
-			return false ;
+		if(0 <= rep.probability && rep.probability <= 1) {
+			if (!evaluateProbability(rep.probability)) {
+				logger.info(rep.name + ":条件を満たしているが確率で失敗");
+				return false ;
+			}
+		}else {
+			logger.warn(rep.name + ":確率は0~1の間で設定してください。確率:1として計算します。" + rep.toString());
 		}
 		
-		//攻撃パスの判定
-		if(rep.attackpath == 1) {
-			if (!evaluateAttackPath("CB",0,rep.target,"ATK")) {
-				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
-				return false ;
-			}
-		}else if(rep.attackpath == 2) {
-			if (!evaluateAttackPath("C",0,rep.target,"ATK")) {
-				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
-				return false ;
-			}
-		}else if(rep.attackpath == 3) {
-			if (!evaluateAttackPath("CDBf",0,rep.target,"ATK")) {
-				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
-				return false ;
-			}
-		}else if(rep.attackpath == 4) {
-			if (!evaluateAttackPath("CDf",0,rep.target,"ATK")) {
-				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
-				return false ;
-			}
-		}else if(rep.attackpath == 5) {
-			if (!evaluateAttackPath("CDfa",0,rep.target,"ATK")) {
-				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
-				return false ;
-			}
-		}else if(rep.attackpath == 6) {
-			if (!evaluateAttackPath("CB",0,rep.target,"INF")) {
-				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
-				return false ;
-			}
-		}else if(rep.attackpath == 7) {
-			if (!evaluateAttackPath("C",0,rep.target,"INF")) {
-				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
-				return false ;
-			}
-		}else if(rep.attackpath == 8) {
-			if (!evaluateAttackPath("CB",rep.target,rep.target,"INF")) {
-				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
-				return false ;
-			}
-		}else if(rep.attackpath == 9) {
-			if (!evaluateAttackPath("C",rep.target,rep.target,"INF")) {
-				logger.info(rep.name + "攻撃パスの条件を満たしていないので失敗");
-				return false ;
-			}
-		}
 		
 		logger.info("リプライを確定しました。" + rep.name + ":"+rep.toString());
 		return true;
@@ -2303,9 +2349,9 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
     }
 
 	//C行列の要素を変える関数　2022/12/20
-	public void C_calculate(String asset_number, String change){
+	public void C_calculate(int asset_number, String change){
 		int i,j;
-		int as =Integer.parseInt(asset_number,10);
+		int as = asset_number;
 		String add = "add";
 		String remove = "remove";
 
@@ -2316,13 +2362,14 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 			}
 		}else if(change.equals(remove)){
 			for (i=0; i < elem; i++) {
-				if(C0[as][i] != 0) {  
+				if(C0[as][i] != 0 && C[i][i] == 1) {  
 					C[as][i] = 1;
 				}
-				if(C0[i][as] != 0 ){
+				if(C0[i][as] != 0 && C[i][i] == 1){
 					C[i][as] = 1;
 				}
 			}
+			C[as][as] = 1;
 		}
 		//結果確認(接続行列C)
 		System.out.print("C["+"\r\n");
@@ -2341,11 +2388,11 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	}
 
 	//D行列の要素を変える関数　2022/12/20
-	public void D_calculate(String asset_number, String change){
+	public void D_calculate(int asset_number, String change){
 		int i,j;
 		String add = "add";
 		String remove = "remove";
-		int as =Integer.parseInt(asset_number,10);
+		int as = asset_number;
 
 		if(change.equals(add)){
 			D[as][as] = 1;
@@ -2365,11 +2412,11 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	}
 
 	//B行列の要素を変える関数　2022/12/20
-	public void B_calculate(String asset_number, String change){
+	public void B_calculate(int asset_number, String change){
 		int i,j;
 		String add = "add";
 		String remove = "remove";
-		int as =Integer.parseInt(asset_number,10);
+		int as = asset_number;
 
 		if(change.equals(add)){
 			B[as][as] = 1;
@@ -2389,11 +2436,11 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	}
 
 	//D_inf行列の要素を変える関数　2022/12/20
-	public void D_inf_calculate(String asset_number, String change){
+	public void D_inf_calculate(int asset_number, String change){
 		int i,j;
 		String add = "add";
 		String remove = "remove";
-		int as =Integer.parseInt(asset_number,10);
+		int as = asset_number;
 
 		if(change.equals(add)){
 			D_inf[as][as] = 1;
@@ -2415,8 +2462,8 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 	//感染拡大の計算(B,C,D_infの行列の要素が変化する度に計算)　2022/12/20
 	public void INF_calculate(){
 		int i,j,k,n;
-		String attack_state ;
-		int[][] step = new int[elem][1];
+		String state_elem ;
+		int[][] v = new int[elem][1];
 		int[][] r = new int[elem][1];
 		int[][] RE = new int[elem][elem];
 		int[][] R = new int[elem][elem];
@@ -2424,8 +2471,9 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		int[][] R1 = new int[elem][elem];
 
 		for(i=0; i<elem ; i++){
-			step[i][0] = 1 ;
+			v[i][0] = 1 ;
 		}
+		//2022.01.26　リモートPCが感染しても被害が広がらない問題:今のところデータの作り方で対処
 
 		//R0,R = (B+D_inf)*C
 		for(i=0; i < elem; i++){
@@ -2438,8 +2486,8 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		}
 
 		//for n=1 to elem-1
-		// R=(R+eye(elem))*(B+D_inf)*C
-		//→R=RE*R0
+		//RE=(R+eye(elem))
+		//R=RE*R0
 		for(n=1; n <elem; n ++){
 			for(i=0; i < elem; i++){
 				for(j=0; j < elem; j++){
@@ -2459,8 +2507,7 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 			}
 		}
 
-		//③R=R*D
-		//④R=R*u
+		//R1=R*D
 		for(i=0; i < elem; i++){
 			for(j=0; j < elem; j++){
 				for(k=0; k < elem; k++){
@@ -2472,13 +2519,14 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 				}
 			}
 		}
-
+		
+		//R=R1*vベクトル
 		for(i=0; i < elem; i++){
 			for(k=0; k < elem; k++){
 				if(k==0){
-					r[i][0] = R1[i][k]* step[k][0];
+					r[i][0] = R1[i][k]* v[k][0];
 				}else{
-					r[i][0] += R1[i][k]* step[k][0];
+					r[i][0] += R1[i][k]* v[k][0];
 				}      
 			}
 		}
@@ -2487,52 +2535,51 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		for(i=1; i<elem; i++){
 			//新しく感染した機器をステート追加
 			if (r[i][0]!=0 && D_inf[i][i]==0){
-				attack_state = "INF" + String.format("%02d",i) ;
-				addState(attack_state,  new Date(), "ikura");
+				state_elem = String.format("%02d",i) + "/INF";
+				String INF_state = StateData.getStateID(state_elem);
+				if(INF_state == null){
+					logger.warn("存在しないINFステートを追加しようとしました。" + state.toString());
+				}				
+				addState(INF_state,  new Date(), "ikura");
 			}
 		}
 	}
 	
-  //attackpath の計算
-	public boolean evaluateAttackPath(String str,int from, int to, String attacktype){
+	//attackpath の計算
+	public boolean evaluateAttackPath(String str,int from, int to){
 		int i,j,k,n,result;
-		int[][] target = new int[1][elem];
-		int[][] step = new int[elem][1];
+		int[][] v = new int[1][elem];
+		int[][] u = new int[elem][1];
 		int[][] r = new int[elem][1];
 		int[][] RE = new int[elem][elem];
-		int[][] R1 = new int[elem][elem];
+		int[][] RD = new int[elem][elem];
 		int[][] R = new int[elem][elem];
 		int[][] BR = new int[elem][elem];
-		String attack_state = attacktype + String.format("%02d",to) ;
-		step[from][0] = 1 ;
-		target[0][to] = 1 ;
+		u[from][0] = 1 ;
+		v[0][to] = 1 ;
+		
+		int fwI_diag;
+		int vpn_diag;
+		
+		//元のFWの状態を保存
+		fwI_diag =D[fwI][fwI] ;	
+		//元のvpnの状態を保存
+		vpn_diag =D[vpn][vpn] ;
 
-		/*フィッシング等、内部者の過失によってネットワーク内部の機器を侵害された場合、侵害された機器からインターネットまでの道の途中にあるFWは攻撃者の通信を通してしまうため、
-    	攻撃パスの判定中はそのFWを攻撃済みのものとして扱う */
-		int [] fw0 = new int [fw.length];
-		if(str.contains("f")){
-			if(fw.length!=0) {
-				for(i =1 ; i <= fw.length ; i ++){
-					//元のFWの状態を保存
-					fw0[i-1] =D[fw[i-1]][fw[i-1]] ;
-
-					if(i == fw.length){
-						for(j = fw[i-1]; j < elem; j++){
-							if(D[j][j] == 1 ){
-								//D行列のFWの対角成分を1にする
-								D[fw[i-1]][fw[i-1]] = 1;
-								break;
-							}
-						}
-					}else{
-						for(j = fw[i-1]; j < fw[i]+1; j++){
-							if(D[j][j] == 1 ){
-								//D行列のFWの対角成分を1にする
-								D[fw[i-1]][fw[i-1]] = 1;
-								break;
-							}
-						}
-					}
+		
+		if(str.contains("D")){
+			if(D[ra][ra] == 1 && C[ra][ra] == 1){
+				//リモートアクセスPCが攻略済みだった場合、VPNを攻略済みとして扱う。
+				//D行列のVPNの対角成分を1にする
+				D[vpn][vpn] = 1;
+			}
+			/*フィッシング等、内部者の過失によってネットワーク内部の機器を侵害された場合、侵害された機器からインターネットまでの道の途中にあるFWは攻撃者の通信を通してしまうため、
+	    	攻撃パスの判定中はそのFWを攻撃済みのものとして扱う */
+			for(j = fwI; j < fw0; j++){
+				if(j != ra && D[j][j] == 1 && C[j][j] == 1){
+					//D行列のFWの対角成分を1にする
+					D[fwI][fwI] = 1;
+					break;
 				}
 			}
 		}
@@ -2563,15 +2610,15 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 					for(k=0; k < elem; k++){
 						if(k==0){
 							if(str.contains("D")){
-								R1[i][j] = RE[i][k] * D[k][j];
-								R[i][j] = R1[i][k] * C[k][j];
+								RD[i][j] = RE[i][k] * D[k][j];
+								R[i][j] = RD[i][k] * C[k][j];
 							}else{
 								R[i][j] = RE[i][k] * C[k][j];
 							}							
 						}else{
 							if(str.contains("D")){
-								R1[i][j] += RE[i][k] * D[k][j];
-								R[i][j] += R1[i][k] * C[k][j];
+								RD[i][j] += RE[i][k] * D[k][j];
+								R[i][j] += RD[i][k] * C[k][j];
 							}else{
 								R[i][j] += RE[i][k] * C[k][j];
 							}							
@@ -2602,37 +2649,29 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		for(i=0; i < elem; i++){
 			for(k=0; k < elem; k++){
 				if(k==0){
-					r[i][0] = BR[i][k]* step[k][0];
+					r[i][0] = BR[i][k]* u[k][0];
 				}else{
-					r[i][0] += BR[i][k]* step[k][0];
+					r[i][0] += BR[i][k]* u[k][0];
 				}      
 			}
 		}
 
-		if(str.contains("f")){
-			if(fw.length !=0) {
-				//fwのD行列をもとに戻す
-				for(i =1;i<=fw.length; i++) {
-					D[fw[i-1]][fw[i-1]] = fw0[i-1];
-				}
-			}
+		if(str.contains("D")){
+			//fwのD行列をもとに戻す
+			D[fwI][fwI] = fwI_diag;	
+			//vpnのD行列をもとに戻す
+			D[vpn][vpn] = vpn_diag;
 		}
 
 		result =0;
 		for(k=0; k < elem; k++){
-			result += target[0][k] * r[k][0];
-		}
-		if(str.contains("a")){
-			result = result * D[to][to];
+			result += v[0][k] * r[k][0];
 		}
 
 		//攻撃対象が攻撃可能かを判定する
 		if (result==0){
 			return false;
 		}else{
-			if(!str.contains("a")){
-				addState(attack_state,  new Date(), "ikura");
-			}
 			return true;
 		}
 	}

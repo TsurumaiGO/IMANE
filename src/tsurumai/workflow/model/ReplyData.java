@@ -172,13 +172,9 @@ public class ReplyData{
     
     //攻撃パスの判定　　2022/12/20　追加
     @XmlAttribute
-	public int attackpath = 0 ;
-    @XmlAttribute
-	public int target ;
-    
-    
-    
-	
+	public String attackpath ;
+
+    	
 	@XmlTransient
 
 	public boolean isTriggerAction(){
