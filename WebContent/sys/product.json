@@ -1,6 +1,6 @@
-{"SERVER_VERSION":"v1.0.2; build 20221005",
+{"SERVER_VERSION":"v1.0.3a; build 20230130",
 "SERVER_DESC":"IMANE_PC server (under development)",
-"CLIENT_VERSION":"v1.0.2; build 20221005",
+"CLIENT_VERSION":"v1.0.3a; build 20230130",
 "CLIENT_DESC":"IMANE_PC client (under development)",
-"COPYRIGHT":"Copyright 2019-2022 Nagoya Institute of Technology",
+"COPYRIGHT":"Copyright 2019-2023 Nagoya Institute of Technology",
 "CAPTION":"IMANE-PC (Incident MANagement Exercise)"}

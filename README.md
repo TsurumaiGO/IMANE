@@ -16,8 +16,8 @@
 # Getting Started / スタートガイド
 ### 前提条件
 - サーバ
-  - jdk　verx 動作を確認
-  - Tomcat verx　動作を確認
+  - jdk 8以降
+  - Tomcat 9.x (Tomcat 10では動作しません)
 - クライアント
   - Google Chrome
  
@@ -25,10 +25,10 @@
   - OpenJDKをインストール
     - https://openjdk.java.net/
 
-- Tomcatのインストールとworkshop.jarの配備
+- Tomcatのインストールとworkshop.warの配備
   - Apache Tomcatをインストール
     - http://tomcat.apache.org/
-  - apache-tomcat-x.x.xx\webapps内にworkshop.jarを配備する
+  - apache-tomcat-x.x.xx\webapps内にworkshop.warを配備する
 
 - サーバーの起動
   1. Tomcatを起動

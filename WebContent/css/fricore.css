@@ -888,7 +888,18 @@ input[type="range"] {
 	display:inline-block;position:absolute;right:0;top:1.5em;white-space:nowrap;min-width: 10em;
 }
 
-
+.iconbutton{
+	border:1px outset gray;
+	background-color: buttonface;
+}
+.iconbutton:active{
+	border:1px inset gray;
+	background-color: buttonface;
+}
+.iconbutton:hover{
+	border:1px inset blue;
+	background-color: buttonhighlight;
+}
 
 .clickable{
 	cursor:hand;

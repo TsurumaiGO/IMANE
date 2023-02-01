@@ -1,10 +1,8 @@
 {
-	"name": "feature-virtualtime test",
-	"phases": [{"phase":1,"description":"phase1","timelimit":1200}],
-	"features": ["virtualtime"],
-	"invisible-action": ["invisible"],
-	"teams": [{"id":"test.example.com", "name":"test.example.com"}],
-	"groups": [
-		{"id":"red", "name":"red", "icon":"redteam", "isDefault":false},
-		{"id":"blue", "name":"blue", "icon":"blueteam", "isDefault":true}]
+  "teams":[
+    {"id":"COE.com","name":"COE_4th_term"}
+  ],
+  "phases":[
+    {"phase":1,"description":"phase1","timelimit":1200,"endstate":[]}
+  ]
 }

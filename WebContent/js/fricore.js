@@ -53,6 +53,22 @@ var FrICORE = function(){
 		HIDDEN:0x10,
 		CONTROL:0x20
 	};
+	/*
+	this.markerMapping=[
+		{selector:".data-imane-status-normal",matcher:"(HEA)([0-9]+)", resetState:true},
+		{selector:".data-imane-status-vulnerable",matcher:"(VUL)([0-9]+)"},
+		{selector:".data-imane-status-compromised",matcher:"(ATK)([0-9]+)"},
+		{selector:".data-imane-status-infected",matcher:"(INF)([0-9]+)"},
+		{selector:".data-imane-status-quarantined",matcher:"(CON)([0-9]+)"}
+	]*/
+	this.markerLabel = {
+		HEA: "正常",
+		BUL: "脆弱性あり",
+		ATK: "乗っ取られている", 
+		INF: "感染している", 
+		CON: "隔離されている"
+	};
+
 };
 
 FrICORE.info = function(msg){
@@ -1375,6 +1391,12 @@ function updateWorkflowInfo(){
 	.fail(function(xhr){
 	});
 	
+	
+	//TODO:
+	refreshSystemView();
+	
+	
+	
 	if($('#facilitator-main').is(":visible") && FRICORE.isadmin && FRICORE.usersession){
 		//if($('#processlist-autoupdate:checked').length != 0){
 		if(!FRICORE.disabAutoRefresh){
@@ -1385,6 +1407,9 @@ function updateWorkflowInfo(){
 				updateWF();
 		}
 	}
+	
+	
+	//
 }
 /**
  * 通信エラーダイアログを表示
@@ -2368,6 +2393,8 @@ function doLogin(){
 
 		loadHistory();
 		monitor.lap('loadHistory');
+		
+		refreshSystemView();
 
 		if(FRICORE.isadmin){
 			getProcess({},true);
@@ -3278,6 +3305,8 @@ function onLoadEvent(data, showHidden){
 			playEffect(e);
 		});
 	}
+	
+	refreshSystemView();
 }
 
 
@@ -4483,7 +4512,115 @@ function xhrToString(err){//TODO: coordinate console log
 }
 
 
+//experimental: システムビュー
+function showSystemView(){
+	var c = $("#systemview-container");
+	c.dialog({
+		position:{my:"right bottom", at:"right bottom"},
+		height: 600,width:800,
+	}).on("dialogresize",(e)=>{svgFitToContainer("#systemview-container svg");});
+	var s = $("#systemview-placeholder");
+	if(s.children("svg").length == 0){
+		s.load("systemview.svg", null,
+			(e)=>{svgFitToContainer("#systemview-container svg");refreshSystemView();});
+	}
+}
+function refreshSystemView(){
+	
+	//TODO: implement me.
+	//ユーザステートとシステムステートをスキャンし、FRICORE.markerMappingに定義されたセレクタとマッチする要素にスタイルを適用する
 
+	$("[data-imane-device]").removeClass("data-imane-status-quarantined").
+		removeClass("data-imane-status-infected").
+		removeClass("data-imane-status-compromised").
+		removeClass("data-imane-status-vulnerable").
+		removeClass("data-imane-status-normal");
+
+	
+	setDeviceMarker("data-imane-status-normal", "/HEA");
+	setDeviceMarker("data-imane-status-vulnerable", "/BUL");
+	setDeviceMarker("data-imane-status-compromised", "/ATK");
+	setDeviceMarker("data-imane-status-infected", "/INF");
+	setDeviceMarker("data-imane-status-quarantined", "/CON");
+
+
+//TODO: ユーザステートを反映	
+	var userStates = FRICORE.availableStates;
+	var history = FRICORE.events;
+	var attachedEvents = _.filter(FRICORE.events, (e)=>{return e.action.attachments != null;});
+	
+
+	
+}
+function setDeviceMarker(attr, exp){
+	
+	var isSystemState = $("#systemview-systemstate").is(":checked");
+	var keys = isSystemState ? 
+		Object.keys(FRICORE.workflowstate.systemState) : FRICORE.availableStates.map(e=>{return e.id;});
+	
+	
+	
+	var target = _.filter(keys,(e)=>{return e.endsWith(exp)});
+	target.forEach((e)=>{
+		var elm = $("["+attr+"='"+e+"']");
+		elm.addClass(attr);
+		elm.on("click", (e)=>{showDeviceStatusText(exp, e);});
+
+   });
+
+}
+function showDeviceStatusText(exp, evt){
+	var elm = $("#systemview-tooltip");
+	if(elm.is(":visible")){
+		elm.hide().text("");
+	}else{
+		var label = exp.replace("/","");
+		var txt = label ? FRICORE.markerLabel[label] : "異常あり";
+		elm.text(txt).css("left", evt.pageX).css("top", evt.pageY).css("z-index", 1000).show();
+	}
+}
+
+
+//TODO: implementing now...
+function groupStateCards(){
+	
+	var sys = _.filter(FRICORE.workflowstate.systemState, (e)=>{return /(\w+)\/(\w+)\/(\w+)/.exec(e)});
+	var usr = _.filter(FRICORE.availableStates,  (e)=>{});
+
+	var r = /(\w+)\/(\w+)\/(\w+)/.exec(s);
+	
+	
+	
+}
+
+
+
+function svgZoom(svgselector, ratio){
+/*	var s = $(svgselector)[0];
+	var w = $(svgselector).width();
+	var h = $(svgselector).height();
+	var scale = s.currentScale + ratio;
+	$(s).width(w*scale).height(h*scale);*/
+	var s = $(svgselector)[0];
+	s.currentScale = s.currentScale + ratio;
+}
+
+//SVG要素を縮小
+function svgZoomout(svgselector){
+	svgZoom(svgselector, -0.1)
+}
+//SVG要素を拡大
+function svgZoomin(svgselector){
+	svgZoom(svgselector, 0.1);
+}
+//SVG要素を親要素のサイズに合わせる
+function svgFitToContainer(svgselector){
+	var c = $(svgselector).parent();
+	var h = c.innerHeight();
+	var w = c.innerWidth();
+	$(svgselector)[0].setAttribute("currentScale", 1);
+	$(svgselector).width(w).height(h);
+}
 
 
 
