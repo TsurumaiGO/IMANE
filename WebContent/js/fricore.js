@@ -63,7 +63,7 @@ var FrICORE = function(){
 	]*/
 	this.markerLabel = {
 		HEA: "正常",
-		BUL: "脆弱性あり",
+		VUL: "脆弱性あり",
 		ATK: "乗っ取られている", 
 		INF: "感染している", 
 		CON: "隔離されている"
@@ -4538,7 +4538,7 @@ function refreshSystemView(){
 
 	
 	setDeviceMarker("data-imane-status-normal", "/HEA");
-	setDeviceMarker("data-imane-status-vulnerable", "/BUL");
+	setDeviceMarker("data-imane-status-vulnerable", "/VUL");
 	setDeviceMarker("data-imane-status-compromised", "/ATK");
 	setDeviceMarker("data-imane-status-infected", "/INF");
 	setDeviceMarker("data-imane-status-quarantined", "/CON");
