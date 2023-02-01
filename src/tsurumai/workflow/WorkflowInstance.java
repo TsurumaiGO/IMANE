@@ -806,9 +806,9 @@ public class WorkflowInstance {
 	    str0=str0.toUpperCase(); //すべて大文字に変換する
 	    
 	    int P1=str0.indexOf("(");
-	    logic=str0.substring(0,P1-1);
+	    logic=str0.substring(0,P1);
 	    int P2=str0.lastIndexOf(")");
-	    str0=str0.substring(P1+1,P2-1);
+	    str0=str0.substring(P1+1,P2);
 	    
 	    buf=SplitElm(str0);
 	
