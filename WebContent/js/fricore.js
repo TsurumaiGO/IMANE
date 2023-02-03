@@ -3236,7 +3236,6 @@ function onLoadEvent(data, showHidden){
 		}
 	}
 	var cards = [];
-	//TODO: ステートカードを入手した日時をキャッシュ
 	
 	if(data.action.attachments)	cards = _.union(cards, data.action.attachments);
 	if(data.reply && data.reply.state)	cards.push(data.reply.state);
