@@ -7,7 +7,7 @@
        "email":"サイバー攻撃者@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
        "system": [false]
      },
      {
@@ -17,7 +17,7 @@
        "email":"CSIRT@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
        "system": [false]
      },
      {
@@ -27,7 +27,7 @@
        "email":"リモートPC@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -37,7 +37,7 @@
        "email":"FW1@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -47,7 +47,7 @@
        "email":"VPN@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -57,7 +57,7 @@
        "email":"メールサーバ@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -67,7 +67,7 @@
        "email":"Webサーバ@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -77,7 +77,7 @@
        "email":"社員用PC1@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -87,7 +87,7 @@
        "email":"社員用PC2@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -97,7 +97,7 @@
        "email":"保守PC1@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -107,7 +107,7 @@
        "email":"ERPサーバ@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -117,7 +117,7 @@
        "email":"FW2@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -127,7 +127,7 @@
        "email":"生産管理サーバ@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -137,7 +137,7 @@
        "email":"設備管理サーバ@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -147,7 +147,7 @@
        "email":"EWS@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -157,7 +157,7 @@
        "email":"SCADA@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -167,7 +167,7 @@
        "email":"OPCサーバ@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
      {
@@ -177,7 +177,137 @@
        "email":"PLC@COE.com",
        "team":"COE.com",
        "desc":"",
-       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC"],
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"社員用PC2",
+       "role":"社員用PC2",
+       "rolename":"社員用PC2",
+       "email":"社員用PC2@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"保守PC1",
+       "role":"保守PC1",
+       "rolename":"保守PC1",
+       "email":"保守PC1@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"ERPサーバ",
+       "role":"ERPサーバ",
+       "rolename":"ERPサーバ",
+       "email":"ERPサーバ@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"FW2",
+       "role":"FW2",
+       "rolename":"FW2",
+       "email":"FW2@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"生産管理サーバ",
+       "role":"生産管理サーバ",
+       "rolename":"生産管理サーバ",
+       "email":"生産管理サーバ@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"設備管理サーバ",
+       "role":"設備管理サーバ",
+       "rolename":"設備管理サーバ",
+       "email":"設備管理サーバ@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"EWS",
+       "role":"EWS",
+       "rolename":"EWS",
+       "email":"EWS@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"SCADA",
+       "role":"SCADA",
+       "rolename":"SCADA",
+       "email":"SCADA@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"OPCサーバ",
+       "role":"OPCサーバ",
+       "rolename":"OPCサーバ",
+       "email":"OPCサーバ@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"PLC",
+       "role":"PLC",
+       "rolename":"PLC",
+       "email":"PLC@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"オフィス",
+       "role":"オフィス",
+       "rolename":"オフィス",
+       "email":"オフィス@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"プラント監視ルーム",
+       "role":"プラント監視ルーム",
+       "rolename":"プラント監視ルーム",
+       "email":"プラント監視ルーム@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
+       "system": [true]
+     },
+     {
+       "name":"フィールド",
+       "role":"フィールド",
+       "rolename":"フィールド",
+       "email":"フィールド@COE.com",
+       "team":"COE.com",
+       "desc":"",
+       "recipients":["サイバー攻撃者","CSIRT","リモートPC","FW1","VPN","メールサーバ","Webサーバ","社員用PC1","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","社員用PC2","保守PC1","ERPサーバ","FW2","生産管理サーバ","設備管理サーバ","EWS","SCADA","OPCサーバ","PLC","オフィス","プラント監視ルーム","フィールド"],
        "system": [true]
      },
     {

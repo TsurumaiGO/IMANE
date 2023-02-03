@@ -4,19 +4,21 @@
 .data-imane-status-vulnerable{
 	stroke-opacity:0.8;
 	stroke:coral;
-	fill-opacity:0.3;
+	fill-opacity:0.2;
 	fill:coral;
 }
 .data-imane-status-compromised{
 	stroke-opacity:0.8;
 	stroke:red;
-	fill-opacity:0.3;
+	stroke-width:8px;
+	fill-opacity:0.4;
 	fill:red;
 }
 .data-imane-status-infected{
-	stroke-opacity:0.5;
+	stroke-opacity:0.6;
 	stroke:darkred;
-	fill-opacity:0.3;
+	stroke-width:4px;
+	fill-opacity:0.6;
 	fill:darkred;
 }
 

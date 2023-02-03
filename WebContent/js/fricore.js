@@ -3236,6 +3236,8 @@ function onLoadEvent(data, showHidden){
 		}
 	}
 	var cards = [];
+	//TODO: ステートカードを入手した日時をキャッシュ
+	
 	if(data.action.attachments)	cards = _.union(cards, data.action.attachments);
 	if(data.reply && data.reply.state)	cards.push(data.reply.state);
 	if(data.action.statecards)	cards = _.union(cards,data.action.statecards);
@@ -4536,20 +4538,24 @@ function refreshSystemView(){
 		removeClass("data-imane-status-vulnerable").
 		removeClass("data-imane-status-normal");
 
+	//TODO: tooltipのイベントハンドラをリセット
+	$("#systemview-tooltip").text("");
+	$("[data-imane-device]").on("click", null);
+
 	
-	setDeviceMarker("data-imane-status-normal", "/HEA");
-	setDeviceMarker("data-imane-status-vulnerable", "/VUL");
-	setDeviceMarker("data-imane-status-compromised", "/ATK");
-	setDeviceMarker("data-imane-status-infected", "/INF");
-	setDeviceMarker("data-imane-status-quarantined", "/CON");
+	setDeviceMarker("data-imane-status-normal", "HEA");
+	setDeviceMarker("data-imane-status-vulnerable", "VUL");
+	setDeviceMarker("data-imane-status-compromised", "ATK");
+	setDeviceMarker("data-imane-status-infected", "INF");
+	setDeviceMarker("data-imane-status-quarantined", "CON");
+	
 
-
-//TODO: ユーザステートを反映	
+/*//TODO: ユーザステートを反映	
 	var userStates = FRICORE.availableStates;
 	var history = FRICORE.events;
 	var attachedEvents = _.filter(FRICORE.events, (e)=>{return e.action.attachments != null;});
 	
-
+*/
 	
 }
 function setDeviceMarker(attr, exp){
@@ -4557,9 +4563,21 @@ function setDeviceMarker(attr, exp){
 	var isSystemState = $("#systemview-systemstate").is(":checked");
 	var keys = isSystemState ? 
 		Object.keys(FRICORE.workflowstate.systemState) : FRICORE.availableStates.map(e=>{return e.id;});
-	
-	
-	
+
+	keys.forEach(e=>{
+		var s = parseDeviceStatus(e);
+		if(s.status != exp) return;
+		var ss = [s.zone,s.deviceid,s.status].join("/");
+		var elm = $("["+attr+"='"+ss+"']");
+		if(s.verb == "OFF"){
+			elm.removeClass(attr);
+			elm.on("click", null);
+		}else{
+			elm.addClass(attr);
+			elm.on("click", (e)=>{showDeviceStatusText(exp, e);});
+		}
+	})
+	/*
 	var target = _.filter(keys,(e)=>{return e.endsWith(exp)});
 	target.forEach((e)=>{
 		var elm = $("["+attr+"='"+e+"']");
@@ -4567,8 +4585,20 @@ function setDeviceMarker(attr, exp){
 		elm.on("click", (e)=>{showDeviceStatusText(exp, e);});
 
    });
+   */
 
 }
+function parseDeviceStatus(str){
+	var buff = str.split("/");
+	var ret = {
+		zone:buff[0],
+		deviceid:buff[1],
+		status:buff[2],
+		verb:buff[3]
+	};
+	return ret;
+}
+
 function showDeviceStatusText(exp, evt){
 	var elm = $("#systemview-tooltip");
 	if(elm.is(":visible")){
@@ -4616,7 +4646,7 @@ function svgZoomin(svgselector){
 //SVG要素を親要素のサイズに合わせる
 function svgFitToContainer(svgselector){
 	var c = $(svgselector).parent();
-	var h = c.innerHeight();
+	var h = c.innerHeight() - 20;
 	var w = c.innerWidth();
 	$(svgselector)[0].setAttribute("currentScale", 1);
 	$(svgselector).width(w).height(h);

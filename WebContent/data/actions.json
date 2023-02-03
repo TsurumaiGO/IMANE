@@ -25,6 +25,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact001no1",
        "removestate":["BAact001no1","rBAact001no1"],
+       "attachments":["REMOTEACCESS/X01/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact001no1"
 	},
@@ -45,6 +46,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact002no1",
        "removestate":["BAact002no1","rBAact002no1"],
+       "attachments":["FW_INTERNET/X02/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact002no1"
 	},
@@ -65,6 +67,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact003no1",
        "removestate":["BAact003no1","rBAact003no1"],
+       "attachments":["VPN/X03/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact003no1"
 	},
@@ -85,6 +88,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact004no1",
        "removestate":["BAact004no1","rBAact004no1"],
+       "attachments":["ZONE-4/X04/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact004no1"
 	},
@@ -105,6 +109,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact005no1",
        "removestate":["BAact005no1","rBAact005no1"],
+       "attachments":["ZONE-4/X05/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact005no1"
 	},
@@ -125,6 +130,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact006no1",
        "removestate":["BAact006no1","rBAact006no1"],
+       "attachments":["ZONE-4/X06/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact006no1"
 	},
@@ -145,6 +151,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact007no1",
        "removestate":["BAact007no1","rBAact007no1"],
+       "attachments":["ZONE-4/X07/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact007no1"
 	},
@@ -165,6 +172,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact008no1",
        "removestate":["BAact008no1","rBAact008no1"],
+       "attachments":["ZONE-4/X08/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact008no1"
 	},
@@ -185,6 +193,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact009no1",
        "removestate":["BAact009no1","rBAact009no1"],
+       "attachments":["ZONE-4/X09/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact009no1"
 	},
@@ -205,6 +214,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact010no1",
        "removestate":["BAact010no1","rBAact010no1"],
+       "attachments":["FW_0/X10/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact010no1"
 	},
@@ -225,6 +235,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact011no1",
        "removestate":["BAact011no1","rBAact011no1"],
+       "attachments":["ZONE-3/X11/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact011no1"
 	},
@@ -245,6 +256,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact012no1",
        "removestate":["BAact012no1","rBAact012no1"],
+       "attachments":["ZONE-3/X12/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact012no1"
 	},
@@ -265,6 +277,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact013no1",
        "removestate":["BAact013no1","rBAact013no1"],
+       "attachments":["ZONE-2/X13/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact013no1"
 	},
@@ -285,6 +298,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact014no1",
        "removestate":["BAact014no1","rBAact014no1"],
+       "attachments":["ZONE-2/X14/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact014no1"
 	},
@@ -305,6 +319,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact015no1",
        "removestate":["BAact015no1","rBAact015no1"],
+       "attachments":["ZONE-2/X15/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact015no1"
 	},
@@ -325,6 +340,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact016no1",
        "removestate":["BAact016no1","rBAact016no1"],
+       "attachments":["ZONE-1/X16/VUL/OFF"],
        "message":"実行しました。",
        "id":"BAact016no1"
 	},
@@ -352,7 +368,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact017no1",
        "removestate":["BAact017no1","rBAact017no1"],
-       "attachments":["REMOTEACCESS/X01/CON"],
+       "attachments":["REMOTEACCESS/X01/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact017no1"
 	},
@@ -373,7 +389,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact018no1",
        "removestate":["BAact018no1","rBAact018no1"],
-       "attachments":["FW_INTERNET/X02/CON"],
+       "attachments":["FW_INTERNET/X02/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact018no1"
 	},
@@ -394,7 +410,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact019no1",
        "removestate":["BAact019no1","rBAact019no1"],
-       "attachments":["VPN/X03/CON"],
+       "attachments":["VPN/X03/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact019no1"
 	},
@@ -415,7 +431,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact020no1",
        "removestate":["BAact020no1","rBAact020no1"],
-       "attachments":["ZONE-4/X04/CON"],
+       "attachments":["ZONE-4/X04/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact020no1"
 	},
@@ -436,7 +452,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact021no1",
        "removestate":["BAact021no1","rBAact021no1"],
-       "attachments":["ZONE-4/X05/CON"],
+       "attachments":["ZONE-4/X05/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact021no1"
 	},
@@ -457,7 +473,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact022no1",
        "removestate":["BAact022no1","rBAact022no1"],
-       "attachments":["ZONE-4/X06/CON"],
+       "attachments":["ZONE-4/X06/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact022no1"
 	},
@@ -478,7 +494,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact023no1",
        "removestate":["BAact023no1","rBAact023no1"],
-       "attachments":["ZONE-4/X07/CON"],
+       "attachments":["ZONE-4/X07/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact023no1"
 	},
@@ -499,7 +515,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact024no1",
        "removestate":["BAact024no1","rBAact024no1"],
-       "attachments":["ZONE-4/X08/CON"],
+       "attachments":["ZONE-4/X08/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact024no1"
 	},
@@ -520,7 +536,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact025no1",
        "removestate":["BAact025no1","rBAact025no1"],
-       "attachments":["ZONE-4/X09/CON"],
+       "attachments":["ZONE-4/X09/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact025no1"
 	},
@@ -541,7 +557,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact026no1",
        "removestate":["BAact026no1","rBAact026no1"],
-       "attachments":["FW_0/X10/CON"],
+       "attachments":["FW_0/X10/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact026no1"
 	},
@@ -562,7 +578,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact027no1",
        "removestate":["BAact027no1","rBAact027no1"],
-       "attachments":["ZONE-3/X11/CON"],
+       "attachments":["ZONE-3/X11/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact027no1"
 	},
@@ -583,7 +599,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact028no1",
        "removestate":["BAact028no1","rBAact028no1"],
-       "attachments":["ZONE-3/X12/CON"],
+       "attachments":["ZONE-3/X12/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact028no1"
 	},
@@ -604,7 +620,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact029no1",
        "removestate":["BAact029no1","rBAact029no1"],
-       "attachments":["ZONE-2/X13/CON"],
+       "attachments":["ZONE-2/X13/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact029no1"
 	},
@@ -625,7 +641,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact030no1",
        "removestate":["BAact030no1","rBAact030no1"],
-       "attachments":["ZONE-2/X14/CON"],
+       "attachments":["ZONE-2/X14/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact030no1"
 	},
@@ -646,7 +662,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact031no1",
        "removestate":["BAact031no1","rBAact031no1"],
-       "attachments":["ZONE-2/X15/CON"],
+       "attachments":["ZONE-2/X15/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact031no1"
 	},
@@ -667,7 +683,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact032no1",
        "removestate":["BAact032no1","rBAact032no1"],
-       "attachments":["ZONE-1/X16/CON"],
+       "attachments":["ZONE-1/X16/CON/ON"],
        "message":"隔離しました。",
        "id":"BAact032no1"
 	},
@@ -675,6 +691,7 @@
        "type":"action",
        "name":"機器の再接続",
        "roles":["CSIRT"],
+       "delay":3,
        "message":"隔離していた機器を再接続します。",
        "id":"BMact033"
 	},
@@ -695,43 +712,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact033no1",
        "removestate":["BAact033no1","rBAact033no1"],
-       "attachments":["REMOTEACCESS/X01/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact033no1"
-	},
-	{
-       "type":"auto",
-       "name":"リモートPCの再接続完了",
-       "systemstatecondition":["BAact033no2"],
-       "from":"リモートPC",
-       "to":"CSIRT",
-       "rerunstate":"rBAact033no2",
-       "removestate":["BAact033no2","rBAact033no2"],
-       "attachments":["REMOTEACCESS/X01/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact033no2"
-	},
-	{
-       "type":"auto",
-       "name":"リモートPCの再接続完了",
-       "systemstatecondition":["BAact033no3"],
-       "from":"リモートPC",
-       "to":"CSIRT",
-       "rerunstate":"rBAact033no3",
-       "removestate":["BAact033no3","rBAact033no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact033no3"
-	},
-	{
-       "type":"auto",
-       "name":"リモートPCの再接続完了",
-       "systemstatecondition":["BAact033no4"],
-       "from":"リモートPC",
-       "to":"CSIRT",
-       "rerunstate":"rBAact033no4",
-       "removestate":["BAact033no4","rBAact033no4"],
+       "attachments":["REMOTEACCESS/X01/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact033no4"
+       "id":"BAact033no1"
 	},
 	{
        "type":"auto",
@@ -750,43 +733,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact034no1",
        "removestate":["BAact034no1","rBAact034no1"],
-       "attachments":["FW_INTERNET/X02/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact034no1"
-	},
-	{
-       "type":"auto",
-       "name":"FW1の再接続完了",
-       "systemstatecondition":["BAact034no2"],
-       "from":"FW1",
-       "to":"CSIRT",
-       "rerunstate":"rBAact034no2",
-       "removestate":["BAact034no2","rBAact034no2"],
-       "attachments":["FW_INTERNET/X02/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact034no2"
-	},
-	{
-       "type":"auto",
-       "name":"FW1の再接続完了",
-       "systemstatecondition":["BAact034no3"],
-       "from":"FW1",
-       "to":"CSIRT",
-       "rerunstate":"rBAact034no3",
-       "removestate":["BAact034no3","rBAact034no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact034no3"
-	},
-	{
-       "type":"auto",
-       "name":"FW1の再接続完了",
-       "systemstatecondition":["BAact034no4"],
-       "from":"FW1",
-       "to":"CSIRT",
-       "rerunstate":"rBAact034no4",
-       "removestate":["BAact034no4","rBAact034no4"],
+       "attachments":["FW_INTERNET/X02/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact034no4"
+       "id":"BAact034no1"
 	},
 	{
        "type":"auto",
@@ -805,43 +754,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact035no1",
        "removestate":["BAact035no1","rBAact035no1"],
-       "attachments":["VPN/X03/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact035no1"
-	},
-	{
-       "type":"auto",
-       "name":"VPNの再接続完了",
-       "systemstatecondition":["BAact035no2"],
-       "from":"VPN",
-       "to":"CSIRT",
-       "rerunstate":"rBAact035no2",
-       "removestate":["BAact035no2","rBAact035no2"],
-       "attachments":["VPN/X03/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact035no2"
-	},
-	{
-       "type":"auto",
-       "name":"VPNの再接続完了",
-       "systemstatecondition":["BAact035no3"],
-       "from":"VPN",
-       "to":"CSIRT",
-       "rerunstate":"rBAact035no3",
-       "removestate":["BAact035no3","rBAact035no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact035no3"
-	},
-	{
-       "type":"auto",
-       "name":"VPNの再接続完了",
-       "systemstatecondition":["BAact035no4"],
-       "from":"VPN",
-       "to":"CSIRT",
-       "rerunstate":"rBAact035no4",
-       "removestate":["BAact035no4","rBAact035no4"],
+       "attachments":["VPN/X03/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact035no4"
+       "id":"BAact035no1"
 	},
 	{
        "type":"auto",
@@ -860,43 +775,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact036no1",
        "removestate":["BAact036no1","rBAact036no1"],
-       "attachments":["ZONE-4/X04/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact036no1"
-	},
-	{
-       "type":"auto",
-       "name":"メールサーバの再接続完了",
-       "systemstatecondition":["BAact036no2"],
-       "from":"メールサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact036no2",
-       "removestate":["BAact036no2","rBAact036no2"],
-       "attachments":["ZONE-4/X04/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact036no2"
-	},
-	{
-       "type":"auto",
-       "name":"メールサーバの再接続完了",
-       "systemstatecondition":["BAact036no3"],
-       "from":"メールサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact036no3",
-       "removestate":["BAact036no3","rBAact036no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact036no3"
-	},
-	{
-       "type":"auto",
-       "name":"メールサーバの再接続完了",
-       "systemstatecondition":["BAact036no4"],
-       "from":"メールサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact036no4",
-       "removestate":["BAact036no4","rBAact036no4"],
+       "attachments":["ZONE-4/X04/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact036no4"
+       "id":"BAact036no1"
 	},
 	{
        "type":"auto",
@@ -915,43 +796,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact037no1",
        "removestate":["BAact037no1","rBAact037no1"],
-       "attachments":["ZONE-4/X05/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact037no1"
-	},
-	{
-       "type":"auto",
-       "name":"Webサーバの再接続完了",
-       "systemstatecondition":["BAact037no2"],
-       "from":"Webサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact037no2",
-       "removestate":["BAact037no2","rBAact037no2"],
-       "attachments":["ZONE-4/X05/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact037no2"
-	},
-	{
-       "type":"auto",
-       "name":"Webサーバの再接続完了",
-       "systemstatecondition":["BAact037no3"],
-       "from":"Webサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact037no3",
-       "removestate":["BAact037no3","rBAact037no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact037no3"
-	},
-	{
-       "type":"auto",
-       "name":"Webサーバの再接続完了",
-       "systemstatecondition":["BAact037no4"],
-       "from":"Webサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact037no4",
-       "removestate":["BAact037no4","rBAact037no4"],
+       "attachments":["ZONE-4/X05/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact037no4"
+       "id":"BAact037no1"
 	},
 	{
        "type":"auto",
@@ -970,43 +817,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact038no1",
        "removestate":["BAact038no1","rBAact038no1"],
-       "attachments":["ZONE-4/X06/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact038no1"
-	},
-	{
-       "type":"auto",
-       "name":"社員用PC1の再接続完了",
-       "systemstatecondition":["BAact038no2"],
-       "from":"社員用PC1",
-       "to":"CSIRT",
-       "rerunstate":"rBAact038no2",
-       "removestate":["BAact038no2","rBAact038no2"],
-       "attachments":["ZONE-4/X06/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact038no2"
-	},
-	{
-       "type":"auto",
-       "name":"社員用PC1の再接続完了",
-       "systemstatecondition":["BAact038no3"],
-       "from":"社員用PC1",
-       "to":"CSIRT",
-       "rerunstate":"rBAact038no3",
-       "removestate":["BAact038no3","rBAact038no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact038no3"
-	},
-	{
-       "type":"auto",
-       "name":"社員用PC1の再接続完了",
-       "systemstatecondition":["BAact038no4"],
-       "from":"社員用PC1",
-       "to":"CSIRT",
-       "rerunstate":"rBAact038no4",
-       "removestate":["BAact038no4","rBAact038no4"],
+       "attachments":["ZONE-4/X06/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact038no4"
+       "id":"BAact038no1"
 	},
 	{
        "type":"auto",
@@ -1025,43 +838,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact039no1",
        "removestate":["BAact039no1","rBAact039no1"],
-       "attachments":["ZONE-4/X07/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact039no1"
-	},
-	{
-       "type":"auto",
-       "name":"社員用PC2の再接続完了",
-       "systemstatecondition":["BAact039no2"],
-       "from":"社員用PC2",
-       "to":"CSIRT",
-       "rerunstate":"rBAact039no2",
-       "removestate":["BAact039no2","rBAact039no2"],
-       "attachments":["ZONE-4/X07/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact039no2"
-	},
-	{
-       "type":"auto",
-       "name":"社員用PC2の再接続完了",
-       "systemstatecondition":["BAact039no3"],
-       "from":"社員用PC2",
-       "to":"CSIRT",
-       "rerunstate":"rBAact039no3",
-       "removestate":["BAact039no3","rBAact039no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact039no3"
-	},
-	{
-       "type":"auto",
-       "name":"社員用PC2の再接続完了",
-       "systemstatecondition":["BAact039no4"],
-       "from":"社員用PC2",
-       "to":"CSIRT",
-       "rerunstate":"rBAact039no4",
-       "removestate":["BAact039no4","rBAact039no4"],
+       "attachments":["ZONE-4/X07/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact039no4"
+       "id":"BAact039no1"
 	},
 	{
        "type":"auto",
@@ -1080,43 +859,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact040no1",
        "removestate":["BAact040no1","rBAact040no1"],
-       "attachments":["ZONE-4/X08/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact040no1"
-	},
-	{
-       "type":"auto",
-       "name":"保守PC1の再接続完了",
-       "systemstatecondition":["BAact040no2"],
-       "from":"保守PC1",
-       "to":"CSIRT",
-       "rerunstate":"rBAact040no2",
-       "removestate":["BAact040no2","rBAact040no2"],
-       "attachments":["ZONE-4/X08/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact040no2"
-	},
-	{
-       "type":"auto",
-       "name":"保守PC1の再接続完了",
-       "systemstatecondition":["BAact040no3"],
-       "from":"保守PC1",
-       "to":"CSIRT",
-       "rerunstate":"rBAact040no3",
-       "removestate":["BAact040no3","rBAact040no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact040no3"
-	},
-	{
-       "type":"auto",
-       "name":"保守PC1の再接続完了",
-       "systemstatecondition":["BAact040no4"],
-       "from":"保守PC1",
-       "to":"CSIRT",
-       "rerunstate":"rBAact040no4",
-       "removestate":["BAact040no4","rBAact040no4"],
+       "attachments":["ZONE-4/X08/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact040no4"
+       "id":"BAact040no1"
 	},
 	{
        "type":"auto",
@@ -1135,43 +880,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact041no1",
        "removestate":["BAact041no1","rBAact041no1"],
-       "attachments":["ZONE-4/X09/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact041no1"
-	},
-	{
-       "type":"auto",
-       "name":"ERPサーバの再接続完了",
-       "systemstatecondition":["BAact041no2"],
-       "from":"ERPサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact041no2",
-       "removestate":["BAact041no2","rBAact041no2"],
-       "attachments":["ZONE-4/X09/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact041no2"
-	},
-	{
-       "type":"auto",
-       "name":"ERPサーバの再接続完了",
-       "systemstatecondition":["BAact041no3"],
-       "from":"ERPサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact041no3",
-       "removestate":["BAact041no3","rBAact041no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact041no3"
-	},
-	{
-       "type":"auto",
-       "name":"ERPサーバの再接続完了",
-       "systemstatecondition":["BAact041no4"],
-       "from":"ERPサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact041no4",
-       "removestate":["BAact041no4","rBAact041no4"],
+       "attachments":["ZONE-4/X09/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact041no4"
+       "id":"BAact041no1"
 	},
 	{
        "type":"auto",
@@ -1190,43 +901,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact042no1",
        "removestate":["BAact042no1","rBAact042no1"],
-       "attachments":["FW_0/X10/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact042no1"
-	},
-	{
-       "type":"auto",
-       "name":"FW2の再接続完了",
-       "systemstatecondition":["BAact042no2"],
-       "from":"FW2",
-       "to":"CSIRT",
-       "rerunstate":"rBAact042no2",
-       "removestate":["BAact042no2","rBAact042no2"],
-       "attachments":["FW_0/X10/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact042no2"
-	},
-	{
-       "type":"auto",
-       "name":"FW2の再接続完了",
-       "systemstatecondition":["BAact042no3"],
-       "from":"FW2",
-       "to":"CSIRT",
-       "rerunstate":"rBAact042no3",
-       "removestate":["BAact042no3","rBAact042no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact042no3"
-	},
-	{
-       "type":"auto",
-       "name":"FW2の再接続完了",
-       "systemstatecondition":["BAact042no4"],
-       "from":"FW2",
-       "to":"CSIRT",
-       "rerunstate":"rBAact042no4",
-       "removestate":["BAact042no4","rBAact042no4"],
+       "attachments":["FW_0/X10/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact042no4"
+       "id":"BAact042no1"
 	},
 	{
        "type":"auto",
@@ -1245,43 +922,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact043no1",
        "removestate":["BAact043no1","rBAact043no1"],
-       "attachments":["ZONE-3/X11/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact043no1"
-	},
-	{
-       "type":"auto",
-       "name":"生産管理サーバの再接続完了",
-       "systemstatecondition":["BAact043no2"],
-       "from":"生産管理サーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact043no2",
-       "removestate":["BAact043no2","rBAact043no2"],
-       "attachments":["ZONE-3/X11/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact043no2"
-	},
-	{
-       "type":"auto",
-       "name":"生産管理サーバの再接続完了",
-       "systemstatecondition":["BAact043no3"],
-       "from":"生産管理サーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact043no3",
-       "removestate":["BAact043no3","rBAact043no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact043no3"
-	},
-	{
-       "type":"auto",
-       "name":"生産管理サーバの再接続完了",
-       "systemstatecondition":["BAact043no4"],
-       "from":"生産管理サーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact043no4",
-       "removestate":["BAact043no4","rBAact043no4"],
+       "attachments":["ZONE-3/X11/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact043no4"
+       "id":"BAact043no1"
 	},
 	{
        "type":"auto",
@@ -1300,43 +943,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact044no1",
        "removestate":["BAact044no1","rBAact044no1"],
-       "attachments":["ZONE-3/X12/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact044no1"
-	},
-	{
-       "type":"auto",
-       "name":"設備管理サーバの再接続完了",
-       "systemstatecondition":["BAact044no2"],
-       "from":"設備管理サーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact044no2",
-       "removestate":["BAact044no2","rBAact044no2"],
-       "attachments":["ZONE-3/X12/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact044no2"
-	},
-	{
-       "type":"auto",
-       "name":"設備管理サーバの再接続完了",
-       "systemstatecondition":["BAact044no3"],
-       "from":"設備管理サーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact044no3",
-       "removestate":["BAact044no3","rBAact044no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact044no3"
-	},
-	{
-       "type":"auto",
-       "name":"設備管理サーバの再接続完了",
-       "systemstatecondition":["BAact044no4"],
-       "from":"設備管理サーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact044no4",
-       "removestate":["BAact044no4","rBAact044no4"],
+       "attachments":["ZONE-3/X12/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact044no4"
+       "id":"BAact044no1"
 	},
 	{
        "type":"auto",
@@ -1355,43 +964,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact045no1",
        "removestate":["BAact045no1","rBAact045no1"],
-       "attachments":["ZONE-2/X13/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact045no1"
-	},
-	{
-       "type":"auto",
-       "name":"EWSの再接続完了",
-       "systemstatecondition":["BAact045no2"],
-       "from":"EWS",
-       "to":"CSIRT",
-       "rerunstate":"rBAact045no2",
-       "removestate":["BAact045no2","rBAact045no2"],
-       "attachments":["ZONE-2/X13/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact045no2"
-	},
-	{
-       "type":"auto",
-       "name":"EWSの再接続完了",
-       "systemstatecondition":["BAact045no3"],
-       "from":"EWS",
-       "to":"CSIRT",
-       "rerunstate":"rBAact045no3",
-       "removestate":["BAact045no3","rBAact045no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact045no3"
-	},
-	{
-       "type":"auto",
-       "name":"EWSの再接続完了",
-       "systemstatecondition":["BAact045no4"],
-       "from":"EWS",
-       "to":"CSIRT",
-       "rerunstate":"rBAact045no4",
-       "removestate":["BAact045no4","rBAact045no4"],
+       "attachments":["ZONE-2/X13/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact045no4"
+       "id":"BAact045no1"
 	},
 	{
        "type":"auto",
@@ -1410,43 +985,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact046no1",
        "removestate":["BAact046no1","rBAact046no1"],
-       "attachments":["ZONE-2/X14/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact046no1"
-	},
-	{
-       "type":"auto",
-       "name":"SCADAの再接続完了",
-       "systemstatecondition":["BAact046no2"],
-       "from":"SCADA",
-       "to":"CSIRT",
-       "rerunstate":"rBAact046no2",
-       "removestate":["BAact046no2","rBAact046no2"],
-       "attachments":["ZONE-2/X14/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact046no2"
-	},
-	{
-       "type":"auto",
-       "name":"SCADAの再接続完了",
-       "systemstatecondition":["BAact046no3"],
-       "from":"SCADA",
-       "to":"CSIRT",
-       "rerunstate":"rBAact046no3",
-       "removestate":["BAact046no3","rBAact046no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact046no3"
-	},
-	{
-       "type":"auto",
-       "name":"SCADAの再接続完了",
-       "systemstatecondition":["BAact046no4"],
-       "from":"SCADA",
-       "to":"CSIRT",
-       "rerunstate":"rBAact046no4",
-       "removestate":["BAact046no4","rBAact046no4"],
+       "attachments":["ZONE-2/X14/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact046no4"
+       "id":"BAact046no1"
 	},
 	{
        "type":"auto",
@@ -1465,43 +1006,9 @@
        "to":"CSIRT",
        "rerunstate":"rBAact047no1",
        "removestate":["BAact047no1","rBAact047no1"],
-       "attachments":["ZONE-2/X15/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact047no1"
-	},
-	{
-       "type":"auto",
-       "name":"OPCサーバの再接続完了",
-       "systemstatecondition":["BAact047no2"],
-       "from":"OPCサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact047no2",
-       "removestate":["BAact047no2","rBAact047no2"],
-       "attachments":["ZONE-2/X15/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact047no2"
-	},
-	{
-       "type":"auto",
-       "name":"OPCサーバの再接続完了",
-       "systemstatecondition":["BAact047no3"],
-       "from":"OPCサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact047no3",
-       "removestate":["BAact047no3","rBAact047no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact047no3"
-	},
-	{
-       "type":"auto",
-       "name":"OPCサーバの再接続完了",
-       "systemstatecondition":["BAact047no4"],
-       "from":"OPCサーバ",
-       "to":"CSIRT",
-       "rerunstate":"rBAact047no4",
-       "removestate":["BAact047no4","rBAact047no4"],
+       "attachments":["ZONE-2/X15/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact047no4"
+       "id":"BAact047no1"
 	},
 	{
        "type":"auto",
@@ -1520,48 +1027,15 @@
        "to":"CSIRT",
        "rerunstate":"rBAact048no1",
        "removestate":["BAact048no1","rBAact048no1"],
-       "attachments":["ZONE-1/X16/INF"],
-       "message":"感染しているまま再接続しました。",
-       "id":"BAact048no1"
-	},
-	{
-       "type":"auto",
-       "name":"PLCの再接続完了",
-       "systemstatecondition":["BAact048no2"],
-       "from":"PLC",
-       "to":"CSIRT",
-       "rerunstate":"rBAact048no2",
-       "removestate":["BAact048no2","rBAact048no2"],
-       "attachments":["ZONE-1/X16/ATK"],
-       "message":"乗っ取られてるまま再接続しました。",
-       "id":"BAact048no2"
-	},
-	{
-       "type":"auto",
-       "name":"PLCの再接続完了",
-       "systemstatecondition":["BAact048no3"],
-       "from":"PLC",
-       "to":"CSIRT",
-       "rerunstate":"rBAact048no3",
-       "removestate":["BAact048no3","rBAact048no3"],
-       "message":"脆弱性があるまま再接続しました。",
-       "id":"BAact048no3"
-	},
-	{
-       "type":"auto",
-       "name":"PLCの再接続完了",
-       "systemstatecondition":["BAact048no4"],
-       "from":"PLC",
-       "to":"CSIRT",
-       "rerunstate":"rBAact048no4",
-       "removestate":["BAact048no4","rBAact048no4"],
+       "attachments":["ZONE-1/X16/CON/OFF"],
        "message":"再接続しました。",
-       "id":"BAact048no4"
+       "id":"BAact048no1"
 	},
 	{
        "type":"action",
        "name":"復旧する(バックアップから復旧＋パッチ適用)",
        "roles":["CSIRT"],
+       "delay":4,
        "message":"復旧します。端末が隔離されている状態で実施してください。",
        "id":"BMact049"
 	},
@@ -1582,6 +1056,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact049no1",
        "removestate":["BAact049no1","rBAact049no1"],
+       "attachments":["REMOTEACCESS/X01/ATK/OFF","REMOTEACCESS/X01/INF/OFF","REMOTEACCESS/X01/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact049no1"
 	},
@@ -1602,6 +1077,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact050no1",
        "removestate":["BAact050no1","rBAact050no1"],
+       "attachments":["FW_INTERNET/X02/ATK/OFF","FW_INTERNET/X02/INF/OFF","FW_INTERNET/X02/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact050no1"
 	},
@@ -1622,6 +1098,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact051no1",
        "removestate":["BAact051no1","rBAact051no1"],
+       "attachments":["VPN/X03/ATK/OFF","VPN/X03/INF/OFF","VPN/X03/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact051no1"
 	},
@@ -1642,6 +1119,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact052no1",
        "removestate":["BAact052no1","rBAact052no1"],
+       "attachments":["ZONE-4/X04/ATK/OFF","ZONE-4/X04/INF/OFF","ZONE-4/X04/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact052no1"
 	},
@@ -1662,6 +1140,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact053no1",
        "removestate":["BAact053no1","rBAact053no1"],
+       "attachments":["ZONE-4/X05/ATK/OFF","ZONE-4/X05/INF/OFF","ZONE-4/X05/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact053no1"
 	},
@@ -1682,6 +1161,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact054no1",
        "removestate":["BAact054no1","rBAact054no1"],
+       "attachments":["ZONE-4/X06/ATK/OFF","ZONE-4/X06/INF/OFF","ZONE-4/X06/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact054no1"
 	},
@@ -1702,6 +1182,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact055no1",
        "removestate":["BAact055no1","rBAact055no1"],
+       "attachments":["ZONE-4/X07/ATK/OFF","ZONE-4/X07/INF/OFF","ZONE-4/X07/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact055no1"
 	},
@@ -1722,6 +1203,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact056no1",
        "removestate":["BAact056no1","rBAact056no1"],
+       "attachments":["ZONE-4/X08/ATK/OFF","ZONE-4/X08/INF/OFF","ZONE-4/X08/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact056no1"
 	},
@@ -1742,6 +1224,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact057no1",
        "removestate":["BAact057no1","rBAact057no1"],
+       "attachments":["ZONE-4/X09/ATK/OFF","ZONE-4/X09/INF/OFF","ZONE-4/X09/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact057no1"
 	},
@@ -1762,6 +1245,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact058no1",
        "removestate":["BAact058no1","rBAact058no1"],
+       "attachments":["FW_0/X10/ATK/OFF","FW_0/X10/INF/OFF","FW_0/X10/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact058no1"
 	},
@@ -1782,6 +1266,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact059no1",
        "removestate":["BAact059no1","rBAact059no1"],
+       "attachments":["ZONE-3/X11/ATK/OFF","ZONE-3/X11/INF/OFF","ZONE-3/X11/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact059no1"
 	},
@@ -1802,6 +1287,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact060no1",
        "removestate":["BAact060no1","rBAact060no1"],
+       "attachments":["ZONE-3/X12/ATK/OFF","ZONE-3/X12/INF/OFF","ZONE-3/X12/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact060no1"
 	},
@@ -1822,6 +1308,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact061no1",
        "removestate":["BAact061no1","rBAact061no1"],
+       "attachments":["ZONE-2/X13/ATK/OFF","ZONE-2/X13/INF/OFF","ZONE-2/X13/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact061no1"
 	},
@@ -1842,6 +1329,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact062no1",
        "removestate":["BAact062no1","rBAact062no1"],
+       "attachments":["ZONE-2/X14/ATK/OFF","ZONE-2/X14/INF/OFF","ZONE-2/X14/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact062no1"
 	},
@@ -1862,6 +1350,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact063no1",
        "removestate":["BAact063no1","rBAact063no1"],
+       "attachments":["ZONE-2/X15/ATK/OFF","ZONE-2/X15/INF/OFF","ZONE-2/X15/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact063no1"
 	},
@@ -1882,6 +1371,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact064no1",
        "removestate":["BAact064no1","rBAact064no1"],
+       "attachments":["ZONE-1/X16/ATK/OFF","ZONE-1/X16/INF/OFF","ZONE-1/X16/VUL/OFF"],
        "message":"復旧しました。",
        "id":"BAact064no1"
 	},
@@ -1909,7 +1399,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact065no1",
        "removestate":["BAact065no1","rBAact065no1"],
-       "attachments":["REMOTEACCESS/X01/ATK"],
+       "attachments":["REMOTEACCESS/X01/ATK/ON"],
        "message":"リモートPCにおいて、画像のログを検出しました",
        "id":"BAact065no1"
 	},
@@ -1921,19 +1411,19 @@
        "to":"CSIRT",
        "rerunstate":"rBAact065no2",
        "removestate":["BAact065no2","rBAact065no2"],
-       "attachments":["REMOTEACCESS/X01/INF"],
+       "attachments":["REMOTEACCESS/X01/INF/ON"],
        "message":"リモートPCにおいて、画像のログを検出しました",
        "id":"BAact065no2"
 	},
 	{
        "type":"auto",
-       "name":"FW1異常なし",
+       "name":"リモートPC異常なし",
        "systemstatecondition":["BAact065no3"],
        "from":"リモートPC",
        "to":"CSIRT",
        "rerunstate":"rBAact065no3",
        "removestate":["BAact065no3","rBAact065no3"],
-       "message":"FW1に異常は見つかりませんでした。",
+       "message":"リモートPCに異常は見つかりませんでした。",
        "id":"BAact065no3"
 	},
 	{
@@ -1953,7 +1443,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact066no1",
        "removestate":["BAact066no1","rBAact066no1"],
-       "attachments":["FW_INTERNET/X02/ATK"],
+       "attachments":["FW_INTERNET/X02/ATK/ON"],
        "message":"FW1において、画像のログを検出しました",
        "id":"BAact066no1"
 	},
@@ -1965,19 +1455,19 @@
        "to":"CSIRT",
        "rerunstate":"rBAact066no2",
        "removestate":["BAact066no2","rBAact066no2"],
-       "attachments":["FW_INTERNET/X02/INF"],
+       "attachments":["FW_INTERNET/X02/INF/ON"],
        "message":"FW1において、画像のログを検出しました",
        "id":"BAact066no2"
 	},
 	{
        "type":"auto",
-       "name":"リモートPC異常なし",
+       "name":"FW1異常なし",
        "systemstatecondition":["BAact066no3"],
        "from":"FW1",
        "to":"CSIRT",
        "rerunstate":"rBAact066no3",
        "removestate":["BAact066no3","rBAact066no3"],
-       "message":"リモートPCに異常は見つかりませんでした。",
+       "message":"FW1に異常は見つかりませんでした。",
        "id":"BAact066no3"
 	},
 	{
@@ -1997,7 +1487,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact067no1",
        "removestate":["BAact067no1","rBAact067no1"],
-       "attachments":["VPN/X03/ATK"],
+       "attachments":["VPN/X03/ATK/ON"],
        "message":"VPNにおいて、画像のログを検出しました",
        "id":"BAact067no1"
 	},
@@ -2009,7 +1499,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact067no2",
        "removestate":["BAact067no2","rBAact067no2"],
-       "attachments":["VPN/X03/INF"],
+       "attachments":["VPN/X03/INF/ON"],
        "message":"VPNにおいて、画像のログを検出しました",
        "id":"BAact067no2"
 	},
@@ -2041,7 +1531,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact068no1",
        "removestate":["BAact068no1","rBAact068no1"],
-       "attachments":["ZONE-4/X04/ATK"],
+       "attachments":["ZONE-4/X04/ATK/ON"],
        "message":"メールサーバにおいて、画像のログを検出しました",
        "id":"BAact068no1"
 	},
@@ -2053,7 +1543,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact068no2",
        "removestate":["BAact068no2","rBAact068no2"],
-       "attachments":["ZONE-4/X04/INF"],
+       "attachments":["ZONE-4/X04/INF/ON"],
        "message":"メールサーバにおいて、画像のログを検出しました",
        "id":"BAact068no2"
 	},
@@ -2085,7 +1575,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact069no1",
        "removestate":["BAact069no1","rBAact069no1"],
-       "attachments":["ZONE-4/X05/ATK"],
+       "attachments":["ZONE-4/X05/ATK/ON"],
        "message":"Webサーバにおいて、画像のログを検出しました",
        "id":"BAact069no1"
 	},
@@ -2097,7 +1587,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact069no2",
        "removestate":["BAact069no2","rBAact069no2"],
-       "attachments":["ZONE-4/X05/INF"],
+       "attachments":["ZONE-4/X05/INF/ON"],
        "message":"Webサーバにおいて、画像のログを検出しました",
        "id":"BAact069no2"
 	},
@@ -2129,7 +1619,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact070no1",
        "removestate":["BAact070no1","rBAact070no1"],
-       "attachments":["ZONE-4/X06/ATK"],
+       "attachments":["ZONE-4/X06/ATK/ON"],
        "message":"社員用PC1において、画像のログを検出しました",
        "id":"BAact070no1"
 	},
@@ -2141,7 +1631,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact070no2",
        "removestate":["BAact070no2","rBAact070no2"],
-       "attachments":["ZONE-4/X06/INF"],
+       "attachments":["ZONE-4/X06/INF/ON"],
        "message":"社員用PC1において、画像のログを検出しました",
        "id":"BAact070no2"
 	},
@@ -2173,7 +1663,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact071no1",
        "removestate":["BAact071no1","rBAact071no1"],
-       "attachments":["ZONE-4/X07/ATK"],
+       "attachments":["ZONE-4/X07/ATK/ON"],
        "message":"社員用PC2において、画像のログを検出しました",
        "id":"BAact071no1"
 	},
@@ -2185,7 +1675,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact071no2",
        "removestate":["BAact071no2","rBAact071no2"],
-       "attachments":["ZONE-4/X07/INF"],
+       "attachments":["ZONE-4/X07/INF/ON"],
        "message":"社員用PC2において、画像のログを検出しました",
        "id":"BAact071no2"
 	},
@@ -2217,7 +1707,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact072no1",
        "removestate":["BAact072no1","rBAact072no1"],
-       "attachments":["ZONE-4/X08/ATK"],
+       "attachments":["ZONE-4/X08/ATK/ON"],
        "message":"保守PC1において、画像のログを検出しました",
        "id":"BAact072no1"
 	},
@@ -2229,7 +1719,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact072no2",
        "removestate":["BAact072no2","rBAact072no2"],
-       "attachments":["ZONE-4/X08/INF"],
+       "attachments":["ZONE-4/X08/INF/ON"],
        "message":"保守PC1において、画像のログを検出しました",
        "id":"BAact072no2"
 	},
@@ -2261,7 +1751,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact073no1",
        "removestate":["BAact073no1","rBAact073no1"],
-       "attachments":["ZONE-4/X09/ATK"],
+       "attachments":["ZONE-4/X09/ATK/ON"],
        "message":"ERPサーバにおいて、画像のログを検出しました",
        "id":"BAact073no1"
 	},
@@ -2273,7 +1763,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact073no2",
        "removestate":["BAact073no2","rBAact073no2"],
-       "attachments":["ZONE-4/X09/INF"],
+       "attachments":["ZONE-4/X09/INF/ON"],
        "message":"ERPサーバにおいて、画像のログを検出しました",
        "id":"BAact073no2"
 	},
@@ -2305,7 +1795,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact074no1",
        "removestate":["BAact074no1","rBAact074no1"],
-       "attachments":["FW_0/X10/ATK"],
+       "attachments":["FW_0/X10/ATK/ON"],
        "message":"FW2において、画像のログを検出しました",
        "id":"BAact074no1"
 	},
@@ -2317,7 +1807,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact074no2",
        "removestate":["BAact074no2","rBAact074no2"],
-       "attachments":["FW_0/X10/INF"],
+       "attachments":["FW_0/X10/INF/ON"],
        "message":"FW2において、画像のログを検出しました",
        "id":"BAact074no2"
 	},
@@ -2349,7 +1839,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact075no1",
        "removestate":["BAact075no1","rBAact075no1"],
-       "attachments":["ZONE-3/X11/ATK"],
+       "attachments":["ZONE-3/X11/ATK/ON"],
        "message":"生産管理サーバにおいて、画像のログを検出しました",
        "id":"BAact075no1"
 	},
@@ -2361,7 +1851,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact075no2",
        "removestate":["BAact075no2","rBAact075no2"],
-       "attachments":["ZONE-3/X11/INF"],
+       "attachments":["ZONE-3/X11/INF/ON"],
        "message":"生産管理サーバにおいて、画像のログを検出しました",
        "id":"BAact075no2"
 	},
@@ -2393,7 +1883,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact076no1",
        "removestate":["BAact076no1","rBAact076no1"],
-       "attachments":["ZONE-3/X12/ATK"],
+       "attachments":["ZONE-3/X12/ATK/ON"],
        "message":"設備管理サーバにおいて、画像のログを検出しました",
        "id":"BAact076no1"
 	},
@@ -2405,7 +1895,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact076no2",
        "removestate":["BAact076no2","rBAact076no2"],
-       "attachments":["ZONE-3/X12/INF"],
+       "attachments":["ZONE-3/X12/INF/ON"],
        "message":"設備管理サーバにおいて、画像のログを検出しました",
        "id":"BAact076no2"
 	},
@@ -2437,7 +1927,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact077no1",
        "removestate":["BAact077no1","rBAact077no1"],
-       "attachments":["ZONE-2/X13/ATK"],
+       "attachments":["ZONE-2/X13/ATK/ON"],
        "message":"EWSにおいて、画像のログを検出しました",
        "id":"BAact077no1"
 	},
@@ -2449,7 +1939,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact077no2",
        "removestate":["BAact077no2","rBAact077no2"],
-       "attachments":["ZONE-2/X13/INF"],
+       "attachments":["ZONE-2/X13/INF/ON"],
        "message":"EWSにおいて、画像のログを検出しました",
        "id":"BAact077no2"
 	},
@@ -2481,7 +1971,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact078no1",
        "removestate":["BAact078no1","rBAact078no1"],
-       "attachments":["ZONE-2/X14/ATK"],
+       "attachments":["ZONE-2/X14/ATK/ON"],
        "message":"SCADAにおいて、画像のログを検出しました",
        "id":"BAact078no1"
 	},
@@ -2493,7 +1983,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact078no2",
        "removestate":["BAact078no2","rBAact078no2"],
-       "attachments":["ZONE-2/X14/INF"],
+       "attachments":["ZONE-2/X14/INF/ON"],
        "message":"SCADAにおいて、画像のログを検出しました",
        "id":"BAact078no2"
 	},
@@ -2525,7 +2015,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact079no1",
        "removestate":["BAact079no1","rBAact079no1"],
-       "attachments":["ZONE-2/X15/ATK"],
+       "attachments":["ZONE-2/X15/ATK/ON"],
        "message":"OPCサーバにおいて、画像のログを検出しました",
        "id":"BAact079no1"
 	},
@@ -2537,7 +2027,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact079no2",
        "removestate":["BAact079no2","rBAact079no2"],
-       "attachments":["ZONE-2/X15/INF"],
+       "attachments":["ZONE-2/X15/INF/ON"],
        "message":"OPCサーバにおいて、画像のログを検出しました",
        "id":"BAact079no2"
 	},
@@ -2569,7 +2059,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact080no1",
        "removestate":["BAact080no1","rBAact080no1"],
-       "attachments":["ZONE-1/X16/ATK"],
+       "attachments":["ZONE-1/X16/ATK/ON"],
        "message":"PLCにおいて、画像のログを検出しました",
        "id":"BAact080no1"
 	},
@@ -2581,7 +2071,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact080no2",
        "removestate":["BAact080no2","rBAact080no2"],
-       "attachments":["ZONE-1/X16/INF"],
+       "attachments":["ZONE-1/X16/INF/ON"],
        "message":"PLCにおいて、画像のログを検出しました",
        "id":"BAact080no2"
 	},
@@ -2619,7 +2109,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact081no1",
        "removestate":["BAact081no1","rBAact081no1"],
-       "attachments":["REMOTEACCESS/X01/VUL"],
+       "attachments":["REMOTEACCESS/X01/VUL/ON"],
        "message":"リモートPCにおいて、脆弱性を発見しました。",
        "id":"BAact081no1"
 	},
@@ -2662,7 +2152,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact082no1",
        "removestate":["BAact082no1","rBAact082no1"],
-       "attachments":["FW_INTERNET/X02/VUL"],
+       "attachments":["FW_INTERNET/X02/VUL/ON"],
        "message":"FW1において、脆弱性を発見しました。",
        "id":"BAact082no1"
 	},
@@ -2694,7 +2184,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact083no1",
        "removestate":["BAact083no1","rBAact083no1"],
-       "attachments":["VPN/X03/VUL"],
+       "attachments":["VPN/X03/VUL/ON"],
        "message":"VPNにおいて、脆弱性を発見しました。",
        "id":"BAact083no1"
 	},
@@ -2726,7 +2216,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact084no1",
        "removestate":["BAact084no1","rBAact084no1"],
-       "attachments":["ZONE-4/X04/VUL"],
+       "attachments":["ZONE-4/X04/VUL/ON"],
        "message":"メールサーバにおいて、脆弱性を発見しました。",
        "id":"BAact084no1"
 	},
@@ -2758,7 +2248,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact085no1",
        "removestate":["BAact085no1","rBAact085no1"],
-       "attachments":["ZONE-4/X05/VUL"],
+       "attachments":["ZONE-4/X05/VUL/ON"],
        "message":"Webサーバにおいて、脆弱性を発見しました。",
        "id":"BAact085no1"
 	},
@@ -2790,7 +2280,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact086no1",
        "removestate":["BAact086no1","rBAact086no1"],
-       "attachments":["ZONE-4/X06/VUL"],
+       "attachments":["ZONE-4/X06/VUL/ON"],
        "message":"社員用PC1において、脆弱性を発見しました。",
        "id":"BAact086no1"
 	},
@@ -2822,7 +2312,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact087no1",
        "removestate":["BAact087no1","rBAact087no1"],
-       "attachments":["ZONE-4/X07/VUL"],
+       "attachments":["ZONE-4/X07/VUL/ON"],
        "message":"社員用PC2において、脆弱性を発見しました。",
        "id":"BAact087no1"
 	},
@@ -2854,7 +2344,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact088no1",
        "removestate":["BAact088no1","rBAact088no1"],
-       "attachments":["ZONE-4/X08/VUL"],
+       "attachments":["ZONE-4/X08/VUL/ON"],
        "message":"保守PC1において、脆弱性を発見しました。",
        "id":"BAact088no1"
 	},
@@ -2886,7 +2376,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact089no1",
        "removestate":["BAact089no1","rBAact089no1"],
-       "attachments":["ZONE-4/X09/VUL"],
+       "attachments":["ZONE-4/X09/VUL/ON"],
        "message":"ERPサーバにおいて、脆弱性を発見しました。",
        "id":"BAact089no1"
 	},
@@ -2918,7 +2408,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact090no1",
        "removestate":["BAact090no1","rBAact090no1"],
-       "attachments":["FW_0/X10/VUL"],
+       "attachments":["FW_0/X10/VUL/ON"],
        "message":"FW2において、脆弱性を発見しました。",
        "id":"BAact090no1"
 	},
@@ -2950,7 +2440,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact091no1",
        "removestate":["BAact091no1","rBAact091no1"],
-       "attachments":["ZONE-3/X11/VUL"],
+       "attachments":["ZONE-3/X11/VUL/ON"],
        "message":"生産管理サーバにおいて、脆弱性を発見しました。",
        "id":"BAact091no1"
 	},
@@ -2982,7 +2472,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact092no1",
        "removestate":["BAact092no1","rBAact092no1"],
-       "attachments":["ZONE-3/X12/VUL"],
+       "attachments":["ZONE-3/X12/VUL/ON"],
        "message":"設備管理サーバにおいて、脆弱性を発見しました。",
        "id":"BAact092no1"
 	},
@@ -3014,7 +2504,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact093no1",
        "removestate":["BAact093no1","rBAact093no1"],
-       "attachments":["ZONE-2/X13/VUL"],
+       "attachments":["ZONE-2/X13/VUL/ON"],
        "message":"EWSにおいて、脆弱性を発見しました。",
        "id":"BAact093no1"
 	},
@@ -3046,7 +2536,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact094no1",
        "removestate":["BAact094no1","rBAact094no1"],
-       "attachments":["ZONE-2/X14/VUL"],
+       "attachments":["ZONE-2/X14/VUL/ON"],
        "message":"SCADAにおいて、脆弱性を発見しました。",
        "id":"BAact094no1"
 	},
@@ -3078,7 +2568,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact095no1",
        "removestate":["BAact095no1","rBAact095no1"],
-       "attachments":["ZONE-2/X15/VUL"],
+       "attachments":["ZONE-2/X15/VUL/ON"],
        "message":"OPCサーバにおいて、脆弱性を発見しました。",
        "id":"BAact095no1"
 	},
@@ -3110,7 +2600,7 @@
        "to":"CSIRT",
        "rerunstate":"rBAact096no1",
        "removestate":["BAact096no1","rBAact096no1"],
-       "attachments":["ZONE-1/X16/VUL"],
+       "attachments":["ZONE-1/X16/VUL/ON"],
        "message":"PLCにおいて、脆弱性を発見しました。",
        "id":"BAact096no1"
 	},
@@ -3143,7 +2633,7 @@
 	{
        "type":"auto",
        "name":"FW1の乗っ取り",
-       "attachments":["FW_INTERNET/X02/ATK"],
+       "attachments":["FW_INTERNET/X02/ATK/ON"],
        "systemstatecondition":["RAactS001"],
        "from":"FW1",
        "to":"サイバー攻撃者",
@@ -3175,7 +2665,7 @@
 	},
 	{
        "type":"action",
-       "name":"インターネットからFWにランサムウェアを仕込む",
+       "name":"インターネットからFWに自己増殖型マルウェアを仕込む",
        "roles":["サイバー攻撃者"],
        "id":"RMact002"
 	},
@@ -3191,7 +2681,7 @@
 	{
        "type":"auto",
        "name":"FW1の感染",
-       "attachments":["FW_INTERNET/X02/INF"],
+       "attachments":["FW_INTERNET/X02/INF/ON"],
        "systemstatecondition":["RAactS002"],
        "from":"FW1",
        "to":"サイバー攻撃者",
@@ -3239,7 +2729,7 @@
 	{
        "type":"auto",
        "name":"リモートPCの乗っ取り",
-       "attachments":["REMOTEACCESS/X01/ATK"],
+       "attachments":["REMOTEACCESS/X01/ATK/ON"],
        "systemstatecondition":["RAactS003"],
        "from":"リモートPC",
        "to":"サイバー攻撃者",
@@ -3281,7 +2771,7 @@
 	{
        "type":"auto",
        "name":"FW1の乗っ取り",
-       "attachments":["FW_INTERNET/X02/ATK"],
+       "attachments":["FW_INTERNET/X02/ATK/ON"],
        "systemstatecondition":["RAactS004"],
        "from":"FW1",
        "to":"サイバー攻撃者",
@@ -3323,7 +2813,7 @@
 	{
        "type":"auto",
        "name":"VPNの乗っ取り",
-       "attachments":["VPN/X03/ATK"],
+       "attachments":["VPN/X03/ATK/ON"],
        "systemstatecondition":["RAactS005"],
        "from":"VPN",
        "to":"サイバー攻撃者",
@@ -3365,7 +2855,7 @@
 	{
        "type":"auto",
        "name":"メールサーバの乗っ取り",
-       "attachments":["ZONE-4/X04/ATK"],
+       "attachments":["ZONE-4/X04/ATK/ON"],
        "systemstatecondition":["RAactS006"],
        "from":"メールサーバ",
        "to":"サイバー攻撃者",
@@ -3407,7 +2897,7 @@
 	{
        "type":"auto",
        "name":"Webサーバの乗っ取り",
-       "attachments":["ZONE-4/X05/ATK"],
+       "attachments":["ZONE-4/X05/ATK/ON"],
        "systemstatecondition":["RAactS007"],
        "from":"Webサーバ",
        "to":"サイバー攻撃者",
@@ -3449,7 +2939,7 @@
 	{
        "type":"auto",
        "name":"社員用PC1の乗っ取り",
-       "attachments":["ZONE-4/X06/ATK"],
+       "attachments":["ZONE-4/X06/ATK/ON"],
        "systemstatecondition":["RAactS008"],
        "from":"社員用PC1",
        "to":"サイバー攻撃者",
@@ -3491,7 +2981,7 @@
 	{
        "type":"auto",
        "name":"社員用PC2の乗っ取り",
-       "attachments":["ZONE-4/X07/ATK"],
+       "attachments":["ZONE-4/X07/ATK/ON"],
        "systemstatecondition":["RAactS009"],
        "from":"社員用PC2",
        "to":"サイバー攻撃者",
@@ -3533,7 +3023,7 @@
 	{
        "type":"auto",
        "name":"保守PC1の乗っ取り",
-       "attachments":["ZONE-4/X08/ATK"],
+       "attachments":["ZONE-4/X08/ATK/ON"],
        "systemstatecondition":["RAactS010"],
        "from":"保守PC1",
        "to":"サイバー攻撃者",
@@ -3575,7 +3065,7 @@
 	{
        "type":"auto",
        "name":"ERPサーバの乗っ取り",
-       "attachments":["ZONE-4/X09/ATK"],
+       "attachments":["ZONE-4/X09/ATK/ON"],
        "systemstatecondition":["RAactS011"],
        "from":"ERPサーバ",
        "to":"サイバー攻撃者",
@@ -3617,7 +3107,7 @@
 	{
        "type":"auto",
        "name":"FW2の乗っ取り",
-       "attachments":["FW_0/X10/ATK"],
+       "attachments":["FW_0/X10/ATK/ON"],
        "systemstatecondition":["RAactS012"],
        "from":"FW2",
        "to":"サイバー攻撃者",
@@ -3659,7 +3149,7 @@
 	{
        "type":"auto",
        "name":"生産管理サーバの乗っ取り",
-       "attachments":["ZONE-3/X11/ATK"],
+       "attachments":["ZONE-3/X11/ATK/ON"],
        "systemstatecondition":["RAactS013"],
        "from":"生産管理サーバ",
        "to":"サイバー攻撃者",
@@ -3701,7 +3191,7 @@
 	{
        "type":"auto",
        "name":"設備管理サーバの乗っ取り",
-       "attachments":["ZONE-3/X12/ATK"],
+       "attachments":["ZONE-3/X12/ATK/ON"],
        "systemstatecondition":["RAactS014"],
        "from":"設備管理サーバ",
        "to":"サイバー攻撃者",
@@ -3743,7 +3233,7 @@
 	{
        "type":"auto",
        "name":"EWSの乗っ取り",
-       "attachments":["ZONE-2/X13/ATK"],
+       "attachments":["ZONE-2/X13/ATK/ON"],
        "systemstatecondition":["RAactS015"],
        "from":"EWS",
        "to":"サイバー攻撃者",
@@ -3785,7 +3275,7 @@
 	{
        "type":"auto",
        "name":"SCADAの乗っ取り",
-       "attachments":["ZONE-2/X14/ATK"],
+       "attachments":["ZONE-2/X14/ATK/ON"],
        "systemstatecondition":["RAactS016"],
        "from":"SCADA",
        "to":"サイバー攻撃者",
@@ -3827,7 +3317,7 @@
 	{
        "type":"auto",
        "name":"OPCサーバの乗っ取り",
-       "attachments":["ZONE-2/X15/ATK"],
+       "attachments":["ZONE-2/X15/ATK/ON"],
        "systemstatecondition":["RAactS017"],
        "from":"OPCサーバ",
        "to":"サイバー攻撃者",
@@ -3869,7 +3359,7 @@
 	{
        "type":"auto",
        "name":"PLCの乗っ取り",
-       "attachments":["ZONE-1/X16/ATK"],
+       "attachments":["ZONE-1/X16/ATK/ON"],
        "systemstatecondition":["RAactS018"],
        "from":"PLC",
        "to":"サイバー攻撃者",
@@ -3900,6 +3390,668 @@
        "id":"RAactD018"
 	},
 	{
+       "type":"action",
+       "name":"脆弱性調査",
+       "roles":["サイバー攻撃者"],
+       "id":"RMact019"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact019"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact019",
+       "id":"RAact019"
+	},
+	{
+       "type":"auto",
+       "name":"リモートPCに脆弱性発見",
+       "attachments":["REMOTEACCESS/X01/VUL/ON"],
+       "systemstatecondition":["RAactS019"],
+       "from":"リモートPC",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS019",
+       "removestate":["RAactS019","rRAactS019"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS019"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF019"],
+       "from":"リモートPC",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF019",
+       "removestate":["RAactF019","rRAactF019"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF019"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD019"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD019",
+       "id":"RAactD019"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact020"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact020",
+       "id":"RAact020"
+	},
+	{
+       "type":"auto",
+       "name":"FW1に脆弱性発見",
+       "attachments":["FW_INTERNET/X02/VUL/ON"],
+       "systemstatecondition":["RAactS020"],
+       "from":"FW1",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS020",
+       "removestate":["RAactS020","rRAactS020"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS020"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF020"],
+       "from":"FW1",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF020",
+       "removestate":["RAactF020","rRAactF020"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF020"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD020"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD020",
+       "id":"RAactD020"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact021"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact021",
+       "id":"RAact021"
+	},
+	{
+       "type":"auto",
+       "name":"VPNに脆弱性発見",
+       "attachments":["VPN/X03/VUL/ON"],
+       "systemstatecondition":["RAactS021"],
+       "from":"VPN",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS021",
+       "removestate":["RAactS021","rRAactS021"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS021"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF021"],
+       "from":"VPN",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF021",
+       "removestate":["RAactF021","rRAactF021"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF021"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD021"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD021",
+       "id":"RAactD021"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact022"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact022",
+       "id":"RAact022"
+	},
+	{
+       "type":"auto",
+       "name":"メールサーバに脆弱性発見",
+       "attachments":["ZONE-4/X04/VUL/ON"],
+       "systemstatecondition":["RAactS022"],
+       "from":"メールサーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS022",
+       "removestate":["RAactS022","rRAactS022"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS022"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF022"],
+       "from":"メールサーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF022",
+       "removestate":["RAactF022","rRAactF022"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF022"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD022"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD022",
+       "id":"RAactD022"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact023"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact023",
+       "id":"RAact023"
+	},
+	{
+       "type":"auto",
+       "name":"Webサーバに脆弱性発見",
+       "attachments":["ZONE-4/X05/VUL/ON"],
+       "systemstatecondition":["RAactS023"],
+       "from":"Webサーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS023",
+       "removestate":["RAactS023","rRAactS023"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS023"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF023"],
+       "from":"Webサーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF023",
+       "removestate":["RAactF023","rRAactF023"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF023"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD023"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD023",
+       "id":"RAactD023"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact024"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact024",
+       "id":"RAact024"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC1に脆弱性発見",
+       "attachments":["ZONE-4/X06/VUL/ON"],
+       "systemstatecondition":["RAactS024"],
+       "from":"社員用PC1",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS024",
+       "removestate":["RAactS024","rRAactS024"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS024"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF024"],
+       "from":"社員用PC1",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF024",
+       "removestate":["RAactF024","rRAactF024"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF024"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD024"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD024",
+       "id":"RAactD024"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact025"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact025",
+       "id":"RAact025"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC2に脆弱性発見",
+       "attachments":["ZONE-4/X07/VUL/ON"],
+       "systemstatecondition":["RAactS025"],
+       "from":"社員用PC2",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS025",
+       "removestate":["RAactS025","rRAactS025"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS025"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF025"],
+       "from":"社員用PC2",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF025",
+       "removestate":["RAactF025","rRAactF025"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF025"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD025"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD025",
+       "id":"RAactD025"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact026"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact026",
+       "id":"RAact026"
+	},
+	{
+       "type":"auto",
+       "name":"保守PC1に脆弱性発見",
+       "attachments":["ZONE-4/X08/VUL/ON"],
+       "systemstatecondition":["RAactS026"],
+       "from":"保守PC1",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS026",
+       "removestate":["RAactS026","rRAactS026"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS026"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF026"],
+       "from":"保守PC1",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF026",
+       "removestate":["RAactF026","rRAactF026"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF026"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD026"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD026",
+       "id":"RAactD026"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact027"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact027",
+       "id":"RAact027"
+	},
+	{
+       "type":"auto",
+       "name":"ERPサーバに脆弱性発見",
+       "attachments":["ZONE-4/X09/VUL/ON"],
+       "systemstatecondition":["RAactS027"],
+       "from":"ERPサーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS027",
+       "removestate":["RAactS027","rRAactS027"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS027"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF027"],
+       "from":"ERPサーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF027",
+       "removestate":["RAactF027","rRAactF027"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF027"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD027"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD027",
+       "id":"RAactD027"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact028"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact028",
+       "id":"RAact028"
+	},
+	{
+       "type":"auto",
+       "name":"FW2に脆弱性発見",
+       "attachments":["FW_0/X10/VUL/ON"],
+       "systemstatecondition":["RAactS028"],
+       "from":"FW2",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS028",
+       "removestate":["RAactS028","rRAactS028"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS028"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF028"],
+       "from":"FW2",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF028",
+       "removestate":["RAactF028","rRAactF028"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF028"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD028"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD028",
+       "id":"RAactD028"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact029"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact029",
+       "id":"RAact029"
+	},
+	{
+       "type":"auto",
+       "name":"生産管理サーバに脆弱性発見",
+       "attachments":["ZONE-3/X11/VUL/ON"],
+       "systemstatecondition":["RAactS029"],
+       "from":"生産管理サーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS029",
+       "removestate":["RAactS029","rRAactS029"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS029"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF029"],
+       "from":"生産管理サーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF029",
+       "removestate":["RAactF029","rRAactF029"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF029"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD029"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD029",
+       "id":"RAactD029"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact030"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact030",
+       "id":"RAact030"
+	},
+	{
+       "type":"auto",
+       "name":"設備管理サーバに脆弱性発見",
+       "attachments":["ZONE-3/X12/VUL/ON"],
+       "systemstatecondition":["RAactS030"],
+       "from":"設備管理サーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS030",
+       "removestate":["RAactS030","rRAactS030"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS030"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF030"],
+       "from":"設備管理サーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF030",
+       "removestate":["RAactF030","rRAactF030"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF030"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD030"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD030",
+       "id":"RAactD030"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact031"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact031",
+       "id":"RAact031"
+	},
+	{
+       "type":"auto",
+       "name":"EWSに脆弱性発見",
+       "attachments":["ZONE-2/X13/VUL/ON"],
+       "systemstatecondition":["RAactS031"],
+       "from":"EWS",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS031",
+       "removestate":["RAactS031","rRAactS031"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS031"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF031"],
+       "from":"EWS",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF031",
+       "removestate":["RAactF031","rRAactF031"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF031"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD031"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD031",
+       "id":"RAactD031"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact032"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact032",
+       "id":"RAact032"
+	},
+	{
+       "type":"auto",
+       "name":"SCADAに脆弱性発見",
+       "attachments":["ZONE-2/X14/VUL/ON"],
+       "systemstatecondition":["RAactS032"],
+       "from":"SCADA",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS032",
+       "removestate":["RAactS032","rRAactS032"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS032"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF032"],
+       "from":"SCADA",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF032",
+       "removestate":["RAactF032","rRAactF032"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF032"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD032"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD032",
+       "id":"RAactD032"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact033"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact033",
+       "id":"RAact033"
+	},
+	{
+       "type":"auto",
+       "name":"OPCサーバに脆弱性発見",
+       "attachments":["ZONE-2/X15/VUL/ON"],
+       "systemstatecondition":["RAactS033"],
+       "from":"OPCサーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS033",
+       "removestate":["RAactS033","rRAactS033"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS033"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF033"],
+       "from":"OPCサーバ",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF033",
+       "removestate":["RAactF033","rRAactF033"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF033"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD033"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD033",
+       "id":"RAactD033"
+	},
+	{
+       "type":"auto",
+       "name":"judge",
+       "systemstatecondition":["RAact034"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAact034",
+       "id":"RAact034"
+	},
+	{
+       "type":"auto",
+       "name":"PLCに脆弱性発見",
+       "attachments":["ZONE-1/X16/VUL/ON"],
+       "systemstatecondition":["RAactS034"],
+       "from":"PLC",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactS034",
+       "removestate":["RAactS034","rRAactS034"],
+       "message":"脆弱性を発見しました。",
+       "id":"RAactS034"
+	},
+	{
+       "type":"auto",
+       "name":"攻撃失敗",
+       "systemstatecondition":["RAactF034"],
+       "from":"PLC",
+       "to":"サイバー攻撃者",
+       "rerunstate":"rRAactF034",
+       "removestate":["RAactF034","rRAactF034"],
+       "message":"脆弱性がない、またはアクセスできません。",
+       "id":"RAactF034"
+	},
+	{
+       "type":"auto",
+       "name":"検知判定",
+       "systemstatecondition":["RAactD034"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rRAactD034",
+       "id":"RAactD034"
+	},
+	{
        "type":"auto",
        "name":"count",
        "systemstatecondition":["REMOTEACCESS/X01/INF"],
@@ -3911,12 +4063,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"リモートPCへの感染拡大",
        "systemstatecondition":["SAactS001"],
        "from":"リモートPC",
-       "to":"CSIRT",
-       "attachments":["REMOTEACCESS/X01/INF"],
-       "message":"リモートPCのランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["REMOTEACCESS/X01/INF/ON"],
        "rerunstate":"rSAactS001",
        "removestate":["SAactS001"],
        "id":"SAactS001"
@@ -3942,12 +4093,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"FW1への感染拡大",
        "systemstatecondition":["SAactS002"],
        "from":"FW1",
-       "to":"CSIRT",
-       "attachments":["FW_INTERNET/X02/INF"],
-       "message":"FW1のランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_INTERNET/X02/INF/ON"],
        "rerunstate":"rSAactS002",
        "removestate":["SAactS002"],
        "id":"SAactS002"
@@ -3973,12 +4123,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"VPNへの感染拡大",
        "systemstatecondition":["SAactS003"],
        "from":"VPN",
-       "to":"CSIRT",
-       "attachments":["VPN/X03/INF"],
-       "message":"VPNのランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["VPN/X03/INF/ON"],
        "rerunstate":"rSAactS003",
        "removestate":["SAactS003"],
        "id":"SAactS003"
@@ -4004,12 +4153,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"メールサーバへの感染拡大",
        "systemstatecondition":["SAactS004"],
        "from":"メールサーバ",
-       "to":"CSIRT",
-       "attachments":["ZONE-4/X04/INF"],
-       "message":"メールサーバのランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X04/INF/ON"],
        "rerunstate":"rSAactS004",
        "removestate":["SAactS004"],
        "id":"SAactS004"
@@ -4035,12 +4183,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"Webサーバへの感染拡大",
        "systemstatecondition":["SAactS005"],
        "from":"Webサーバ",
-       "to":"CSIRT",
-       "attachments":["ZONE-4/X05/INF"],
-       "message":"Webサーバのランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X05/INF/ON"],
        "rerunstate":"rSAactS005",
        "removestate":["SAactS005"],
        "id":"SAactS005"
@@ -4066,12 +4213,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"社員用PC1への感染拡大",
        "systemstatecondition":["SAactS006"],
        "from":"社員用PC1",
-       "to":"CSIRT",
-       "attachments":["ZONE-4/X06/INF"],
-       "message":"社員用PC1のランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X06/INF/ON"],
        "rerunstate":"rSAactS006",
        "removestate":["SAactS006"],
        "id":"SAactS006"
@@ -4097,12 +4243,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"社員用PC2への感染拡大",
        "systemstatecondition":["SAactS007"],
        "from":"社員用PC2",
-       "to":"CSIRT",
-       "attachments":["ZONE-4/X07/INF"],
-       "message":"社員用PC2のランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X07/INF/ON"],
        "rerunstate":"rSAactS007",
        "removestate":["SAactS007"],
        "id":"SAactS007"
@@ -4128,12 +4273,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"保守PC1への感染拡大",
        "systemstatecondition":["SAactS008"],
        "from":"保守PC1",
-       "to":"CSIRT",
-       "attachments":["ZONE-4/X08/INF"],
-       "message":"保守PC1のランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X08/INF/ON"],
        "rerunstate":"rSAactS008",
        "removestate":["SAactS008"],
        "id":"SAactS008"
@@ -4159,12 +4303,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"ERPサーバへの感染拡大",
        "systemstatecondition":["SAactS009"],
        "from":"ERPサーバ",
-       "to":"CSIRT",
-       "attachments":["ZONE-4/X09/INF"],
-       "message":"ERPサーバのランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X09/INF/ON"],
        "rerunstate":"rSAactS009",
        "removestate":["SAactS009"],
        "id":"SAactS009"
@@ -4190,12 +4333,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"FW2への感染拡大",
        "systemstatecondition":["SAactS010"],
        "from":"FW2",
-       "to":"CSIRT",
-       "attachments":["FW_0/X10/INF"],
-       "message":"FW2のランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_0/X10/INF/ON"],
        "rerunstate":"rSAactS010",
        "removestate":["SAactS010"],
        "id":"SAactS010"
@@ -4221,12 +4363,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"生産管理サーバへの感染拡大",
        "systemstatecondition":["SAactS011"],
        "from":"生産管理サーバ",
-       "to":"CSIRT",
-       "attachments":["ZONE-3/X11/INF"],
-       "message":"生産管理サーバのランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X11/INF/ON"],
        "rerunstate":"rSAactS011",
        "removestate":["SAactS011"],
        "id":"SAactS011"
@@ -4252,12 +4393,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"設備管理サーバへの感染拡大",
        "systemstatecondition":["SAactS012"],
        "from":"設備管理サーバ",
-       "to":"CSIRT",
-       "attachments":["ZONE-3/X12/INF"],
-       "message":"設備管理サーバのランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X12/INF/ON"],
        "rerunstate":"rSAactS012",
        "removestate":["SAactS012"],
        "id":"SAactS012"
@@ -4283,12 +4423,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"EWSへの感染拡大",
        "systemstatecondition":["SAactS013"],
        "from":"EWS",
-       "to":"CSIRT",
-       "attachments":["ZONE-2/X13/INF"],
-       "message":"EWSのランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X13/INF/ON"],
        "rerunstate":"rSAactS013",
        "removestate":["SAactS013"],
        "id":"SAactS013"
@@ -4314,12 +4453,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"SCADAへの感染拡大",
        "systemstatecondition":["SAactS014"],
        "from":"SCADA",
-       "to":"CSIRT",
-       "attachments":["ZONE-2/X14/INF"],
-       "message":"SCADAのランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X14/INF/ON"],
        "rerunstate":"rSAactS014",
        "removestate":["SAactS014"],
        "id":"SAactS014"
@@ -4345,12 +4483,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"OPCサーバへの感染拡大",
        "systemstatecondition":["SAactS015"],
        "from":"OPCサーバ",
-       "to":"CSIRT",
-       "attachments":["ZONE-2/X15/INF"],
-       "message":"OPCサーバのランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X15/INF/ON"],
        "rerunstate":"rSAactS015",
        "removestate":["SAactS015"],
        "id":"SAactS015"
@@ -4376,12 +4513,11 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"PLCへの感染拡大",
        "systemstatecondition":["SAactS016"],
        "from":"PLC",
-       "to":"CSIRT",
-       "attachments":["ZONE-1/X16/INF"],
-       "message":"PLCのランサムウェア感染が確認されました。至急対応指示をお願いします。",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-1/X16/INF/ON"],
        "rerunstate":"rSAactS016",
        "removestate":["SAactS016"],
        "id":"SAactS016"
@@ -4398,7 +4534,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["REMOTEACCESS/X01/INF"],
+       "systemstatecondition":["REMOTEACCESS/X01/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact017",
@@ -4407,18 +4543,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"リモートPCアクセス不能",
        "systemstatecondition":["SAactS017"],
        "from":"リモートPC",
        "to":"サイバー攻撃者",
-       "attachments":["REMOTEACCESS/X01/INF"],
+       "attachments":["REMOTEACCESS/X01/CON/ON"],
+       "message":"リモートPCが隔離されています。",
        "rerunstate":"rSAactS017",
        "removestate":["SAactS017"],
        "id":"SAactS017"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(REMOTEACCESS/X01/INF))"],
+       "systemstatecondition":["AND(start,NOT(REMOTEACCESS/X01/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr017",
@@ -4428,7 +4565,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["FW_INTERNET/X02/INF"],
+       "systemstatecondition":["FW_INTERNET/X02/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact018",
@@ -4437,18 +4574,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"FW1アクセス不能",
        "systemstatecondition":["SAactS018"],
        "from":"FW1",
        "to":"サイバー攻撃者",
-       "attachments":["FW_INTERNET/X02/INF"],
+       "attachments":["FW_INTERNET/X02/CON/ON"],
+       "message":"FW1が隔離されています。",
        "rerunstate":"rSAactS018",
        "removestate":["SAactS018"],
        "id":"SAactS018"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(FW_INTERNET/X02/INF))"],
+       "systemstatecondition":["AND(start,NOT(FW_INTERNET/X02/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr018",
@@ -4458,7 +4596,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["VPN/X03/INF"],
+       "systemstatecondition":["VPN/X03/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact019",
@@ -4467,18 +4605,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"VPNアクセス不能",
        "systemstatecondition":["SAactS019"],
        "from":"VPN",
        "to":"サイバー攻撃者",
-       "attachments":["VPN/X03/INF"],
+       "attachments":["VPN/X03/CON/ON"],
+       "message":"VPNが隔離されています。",
        "rerunstate":"rSAactS019",
        "removestate":["SAactS019"],
        "id":"SAactS019"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(VPN/X03/INF))"],
+       "systemstatecondition":["AND(start,NOT(VPN/X03/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr019",
@@ -4488,7 +4627,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-4/X04/INF"],
+       "systemstatecondition":["ZONE-4/X04/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact020",
@@ -4497,18 +4636,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"メールサーバアクセス不能",
        "systemstatecondition":["SAactS020"],
        "from":"メールサーバ",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-4/X04/INF"],
+       "attachments":["ZONE-4/X04/CON/ON"],
+       "message":"メールサーバが隔離されています。",
        "rerunstate":"rSAactS020",
        "removestate":["SAactS020"],
        "id":"SAactS020"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-4/X04/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X04/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr020",
@@ -4518,7 +4658,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-4/X05/INF"],
+       "systemstatecondition":["ZONE-4/X05/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact021",
@@ -4527,18 +4667,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"Webサーバアクセス不能",
        "systemstatecondition":["SAactS021"],
        "from":"Webサーバ",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-4/X05/INF"],
+       "attachments":["ZONE-4/X05/CON/ON"],
+       "message":"Webサーバが隔離されています。",
        "rerunstate":"rSAactS021",
        "removestate":["SAactS021"],
        "id":"SAactS021"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-4/X05/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X05/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr021",
@@ -4548,7 +4689,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-4/X06/INF"],
+       "systemstatecondition":["ZONE-4/X06/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact022",
@@ -4557,18 +4698,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"社員用PC1アクセス不能",
        "systemstatecondition":["SAactS022"],
        "from":"社員用PC1",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-4/X06/INF"],
+       "attachments":["ZONE-4/X06/CON/ON"],
+       "message":"社員用PC1が隔離されています。",
        "rerunstate":"rSAactS022",
        "removestate":["SAactS022"],
        "id":"SAactS022"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-4/X06/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X06/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr022",
@@ -4578,7 +4720,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-4/X07/INF"],
+       "systemstatecondition":["ZONE-4/X07/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact023",
@@ -4587,18 +4729,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"社員用PC2アクセス不能",
        "systemstatecondition":["SAactS023"],
        "from":"社員用PC2",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-4/X07/INF"],
+       "attachments":["ZONE-4/X07/CON/ON"],
+       "message":"社員用PC2が隔離されています。",
        "rerunstate":"rSAactS023",
        "removestate":["SAactS023"],
        "id":"SAactS023"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-4/X07/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X07/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr023",
@@ -4608,7 +4751,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-4/X08/INF"],
+       "systemstatecondition":["ZONE-4/X08/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact024",
@@ -4617,18 +4760,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"保守PC1アクセス不能",
        "systemstatecondition":["SAactS024"],
        "from":"保守PC1",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-4/X08/INF"],
+       "attachments":["ZONE-4/X08/CON/ON"],
+       "message":"保守PC1が隔離されています。",
        "rerunstate":"rSAactS024",
        "removestate":["SAactS024"],
        "id":"SAactS024"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-4/X08/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X08/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr024",
@@ -4638,7 +4782,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-4/X09/INF"],
+       "systemstatecondition":["ZONE-4/X09/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact025",
@@ -4647,18 +4791,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"ERPサーバアクセス不能",
        "systemstatecondition":["SAactS025"],
        "from":"ERPサーバ",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-4/X09/INF"],
+       "attachments":["ZONE-4/X09/CON/ON"],
+       "message":"ERPサーバが隔離されています。",
        "rerunstate":"rSAactS025",
        "removestate":["SAactS025"],
        "id":"SAactS025"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-4/X09/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X09/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr025",
@@ -4668,7 +4813,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["FW_0/X10/INF"],
+       "systemstatecondition":["FW_0/X10/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact026",
@@ -4677,18 +4822,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"FW2アクセス不能",
        "systemstatecondition":["SAactS026"],
        "from":"FW2",
        "to":"サイバー攻撃者",
-       "attachments":["FW_0/X10/INF"],
+       "attachments":["FW_0/X10/CON/ON"],
+       "message":"FW2が隔離されています。",
        "rerunstate":"rSAactS026",
        "removestate":["SAactS026"],
        "id":"SAactS026"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(FW_0/X10/INF))"],
+       "systemstatecondition":["AND(start,NOT(FW_0/X10/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr026",
@@ -4698,7 +4844,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-3/X11/INF"],
+       "systemstatecondition":["ZONE-3/X11/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact027",
@@ -4707,18 +4853,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"生産管理サーバアクセス不能",
        "systemstatecondition":["SAactS027"],
        "from":"生産管理サーバ",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-3/X11/INF"],
+       "attachments":["ZONE-3/X11/CON/ON"],
+       "message":"生産管理サーバが隔離されています。",
        "rerunstate":"rSAactS027",
        "removestate":["SAactS027"],
        "id":"SAactS027"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-3/X11/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-3/X11/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr027",
@@ -4728,7 +4875,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-3/X12/INF"],
+       "systemstatecondition":["ZONE-3/X12/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact028",
@@ -4737,18 +4884,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"設備管理サーバアクセス不能",
        "systemstatecondition":["SAactS028"],
        "from":"設備管理サーバ",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-3/X12/INF"],
+       "attachments":["ZONE-3/X12/CON/ON"],
+       "message":"設備管理サーバが隔離されています。",
        "rerunstate":"rSAactS028",
        "removestate":["SAactS028"],
        "id":"SAactS028"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-3/X12/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-3/X12/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr028",
@@ -4758,7 +4906,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-2/X13/INF"],
+       "systemstatecondition":["ZONE-2/X13/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact029",
@@ -4767,18 +4915,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"EWSアクセス不能",
        "systemstatecondition":["SAactS029"],
        "from":"EWS",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-2/X13/INF"],
+       "attachments":["ZONE-2/X13/CON/ON"],
+       "message":"EWSが隔離されています。",
        "rerunstate":"rSAactS029",
        "removestate":["SAactS029"],
        "id":"SAactS029"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-2/X13/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-2/X13/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr029",
@@ -4788,7 +4937,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-2/X14/INF"],
+       "systemstatecondition":["ZONE-2/X14/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact030",
@@ -4797,18 +4946,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"SCADAアクセス不能",
        "systemstatecondition":["SAactS030"],
        "from":"SCADA",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-2/X14/INF"],
+       "attachments":["ZONE-2/X14/CON/ON"],
+       "message":"SCADAが隔離されています。",
        "rerunstate":"rSAactS030",
        "removestate":["SAactS030"],
        "id":"SAactS030"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-2/X14/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-2/X14/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr030",
@@ -4818,7 +4968,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-2/X15/INF"],
+       "systemstatecondition":["ZONE-2/X15/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact031",
@@ -4827,18 +4977,19 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"OPCサーバアクセス不能",
        "systemstatecondition":["SAactS031"],
        "from":"OPCサーバ",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-2/X15/INF"],
+       "attachments":["ZONE-2/X15/CON/ON"],
+       "message":"OPCサーバが隔離されています。",
        "rerunstate":"rSAactS031",
        "removestate":["SAactS031"],
        "id":"SAactS031"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-2/X15/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-2/X15/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr031",
@@ -4848,7 +4999,7 @@
 	{
        "type":"auto",
        "name":"count",
-       "systemstatecondition":["ZONE-1/X16/INF"],
+       "systemstatecondition":["ZONE-1/X16/CON"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAact032",
@@ -4857,23 +5008,3384 @@
 	},
 	{
        "type":"auto",
-       "name":"ランサムウェア感染",
+       "name":"PLCアクセス不能",
        "systemstatecondition":["SAactS032"],
        "from":"PLC",
        "to":"サイバー攻撃者",
-       "attachments":["ZONE-1/X16/INF"],
+       "attachments":["ZONE-1/X16/CON/ON"],
+       "message":"PLCが隔離されています。",
        "rerunstate":"rSAactS032",
        "removestate":["SAactS032"],
        "id":"SAactS032"
 	},
 	{
        "type":"auto",
-       "systemstatecondition":["AND(start,NOT(ZONE-1/X16/INF))"],
+       "systemstatecondition":["AND(start,NOT(ZONE-1/X16/CON))"],
        "from":"system",
        "to":"system",
        "rerunstate":"rSAactr032",
        "removestate":["rSAact032","rSAactS032"],
        "id":"SAactr032"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["REMOTEACCESS/X01/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact033",
+       "removestate":["rSAactr033"],
+       "id":"SAact033"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS033"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL01"],
+       "rerunstate":"rSAactS033",
+       "removestate":["SAactS033"],
+       "id":"SAactS033"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(REMOTEACCESS/X01/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr033",
+       "removestate":["rSAact033","rSAactS033"],
+       "id":"SAactr033"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["FW_INTERNET/X02/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact034",
+       "removestate":["rSAactr034"],
+       "id":"SAact034"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS034"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL02"],
+       "rerunstate":"rSAactS034",
+       "removestate":["SAactS034"],
+       "id":"SAactS034"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(FW_INTERNET/X02/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr034",
+       "removestate":["rSAact034","rSAactS034"],
+       "id":"SAactr034"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["VPN/X03/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact035",
+       "removestate":["rSAactr035"],
+       "id":"SAact035"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS035"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL03"],
+       "rerunstate":"rSAactS035",
+       "removestate":["SAactS035"],
+       "id":"SAactS035"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(VPN/X03/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr035",
+       "removestate":["rSAact035","rSAactS035"],
+       "id":"SAactr035"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X04/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact036",
+       "removestate":["rSAactr036"],
+       "id":"SAact036"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS036"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL04"],
+       "rerunstate":"rSAactS036",
+       "removestate":["SAactS036"],
+       "id":"SAactS036"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X04/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr036",
+       "removestate":["rSAact036","rSAactS036"],
+       "id":"SAactr036"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X05/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact037",
+       "removestate":["rSAactr037"],
+       "id":"SAact037"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS037"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL05"],
+       "rerunstate":"rSAactS037",
+       "removestate":["SAactS037"],
+       "id":"SAactS037"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X05/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr037",
+       "removestate":["rSAact037","rSAactS037"],
+       "id":"SAactr037"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X06/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact038",
+       "removestate":["rSAactr038"],
+       "id":"SAact038"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS038"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL06"],
+       "rerunstate":"rSAactS038",
+       "removestate":["SAactS038"],
+       "id":"SAactS038"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X06/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr038",
+       "removestate":["rSAact038","rSAactS038"],
+       "id":"SAactr038"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X07/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact039",
+       "removestate":["rSAactr039"],
+       "id":"SAact039"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS039"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL07"],
+       "rerunstate":"rSAactS039",
+       "removestate":["SAactS039"],
+       "id":"SAactS039"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X07/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr039",
+       "removestate":["rSAact039","rSAactS039"],
+       "id":"SAactr039"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X08/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact040",
+       "removestate":["rSAactr040"],
+       "id":"SAact040"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS040"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL08"],
+       "rerunstate":"rSAactS040",
+       "removestate":["SAactS040"],
+       "id":"SAactS040"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X08/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr040",
+       "removestate":["rSAact040","rSAactS040"],
+       "id":"SAactr040"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X09/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact041",
+       "removestate":["rSAactr041"],
+       "id":"SAact041"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS041"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL09"],
+       "rerunstate":"rSAactS041",
+       "removestate":["SAactS041"],
+       "id":"SAactS041"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X09/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr041",
+       "removestate":["rSAact041","rSAactS041"],
+       "id":"SAactr041"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["FW_0/X10/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact042",
+       "removestate":["rSAactr042"],
+       "id":"SAact042"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS042"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL10"],
+       "rerunstate":"rSAactS042",
+       "removestate":["SAactS042"],
+       "id":"SAactS042"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(FW_0/X10/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr042",
+       "removestate":["rSAact042","rSAactS042"],
+       "id":"SAactr042"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-3/X11/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact043",
+       "removestate":["rSAactr043"],
+       "id":"SAact043"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS043"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL11"],
+       "rerunstate":"rSAactS043",
+       "removestate":["SAactS043"],
+       "id":"SAactS043"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-3/X11/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr043",
+       "removestate":["rSAact043","rSAactS043"],
+       "id":"SAactr043"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-3/X12/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact044",
+       "removestate":["rSAactr044"],
+       "id":"SAact044"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS044"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL12"],
+       "rerunstate":"rSAactS044",
+       "removestate":["SAactS044"],
+       "id":"SAactS044"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-3/X12/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr044",
+       "removestate":["rSAact044","rSAactS044"],
+       "id":"SAactr044"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-2/X13/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact045",
+       "removestate":["rSAactr045"],
+       "id":"SAact045"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS045"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL13"],
+       "rerunstate":"rSAactS045",
+       "removestate":["SAactS045"],
+       "id":"SAactS045"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-2/X13/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr045",
+       "removestate":["rSAact045","rSAactS045"],
+       "id":"SAactr045"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-2/X14/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact046",
+       "removestate":["rSAactr046"],
+       "id":"SAact046"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS046"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL14"],
+       "rerunstate":"rSAactS046",
+       "removestate":["SAactS046"],
+       "id":"SAactS046"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-2/X14/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr046",
+       "removestate":["rSAact046","rSAactS046"],
+       "id":"SAactr046"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-2/X15/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact047",
+       "removestate":["rSAactr047"],
+       "id":"SAact047"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS047"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL15"],
+       "rerunstate":"rSAactS047",
+       "removestate":["SAactS047"],
+       "id":"SAactS047"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-2/X15/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr047",
+       "removestate":["rSAact047","rSAactS047"],
+       "id":"SAactr047"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-1/X16/VUL"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact048",
+       "removestate":["rSAactr048"],
+       "id":"SAact048"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS048"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSVUL16"],
+       "rerunstate":"rSAactS048",
+       "removestate":["SAactS048"],
+       "id":"SAactS048"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-1/X16/VUL))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr048",
+       "removestate":["rSAact048","rSAactS048"],
+       "id":"SAactr048"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["REMOTEACCESS/X01/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact049",
+       "removestate":["rSAactr049"],
+       "id":"SAact049"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS049"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON01"],
+       "rerunstate":"rSAactS049",
+       "removestate":["SAactS049"],
+       "id":"SAactS049"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(REMOTEACCESS/X01/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr049",
+       "removestate":["rSAact049","rSAactS049"],
+       "id":"SAactr049"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["FW_INTERNET/X02/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact050",
+       "removestate":["rSAactr050"],
+       "id":"SAact050"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS050"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON02"],
+       "rerunstate":"rSAactS050",
+       "removestate":["SAactS050"],
+       "id":"SAactS050"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(FW_INTERNET/X02/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr050",
+       "removestate":["rSAact050","rSAactS050"],
+       "id":"SAactr050"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["VPN/X03/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact051",
+       "removestate":["rSAactr051"],
+       "id":"SAact051"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS051"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON03"],
+       "rerunstate":"rSAactS051",
+       "removestate":["SAactS051"],
+       "id":"SAactS051"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(VPN/X03/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr051",
+       "removestate":["rSAact051","rSAactS051"],
+       "id":"SAactr051"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X04/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact052",
+       "removestate":["rSAactr052"],
+       "id":"SAact052"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS052"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON04"],
+       "rerunstate":"rSAactS052",
+       "removestate":["SAactS052"],
+       "id":"SAactS052"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X04/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr052",
+       "removestate":["rSAact052","rSAactS052"],
+       "id":"SAactr052"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X05/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact053",
+       "removestate":["rSAactr053"],
+       "id":"SAact053"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS053"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON05"],
+       "rerunstate":"rSAactS053",
+       "removestate":["SAactS053"],
+       "id":"SAactS053"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X05/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr053",
+       "removestate":["rSAact053","rSAactS053"],
+       "id":"SAactr053"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X06/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact054",
+       "removestate":["rSAactr054"],
+       "id":"SAact054"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS054"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON06"],
+       "rerunstate":"rSAactS054",
+       "removestate":["SAactS054"],
+       "id":"SAactS054"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X06/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr054",
+       "removestate":["rSAact054","rSAactS054"],
+       "id":"SAactr054"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X07/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact055",
+       "removestate":["rSAactr055"],
+       "id":"SAact055"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS055"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON07"],
+       "rerunstate":"rSAactS055",
+       "removestate":["SAactS055"],
+       "id":"SAactS055"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X07/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr055",
+       "removestate":["rSAact055","rSAactS055"],
+       "id":"SAactr055"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X08/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact056",
+       "removestate":["rSAactr056"],
+       "id":"SAact056"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS056"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON08"],
+       "rerunstate":"rSAactS056",
+       "removestate":["SAactS056"],
+       "id":"SAactS056"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X08/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr056",
+       "removestate":["rSAact056","rSAactS056"],
+       "id":"SAactr056"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-4/X09/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact057",
+       "removestate":["rSAactr057"],
+       "id":"SAact057"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS057"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON09"],
+       "rerunstate":"rSAactS057",
+       "removestate":["SAactS057"],
+       "id":"SAactS057"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-4/X09/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr057",
+       "removestate":["rSAact057","rSAactS057"],
+       "id":"SAactr057"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["FW_0/X10/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact058",
+       "removestate":["rSAactr058"],
+       "id":"SAact058"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS058"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON10"],
+       "rerunstate":"rSAactS058",
+       "removestate":["SAactS058"],
+       "id":"SAactS058"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(FW_0/X10/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr058",
+       "removestate":["rSAact058","rSAactS058"],
+       "id":"SAactr058"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-3/X11/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact059",
+       "removestate":["rSAactr059"],
+       "id":"SAact059"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS059"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON11"],
+       "rerunstate":"rSAactS059",
+       "removestate":["SAactS059"],
+       "id":"SAactS059"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-3/X11/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr059",
+       "removestate":["rSAact059","rSAactS059"],
+       "id":"SAactr059"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-3/X12/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact060",
+       "removestate":["rSAactr060"],
+       "id":"SAact060"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS060"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON12"],
+       "rerunstate":"rSAactS060",
+       "removestate":["SAactS060"],
+       "id":"SAactS060"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-3/X12/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr060",
+       "removestate":["rSAact060","rSAactS060"],
+       "id":"SAactr060"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-2/X13/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact061",
+       "removestate":["rSAactr061"],
+       "id":"SAact061"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS061"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON13"],
+       "rerunstate":"rSAactS061",
+       "removestate":["SAactS061"],
+       "id":"SAactS061"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-2/X13/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr061",
+       "removestate":["rSAact061","rSAactS061"],
+       "id":"SAactr061"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-2/X14/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact062",
+       "removestate":["rSAactr062"],
+       "id":"SAact062"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS062"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON14"],
+       "rerunstate":"rSAactS062",
+       "removestate":["SAactS062"],
+       "id":"SAactS062"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-2/X14/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr062",
+       "removestate":["rSAact062","rSAactS062"],
+       "id":"SAactr062"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-2/X15/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact063",
+       "removestate":["rSAactr063"],
+       "id":"SAact063"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS063"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON15"],
+       "rerunstate":"rSAactS063",
+       "removestate":["SAactS063"],
+       "id":"SAactS063"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-2/X15/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr063",
+       "removestate":["rSAact063","rSAactS063"],
+       "id":"SAactr063"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["ZONE-1/X16/CON"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact064",
+       "removestate":["rSAactr064"],
+       "id":"SAact064"
+	},
+	{
+       "type":"auto",
+       "name":"system",
+       "systemstatecondition":["SAactS064"],
+       "from":"system",
+       "to":"system",
+       "addstate":["SYSCON16"],
+       "rerunstate":"rSAactS064",
+       "removestate":["SAactS064"],
+       "id":"SAactS064"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(ZONE-1/X16/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr064",
+       "removestate":["rSAact064","rSAactS064"],
+       "id":"SAactr064"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL01,NOR(REMOTEACCESS/X01/VUL,SYSCON01,REMOTEACCESS/X01/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact065",
+       "removestate":["rSAactr065"],
+       "id":"SAact065"
+	},
+	{
+       "type":"auto",
+       "name":"リモートPCの脆弱性がなくなる",
+       "systemstatecondition":["SAactS065"],
+       "from":"リモートPC",
+       "to":"サイバー攻撃者",
+       "attachments":["REMOTEACCESS/X01/VUL/OFF"],
+       "rerunstate":"rSAactS065",
+       "removestate":["SYSVUL01","SAactS065"],
+       "id":"SAactS065"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL01,NOR(REMOTEACCESS/X01/VUL,SYSCON01,REMOTEACCESS/X01/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr065",
+       "removestate":["rSAact065","rSAactS065"],
+       "id":"SAactr065"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL02,NOR(FW_INTERNET/X02/VUL,SYSCON02,FW_INTERNET/X02/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact066",
+       "removestate":["rSAactr066"],
+       "id":"SAact066"
+	},
+	{
+       "type":"auto",
+       "name":"FW1の脆弱性がなくなる",
+       "systemstatecondition":["SAactS066"],
+       "from":"FW1",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_INTERNET/X02/VUL/OFF"],
+       "rerunstate":"rSAactS066",
+       "removestate":["SYSVUL02","SAactS066"],
+       "id":"SAactS066"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL02,NOR(FW_INTERNET/X02/VUL,SYSCON02,FW_INTERNET/X02/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr066",
+       "removestate":["rSAact066","rSAactS066"],
+       "id":"SAactr066"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL03,NOR(VPN/X03/VUL,SYSCON03,VPN/X03/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact067",
+       "removestate":["rSAactr067"],
+       "id":"SAact067"
+	},
+	{
+       "type":"auto",
+       "name":"VPNの脆弱性がなくなる",
+       "systemstatecondition":["SAactS067"],
+       "from":"VPN",
+       "to":"サイバー攻撃者",
+       "attachments":["VPN/X03/VUL/OFF"],
+       "rerunstate":"rSAactS067",
+       "removestate":["SYSVUL03","SAactS067"],
+       "id":"SAactS067"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL03,NOR(VPN/X03/VUL,SYSCON03,VPN/X03/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr067",
+       "removestate":["rSAact067","rSAactS067"],
+       "id":"SAactr067"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL04,NOR(ZONE-4/X04/VUL,SYSCON04,ZONE-4/X04/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact068",
+       "removestate":["rSAactr068"],
+       "id":"SAact068"
+	},
+	{
+       "type":"auto",
+       "name":"メールサーバの脆弱性がなくなる",
+       "systemstatecondition":["SAactS068"],
+       "from":"メールサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X04/VUL/OFF"],
+       "rerunstate":"rSAactS068",
+       "removestate":["SYSVUL04","SAactS068"],
+       "id":"SAactS068"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL04,NOR(ZONE-4/X04/VUL,SYSCON04,ZONE-4/X04/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr068",
+       "removestate":["rSAact068","rSAactS068"],
+       "id":"SAactr068"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL05,NOR(ZONE-4/X05/VUL,SYSCON05,ZONE-4/X05/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact069",
+       "removestate":["rSAactr069"],
+       "id":"SAact069"
+	},
+	{
+       "type":"auto",
+       "name":"Webサーバの脆弱性がなくなる",
+       "systemstatecondition":["SAactS069"],
+       "from":"Webサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X05/VUL/OFF"],
+       "rerunstate":"rSAactS069",
+       "removestate":["SYSVUL05","SAactS069"],
+       "id":"SAactS069"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL05,NOR(ZONE-4/X05/VUL,SYSCON05,ZONE-4/X05/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr069",
+       "removestate":["rSAact069","rSAactS069"],
+       "id":"SAactr069"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL06,NOR(ZONE-4/X06/VUL,SYSCON06,ZONE-4/X06/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact070",
+       "removestate":["rSAactr070"],
+       "id":"SAact070"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC1の脆弱性がなくなる",
+       "systemstatecondition":["SAactS070"],
+       "from":"社員用PC1",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X06/VUL/OFF"],
+       "rerunstate":"rSAactS070",
+       "removestate":["SYSVUL06","SAactS070"],
+       "id":"SAactS070"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL06,NOR(ZONE-4/X06/VUL,SYSCON06,ZONE-4/X06/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr070",
+       "removestate":["rSAact070","rSAactS070"],
+       "id":"SAactr070"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL07,NOR(ZONE-4/X07/VUL,SYSCON07,ZONE-4/X07/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact071",
+       "removestate":["rSAactr071"],
+       "id":"SAact071"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC2の脆弱性がなくなる",
+       "systemstatecondition":["SAactS071"],
+       "from":"社員用PC2",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X07/VUL/OFF"],
+       "rerunstate":"rSAactS071",
+       "removestate":["SYSVUL07","SAactS071"],
+       "id":"SAactS071"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL07,NOR(ZONE-4/X07/VUL,SYSCON07,ZONE-4/X07/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr071",
+       "removestate":["rSAact071","rSAactS071"],
+       "id":"SAactr071"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL08,NOR(ZONE-4/X08/VUL,SYSCON08,ZONE-4/X08/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact072",
+       "removestate":["rSAactr072"],
+       "id":"SAact072"
+	},
+	{
+       "type":"auto",
+       "name":"保守PC1の脆弱性がなくなる",
+       "systemstatecondition":["SAactS072"],
+       "from":"保守PC1",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X08/VUL/OFF"],
+       "rerunstate":"rSAactS072",
+       "removestate":["SYSVUL08","SAactS072"],
+       "id":"SAactS072"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL08,NOR(ZONE-4/X08/VUL,SYSCON08,ZONE-4/X08/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr072",
+       "removestate":["rSAact072","rSAactS072"],
+       "id":"SAactr072"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL09,NOR(ZONE-4/X09/VUL,SYSCON09,ZONE-4/X09/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact073",
+       "removestate":["rSAactr073"],
+       "id":"SAact073"
+	},
+	{
+       "type":"auto",
+       "name":"ERPサーバの脆弱性がなくなる",
+       "systemstatecondition":["SAactS073"],
+       "from":"ERPサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X09/VUL/OFF"],
+       "rerunstate":"rSAactS073",
+       "removestate":["SYSVUL09","SAactS073"],
+       "id":"SAactS073"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL09,NOR(ZONE-4/X09/VUL,SYSCON09,ZONE-4/X09/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr073",
+       "removestate":["rSAact073","rSAactS073"],
+       "id":"SAactr073"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL10,NOR(FW_0/X10/VUL,SYSCON10,FW_0/X10/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact074",
+       "removestate":["rSAactr074"],
+       "id":"SAact074"
+	},
+	{
+       "type":"auto",
+       "name":"FW2の脆弱性がなくなる",
+       "systemstatecondition":["SAactS074"],
+       "from":"FW2",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_0/X10/VUL/OFF"],
+       "rerunstate":"rSAactS074",
+       "removestate":["SYSVUL10","SAactS074"],
+       "id":"SAactS074"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL10,NOR(FW_0/X10/VUL,SYSCON10,FW_0/X10/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr074",
+       "removestate":["rSAact074","rSAactS074"],
+       "id":"SAactr074"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL11,NOR(ZONE-3/X11/VUL,SYSCON11,ZONE-3/X11/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact075",
+       "removestate":["rSAactr075"],
+       "id":"SAact075"
+	},
+	{
+       "type":"auto",
+       "name":"生産管理サーバの脆弱性がなくなる",
+       "systemstatecondition":["SAactS075"],
+       "from":"生産管理サーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X11/VUL/OFF"],
+       "rerunstate":"rSAactS075",
+       "removestate":["SYSVUL11","SAactS075"],
+       "id":"SAactS075"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL11,NOR(ZONE-3/X11/VUL,SYSCON11,ZONE-3/X11/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr075",
+       "removestate":["rSAact075","rSAactS075"],
+       "id":"SAactr075"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL12,NOR(ZONE-3/X12/VUL,SYSCON12,ZONE-3/X12/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact076",
+       "removestate":["rSAactr076"],
+       "id":"SAact076"
+	},
+	{
+       "type":"auto",
+       "name":"設備管理サーバの脆弱性がなくなる",
+       "systemstatecondition":["SAactS076"],
+       "from":"設備管理サーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X12/VUL/OFF"],
+       "rerunstate":"rSAactS076",
+       "removestate":["SYSVUL12","SAactS076"],
+       "id":"SAactS076"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL12,NOR(ZONE-3/X12/VUL,SYSCON12,ZONE-3/X12/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr076",
+       "removestate":["rSAact076","rSAactS076"],
+       "id":"SAactr076"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL13,NOR(ZONE-2/X13/VUL,SYSCON13,ZONE-2/X13/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact077",
+       "removestate":["rSAactr077"],
+       "id":"SAact077"
+	},
+	{
+       "type":"auto",
+       "name":"EWSの脆弱性がなくなる",
+       "systemstatecondition":["SAactS077"],
+       "from":"EWS",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X13/VUL/OFF"],
+       "rerunstate":"rSAactS077",
+       "removestate":["SYSVUL13","SAactS077"],
+       "id":"SAactS077"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL13,NOR(ZONE-2/X13/VUL,SYSCON13,ZONE-2/X13/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr077",
+       "removestate":["rSAact077","rSAactS077"],
+       "id":"SAactr077"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL14,NOR(ZONE-2/X14/VUL,SYSCON14,ZONE-2/X14/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact078",
+       "removestate":["rSAactr078"],
+       "id":"SAact078"
+	},
+	{
+       "type":"auto",
+       "name":"SCADAの脆弱性がなくなる",
+       "systemstatecondition":["SAactS078"],
+       "from":"SCADA",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X14/VUL/OFF"],
+       "rerunstate":"rSAactS078",
+       "removestate":["SYSVUL14","SAactS078"],
+       "id":"SAactS078"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL14,NOR(ZONE-2/X14/VUL,SYSCON14,ZONE-2/X14/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr078",
+       "removestate":["rSAact078","rSAactS078"],
+       "id":"SAactr078"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL15,NOR(ZONE-2/X15/VUL,SYSCON15,ZONE-2/X15/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact079",
+       "removestate":["rSAactr079"],
+       "id":"SAact079"
+	},
+	{
+       "type":"auto",
+       "name":"OPCサーバの脆弱性がなくなる",
+       "systemstatecondition":["SAactS079"],
+       "from":"OPCサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X15/VUL/OFF"],
+       "rerunstate":"rSAactS079",
+       "removestate":["SYSVUL15","SAactS079"],
+       "id":"SAactS079"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL15,NOR(ZONE-2/X15/VUL,SYSCON15,ZONE-2/X15/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr079",
+       "removestate":["rSAact079","rSAactS079"],
+       "id":"SAactr079"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSVUL16,NOR(ZONE-1/X16/VUL,SYSCON16,ZONE-1/X16/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact080",
+       "removestate":["rSAactr080"],
+       "id":"SAact080"
+	},
+	{
+       "type":"auto",
+       "name":"PLCの脆弱性がなくなる",
+       "systemstatecondition":["SAactS080"],
+       "from":"PLC",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-1/X16/VUL/OFF"],
+       "rerunstate":"rSAactS080",
+       "removestate":["SYSVUL16","SAactS080"],
+       "id":"SAactS080"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSVUL16,NOR(ZONE-1/X16/VUL,SYSCON16,ZONE-1/X16/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr080",
+       "removestate":["rSAact080","rSAactS080"],
+       "id":"SAactr080"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(REMOTEACCESS/X01/CON),SYSCON01,REMOTEACCESS/X01/ATK,REMOTEACCESS/X01/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact081",
+       "removestate":["rSAactr081"],
+       "id":"SAact081"
+	},
+	{
+       "type":"auto",
+       "name":"リモートPCの隔離解除",
+       "systemstatecondition":["SAactS081"],
+       "from":"リモートPC",
+       "to":"サイバー攻撃者",
+       "attachments":["REMOTEACCESS/X01/CON/OFF","REMOTEACCESS/X01/ATK/ON","REMOTEACCESS/X01/INF/ON"],
+       "rerunstate":"rSAactS081",
+       "removestate":["SYSCON01","SAactS081"],
+       "id":"SAactS081"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(REMOTEACCESS/X01/CON),SYSCON01,REMOTEACCESS/X01/ATK,REMOTEACCESS/X01/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr081",
+       "removestate":["rSAact081","rSAactS081"],
+       "id":"SAactr081"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(FW_INTERNET/X02/CON),SYSCON02,FW_INTERNET/X02/ATK,FW_INTERNET/X02/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact082",
+       "removestate":["rSAactr082"],
+       "id":"SAact082"
+	},
+	{
+       "type":"auto",
+       "name":"FW1の隔離解除",
+       "systemstatecondition":["SAactS082"],
+       "from":"FW1",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_INTERNET/X02/CON/OFF","FW_INTERNET/X02/ATK/ON","FW_INTERNET/X02/INF/ON"],
+       "rerunstate":"rSAactS082",
+       "removestate":["SYSCON02","SAactS082"],
+       "id":"SAactS082"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(FW_INTERNET/X02/CON),SYSCON02,FW_INTERNET/X02/ATK,FW_INTERNET/X02/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr082",
+       "removestate":["rSAact082","rSAactS082"],
+       "id":"SAactr082"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(VPN/X03/CON),SYSCON03,VPN/X03/ATK,VPN/X03/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact083",
+       "removestate":["rSAactr083"],
+       "id":"SAact083"
+	},
+	{
+       "type":"auto",
+       "name":"VPNの隔離解除",
+       "systemstatecondition":["SAactS083"],
+       "from":"VPN",
+       "to":"サイバー攻撃者",
+       "attachments":["VPN/X03/CON/OFF","VPN/X03/ATK/ON","VPN/X03/INF/ON"],
+       "rerunstate":"rSAactS083",
+       "removestate":["SYSCON03","SAactS083"],
+       "id":"SAactS083"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(VPN/X03/CON),SYSCON03,VPN/X03/ATK,VPN/X03/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr083",
+       "removestate":["rSAact083","rSAactS083"],
+       "id":"SAactr083"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-4/X04/CON),SYSCON04,ZONE-4/X04/ATK,ZONE-4/X04/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact084",
+       "removestate":["rSAactr084"],
+       "id":"SAact084"
+	},
+	{
+       "type":"auto",
+       "name":"メールサーバの隔離解除",
+       "systemstatecondition":["SAactS084"],
+       "from":"メールサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X04/CON/OFF","ZONE-4/X04/ATK/ON","ZONE-4/X04/INF/ON"],
+       "rerunstate":"rSAactS084",
+       "removestate":["SYSCON04","SAactS084"],
+       "id":"SAactS084"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-4/X04/CON),SYSCON04,ZONE-4/X04/ATK,ZONE-4/X04/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr084",
+       "removestate":["rSAact084","rSAactS084"],
+       "id":"SAactr084"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-4/X05/CON),SYSCON05,ZONE-4/X05/ATK,ZONE-4/X05/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact085",
+       "removestate":["rSAactr085"],
+       "id":"SAact085"
+	},
+	{
+       "type":"auto",
+       "name":"Webサーバの隔離解除",
+       "systemstatecondition":["SAactS085"],
+       "from":"Webサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X05/CON/OFF","ZONE-4/X05/ATK/ON","ZONE-4/X05/INF/ON"],
+       "rerunstate":"rSAactS085",
+       "removestate":["SYSCON05","SAactS085"],
+       "id":"SAactS085"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-4/X05/CON),SYSCON05,ZONE-4/X05/ATK,ZONE-4/X05/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr085",
+       "removestate":["rSAact085","rSAactS085"],
+       "id":"SAactr085"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-4/X06/CON),SYSCON06,ZONE-4/X06/ATK,ZONE-4/X06/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact086",
+       "removestate":["rSAactr086"],
+       "id":"SAact086"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC1の隔離解除",
+       "systemstatecondition":["SAactS086"],
+       "from":"社員用PC1",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X06/CON/OFF","ZONE-4/X06/ATK/ON","ZONE-4/X06/INF/ON"],
+       "rerunstate":"rSAactS086",
+       "removestate":["SYSCON06","SAactS086"],
+       "id":"SAactS086"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-4/X06/CON),SYSCON06,ZONE-4/X06/ATK,ZONE-4/X06/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr086",
+       "removestate":["rSAact086","rSAactS086"],
+       "id":"SAactr086"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-4/X07/CON),SYSCON07,ZONE-4/X07/ATK,ZONE-4/X07/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact087",
+       "removestate":["rSAactr087"],
+       "id":"SAact087"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC2の隔離解除",
+       "systemstatecondition":["SAactS087"],
+       "from":"社員用PC2",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X07/CON/OFF","ZONE-4/X07/ATK/ON","ZONE-4/X07/INF/ON"],
+       "rerunstate":"rSAactS087",
+       "removestate":["SYSCON07","SAactS087"],
+       "id":"SAactS087"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-4/X07/CON),SYSCON07,ZONE-4/X07/ATK,ZONE-4/X07/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr087",
+       "removestate":["rSAact087","rSAactS087"],
+       "id":"SAactr087"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-4/X08/CON),SYSCON08,ZONE-4/X08/ATK,ZONE-4/X08/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact088",
+       "removestate":["rSAactr088"],
+       "id":"SAact088"
+	},
+	{
+       "type":"auto",
+       "name":"保守PC1の隔離解除",
+       "systemstatecondition":["SAactS088"],
+       "from":"保守PC1",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X08/CON/OFF","ZONE-4/X08/ATK/ON","ZONE-4/X08/INF/ON"],
+       "rerunstate":"rSAactS088",
+       "removestate":["SYSCON08","SAactS088"],
+       "id":"SAactS088"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-4/X08/CON),SYSCON08,ZONE-4/X08/ATK,ZONE-4/X08/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr088",
+       "removestate":["rSAact088","rSAactS088"],
+       "id":"SAactr088"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-4/X09/CON),SYSCON09,ZONE-4/X09/ATK,ZONE-4/X09/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact089",
+       "removestate":["rSAactr089"],
+       "id":"SAact089"
+	},
+	{
+       "type":"auto",
+       "name":"ERPサーバの隔離解除",
+       "systemstatecondition":["SAactS089"],
+       "from":"ERPサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X09/CON/OFF","ZONE-4/X09/ATK/ON","ZONE-4/X09/INF/ON"],
+       "rerunstate":"rSAactS089",
+       "removestate":["SYSCON09","SAactS089"],
+       "id":"SAactS089"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-4/X09/CON),SYSCON09,ZONE-4/X09/ATK,ZONE-4/X09/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr089",
+       "removestate":["rSAact089","rSAactS089"],
+       "id":"SAactr089"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(FW_0/X10/CON),SYSCON10,FW_0/X10/ATK,FW_0/X10/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact090",
+       "removestate":["rSAactr090"],
+       "id":"SAact090"
+	},
+	{
+       "type":"auto",
+       "name":"FW2の隔離解除",
+       "systemstatecondition":["SAactS090"],
+       "from":"FW2",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_0/X10/CON/OFF","FW_0/X10/ATK/ON","FW_0/X10/INF/ON"],
+       "rerunstate":"rSAactS090",
+       "removestate":["SYSCON10","SAactS090"],
+       "id":"SAactS090"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(FW_0/X10/CON),SYSCON10,FW_0/X10/ATK,FW_0/X10/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr090",
+       "removestate":["rSAact090","rSAactS090"],
+       "id":"SAactr090"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-3/X11/CON),SYSCON11,ZONE-3/X11/ATK,ZONE-3/X11/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact091",
+       "removestate":["rSAactr091"],
+       "id":"SAact091"
+	},
+	{
+       "type":"auto",
+       "name":"生産管理サーバの隔離解除",
+       "systemstatecondition":["SAactS091"],
+       "from":"生産管理サーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X11/CON/OFF","ZONE-3/X11/ATK/ON","ZONE-3/X11/INF/ON"],
+       "rerunstate":"rSAactS091",
+       "removestate":["SYSCON11","SAactS091"],
+       "id":"SAactS091"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-3/X11/CON),SYSCON11,ZONE-3/X11/ATK,ZONE-3/X11/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr091",
+       "removestate":["rSAact091","rSAactS091"],
+       "id":"SAactr091"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-3/X12/CON),SYSCON12,ZONE-3/X12/ATK,ZONE-3/X12/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact092",
+       "removestate":["rSAactr092"],
+       "id":"SAact092"
+	},
+	{
+       "type":"auto",
+       "name":"設備管理サーバの隔離解除",
+       "systemstatecondition":["SAactS092"],
+       "from":"設備管理サーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X12/CON/OFF","ZONE-3/X12/ATK/ON","ZONE-3/X12/INF/ON"],
+       "rerunstate":"rSAactS092",
+       "removestate":["SYSCON12","SAactS092"],
+       "id":"SAactS092"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-3/X12/CON),SYSCON12,ZONE-3/X12/ATK,ZONE-3/X12/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr092",
+       "removestate":["rSAact092","rSAactS092"],
+       "id":"SAactr092"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-2/X13/CON),SYSCON13,ZONE-2/X13/ATK,ZONE-2/X13/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact093",
+       "removestate":["rSAactr093"],
+       "id":"SAact093"
+	},
+	{
+       "type":"auto",
+       "name":"EWSの隔離解除",
+       "systemstatecondition":["SAactS093"],
+       "from":"EWS",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X13/CON/OFF","ZONE-2/X13/ATK/ON","ZONE-2/X13/INF/ON"],
+       "rerunstate":"rSAactS093",
+       "removestate":["SYSCON13","SAactS093"],
+       "id":"SAactS093"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-2/X13/CON),SYSCON13,ZONE-2/X13/ATK,ZONE-2/X13/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr093",
+       "removestate":["rSAact093","rSAactS093"],
+       "id":"SAactr093"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-2/X14/CON),SYSCON14,ZONE-2/X14/ATK,ZONE-2/X14/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact094",
+       "removestate":["rSAactr094"],
+       "id":"SAact094"
+	},
+	{
+       "type":"auto",
+       "name":"SCADAの隔離解除",
+       "systemstatecondition":["SAactS094"],
+       "from":"SCADA",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X14/CON/OFF","ZONE-2/X14/ATK/ON","ZONE-2/X14/INF/ON"],
+       "rerunstate":"rSAactS094",
+       "removestate":["SYSCON14","SAactS094"],
+       "id":"SAactS094"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-2/X14/CON),SYSCON14,ZONE-2/X14/ATK,ZONE-2/X14/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr094",
+       "removestate":["rSAact094","rSAactS094"],
+       "id":"SAactr094"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-2/X15/CON),SYSCON15,ZONE-2/X15/ATK,ZONE-2/X15/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact095",
+       "removestate":["rSAactr095"],
+       "id":"SAact095"
+	},
+	{
+       "type":"auto",
+       "name":"OPCサーバの隔離解除",
+       "systemstatecondition":["SAactS095"],
+       "from":"OPCサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X15/CON/OFF","ZONE-2/X15/ATK/ON","ZONE-2/X15/INF/ON"],
+       "rerunstate":"rSAactS095",
+       "removestate":["SYSCON15","SAactS095"],
+       "id":"SAactS095"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-2/X15/CON),SYSCON15,ZONE-2/X15/ATK,ZONE-2/X15/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr095",
+       "removestate":["rSAact095","rSAactS095"],
+       "id":"SAactr095"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(NOT(ZONE-1/X16/CON),SYSCON16,ZONE-1/X16/ATK,ZONE-1/X16/INF)"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact096",
+       "removestate":["rSAactr096"],
+       "id":"SAact096"
+	},
+	{
+       "type":"auto",
+       "name":"PLCの隔離解除",
+       "systemstatecondition":["SAactS096"],
+       "from":"PLC",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-1/X16/CON/OFF","ZONE-1/X16/ATK/ON","ZONE-1/X16/INF/ON"],
+       "rerunstate":"rSAactS096",
+       "removestate":["SYSCON16","SAactS096"],
+       "id":"SAactS096"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(NOT(ZONE-1/X16/CON),SYSCON16,ZONE-1/X16/ATK,ZONE-1/X16/INF)))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr096",
+       "removestate":["rSAact096","rSAactS096"],
+       "id":"SAactr096"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON01,REMOTEACCESS/X01/ATK,NOR(REMOTEACCESS/X01/INF,REMOTEACCESS/X01/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact097",
+       "removestate":["rSAactr097"],
+       "id":"SAact097"
+	},
+	{
+       "type":"auto",
+       "name":"リモートPCの隔離解除",
+       "systemstatecondition":["SAactS097"],
+       "from":"リモートPC",
+       "to":"サイバー攻撃者",
+       "attachments":["REMOTEACCESS/X01/CON/OFF","REMOTEACCESS/X01/ATK/ON","REMOTEACCESS/X01/INF/OFF"],
+       "rerunstate":"rSAactS097",
+       "removestate":["SYSCON01","SAactS097"],
+       "id":"SAactS097"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON01,REMOTEACCESS/X01/ATK,NOR(REMOTEACCESS/X01/INF,REMOTEACCESS/X01/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr097",
+       "removestate":["rSAact097","rSAactS097"],
+       "id":"SAactr097"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON02,FW_INTERNET/X02/ATK,NOR(FW_INTERNET/X02/INF,FW_INTERNET/X02/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact098",
+       "removestate":["rSAactr098"],
+       "id":"SAact098"
+	},
+	{
+       "type":"auto",
+       "name":"FW1の隔離解除",
+       "systemstatecondition":["SAactS098"],
+       "from":"FW1",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_INTERNET/X02/CON/OFF","FW_INTERNET/X02/ATK/ON","FW_INTERNET/X02/INF/OFF"],
+       "rerunstate":"rSAactS098",
+       "removestate":["SYSCON02","SAactS098"],
+       "id":"SAactS098"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON02,FW_INTERNET/X02/ATK,NOR(FW_INTERNET/X02/INF,FW_INTERNET/X02/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr098",
+       "removestate":["rSAact098","rSAactS098"],
+       "id":"SAactr098"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON03,VPN/X03/ATK,NOR(VPN/X03/INF,VPN/X03/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact099",
+       "removestate":["rSAactr099"],
+       "id":"SAact099"
+	},
+	{
+       "type":"auto",
+       "name":"VPNの隔離解除",
+       "systemstatecondition":["SAactS099"],
+       "from":"VPN",
+       "to":"サイバー攻撃者",
+       "attachments":["VPN/X03/CON/OFF","VPN/X03/ATK/ON","VPN/X03/INF/OFF"],
+       "rerunstate":"rSAactS099",
+       "removestate":["SYSCON03","SAactS099"],
+       "id":"SAactS099"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON03,VPN/X03/ATK,NOR(VPN/X03/INF,VPN/X03/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr099",
+       "removestate":["rSAact099","rSAactS099"],
+       "id":"SAactr099"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON04,ZONE-4/X04/ATK,NOR(ZONE-4/X04/INF,ZONE-4/X04/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact100",
+       "removestate":["rSAactr100"],
+       "id":"SAact100"
+	},
+	{
+       "type":"auto",
+       "name":"メールサーバの隔離解除",
+       "systemstatecondition":["SAactS100"],
+       "from":"メールサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X04/CON/OFF","ZONE-4/X04/ATK/ON","ZONE-4/X04/INF/OFF"],
+       "rerunstate":"rSAactS100",
+       "removestate":["SYSCON04","SAactS100"],
+       "id":"SAactS100"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON04,ZONE-4/X04/ATK,NOR(ZONE-4/X04/INF,ZONE-4/X04/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr100",
+       "removestate":["rSAact100","rSAactS100"],
+       "id":"SAactr100"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON05,ZONE-4/X05/ATK,NOR(ZONE-4/X05/INF,ZONE-4/X05/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact101",
+       "removestate":["rSAactr101"],
+       "id":"SAact101"
+	},
+	{
+       "type":"auto",
+       "name":"Webサーバの隔離解除",
+       "systemstatecondition":["SAactS101"],
+       "from":"Webサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X05/CON/OFF","ZONE-4/X05/ATK/ON","ZONE-4/X05/INF/OFF"],
+       "rerunstate":"rSAactS101",
+       "removestate":["SYSCON05","SAactS101"],
+       "id":"SAactS101"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON05,ZONE-4/X05/ATK,NOR(ZONE-4/X05/INF,ZONE-4/X05/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr101",
+       "removestate":["rSAact101","rSAactS101"],
+       "id":"SAactr101"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON06,ZONE-4/X06/ATK,NOR(ZONE-4/X06/INF,ZONE-4/X06/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact102",
+       "removestate":["rSAactr102"],
+       "id":"SAact102"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC1の隔離解除",
+       "systemstatecondition":["SAactS102"],
+       "from":"社員用PC1",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X06/CON/OFF","ZONE-4/X06/ATK/ON","ZONE-4/X06/INF/OFF"],
+       "rerunstate":"rSAactS102",
+       "removestate":["SYSCON06","SAactS102"],
+       "id":"SAactS102"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON06,ZONE-4/X06/ATK,NOR(ZONE-4/X06/INF,ZONE-4/X06/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr102",
+       "removestate":["rSAact102","rSAactS102"],
+       "id":"SAactr102"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON07,ZONE-4/X07/ATK,NOR(ZONE-4/X07/INF,ZONE-4/X07/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact103",
+       "removestate":["rSAactr103"],
+       "id":"SAact103"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC2の隔離解除",
+       "systemstatecondition":["SAactS103"],
+       "from":"社員用PC2",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X07/CON/OFF","ZONE-4/X07/ATK/ON","ZONE-4/X07/INF/OFF"],
+       "rerunstate":"rSAactS103",
+       "removestate":["SYSCON07","SAactS103"],
+       "id":"SAactS103"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON07,ZONE-4/X07/ATK,NOR(ZONE-4/X07/INF,ZONE-4/X07/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr103",
+       "removestate":["rSAact103","rSAactS103"],
+       "id":"SAactr103"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON08,ZONE-4/X08/ATK,NOR(ZONE-4/X08/INF,ZONE-4/X08/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact104",
+       "removestate":["rSAactr104"],
+       "id":"SAact104"
+	},
+	{
+       "type":"auto",
+       "name":"保守PC1の隔離解除",
+       "systemstatecondition":["SAactS104"],
+       "from":"保守PC1",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X08/CON/OFF","ZONE-4/X08/ATK/ON","ZONE-4/X08/INF/OFF"],
+       "rerunstate":"rSAactS104",
+       "removestate":["SYSCON08","SAactS104"],
+       "id":"SAactS104"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON08,ZONE-4/X08/ATK,NOR(ZONE-4/X08/INF,ZONE-4/X08/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr104",
+       "removestate":["rSAact104","rSAactS104"],
+       "id":"SAactr104"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON09,ZONE-4/X09/ATK,NOR(ZONE-4/X09/INF,ZONE-4/X09/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact105",
+       "removestate":["rSAactr105"],
+       "id":"SAact105"
+	},
+	{
+       "type":"auto",
+       "name":"ERPサーバの隔離解除",
+       "systemstatecondition":["SAactS105"],
+       "from":"ERPサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X09/CON/OFF","ZONE-4/X09/ATK/ON","ZONE-4/X09/INF/OFF"],
+       "rerunstate":"rSAactS105",
+       "removestate":["SYSCON09","SAactS105"],
+       "id":"SAactS105"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON09,ZONE-4/X09/ATK,NOR(ZONE-4/X09/INF,ZONE-4/X09/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr105",
+       "removestate":["rSAact105","rSAactS105"],
+       "id":"SAactr105"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON10,FW_0/X10/ATK,NOR(FW_0/X10/INF,FW_0/X10/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact106",
+       "removestate":["rSAactr106"],
+       "id":"SAact106"
+	},
+	{
+       "type":"auto",
+       "name":"FW2の隔離解除",
+       "systemstatecondition":["SAactS106"],
+       "from":"FW2",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_0/X10/CON/OFF","FW_0/X10/ATK/ON","FW_0/X10/INF/OFF"],
+       "rerunstate":"rSAactS106",
+       "removestate":["SYSCON10","SAactS106"],
+       "id":"SAactS106"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON10,FW_0/X10/ATK,NOR(FW_0/X10/INF,FW_0/X10/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr106",
+       "removestate":["rSAact106","rSAactS106"],
+       "id":"SAactr106"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON11,ZONE-3/X11/ATK,NOR(ZONE-3/X11/INF,ZONE-3/X11/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact107",
+       "removestate":["rSAactr107"],
+       "id":"SAact107"
+	},
+	{
+       "type":"auto",
+       "name":"生産管理サーバの隔離解除",
+       "systemstatecondition":["SAactS107"],
+       "from":"生産管理サーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X11/CON/OFF","ZONE-3/X11/ATK/ON","ZONE-3/X11/INF/OFF"],
+       "rerunstate":"rSAactS107",
+       "removestate":["SYSCON11","SAactS107"],
+       "id":"SAactS107"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON11,ZONE-3/X11/ATK,NOR(ZONE-3/X11/INF,ZONE-3/X11/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr107",
+       "removestate":["rSAact107","rSAactS107"],
+       "id":"SAactr107"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON12,ZONE-3/X12/ATK,NOR(ZONE-3/X12/INF,ZONE-3/X12/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact108",
+       "removestate":["rSAactr108"],
+       "id":"SAact108"
+	},
+	{
+       "type":"auto",
+       "name":"設備管理サーバの隔離解除",
+       "systemstatecondition":["SAactS108"],
+       "from":"設備管理サーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X12/CON/OFF","ZONE-3/X12/ATK/ON","ZONE-3/X12/INF/OFF"],
+       "rerunstate":"rSAactS108",
+       "removestate":["SYSCON12","SAactS108"],
+       "id":"SAactS108"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON12,ZONE-3/X12/ATK,NOR(ZONE-3/X12/INF,ZONE-3/X12/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr108",
+       "removestate":["rSAact108","rSAactS108"],
+       "id":"SAactr108"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON13,ZONE-2/X13/ATK,NOR(ZONE-2/X13/INF,ZONE-2/X13/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact109",
+       "removestate":["rSAactr109"],
+       "id":"SAact109"
+	},
+	{
+       "type":"auto",
+       "name":"EWSの隔離解除",
+       "systemstatecondition":["SAactS109"],
+       "from":"EWS",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X13/CON/OFF","ZONE-2/X13/ATK/ON","ZONE-2/X13/INF/OFF"],
+       "rerunstate":"rSAactS109",
+       "removestate":["SYSCON13","SAactS109"],
+       "id":"SAactS109"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON13,ZONE-2/X13/ATK,NOR(ZONE-2/X13/INF,ZONE-2/X13/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr109",
+       "removestate":["rSAact109","rSAactS109"],
+       "id":"SAactr109"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON14,ZONE-2/X14/ATK,NOR(ZONE-2/X14/INF,ZONE-2/X14/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact110",
+       "removestate":["rSAactr110"],
+       "id":"SAact110"
+	},
+	{
+       "type":"auto",
+       "name":"SCADAの隔離解除",
+       "systemstatecondition":["SAactS110"],
+       "from":"SCADA",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X14/CON/OFF","ZONE-2/X14/ATK/ON","ZONE-2/X14/INF/OFF"],
+       "rerunstate":"rSAactS110",
+       "removestate":["SYSCON14","SAactS110"],
+       "id":"SAactS110"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON14,ZONE-2/X14/ATK,NOR(ZONE-2/X14/INF,ZONE-2/X14/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr110",
+       "removestate":["rSAact110","rSAactS110"],
+       "id":"SAactr110"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON15,ZONE-2/X15/ATK,NOR(ZONE-2/X15/INF,ZONE-2/X15/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact111",
+       "removestate":["rSAactr111"],
+       "id":"SAact111"
+	},
+	{
+       "type":"auto",
+       "name":"OPCサーバの隔離解除",
+       "systemstatecondition":["SAactS111"],
+       "from":"OPCサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X15/CON/OFF","ZONE-2/X15/ATK/ON","ZONE-2/X15/INF/OFF"],
+       "rerunstate":"rSAactS111",
+       "removestate":["SYSCON15","SAactS111"],
+       "id":"SAactS111"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON15,ZONE-2/X15/ATK,NOR(ZONE-2/X15/INF,ZONE-2/X15/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr111",
+       "removestate":["rSAact111","rSAactS111"],
+       "id":"SAactr111"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON16,ZONE-1/X16/ATK,NOR(ZONE-1/X16/INF,ZONE-1/X16/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact112",
+       "removestate":["rSAactr112"],
+       "id":"SAact112"
+	},
+	{
+       "type":"auto",
+       "name":"PLCの隔離解除",
+       "systemstatecondition":["SAactS112"],
+       "from":"PLC",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-1/X16/CON/OFF","ZONE-1/X16/ATK/ON","ZONE-1/X16/INF/OFF"],
+       "rerunstate":"rSAactS112",
+       "removestate":["SYSCON16","SAactS112"],
+       "id":"SAactS112"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON16,ZONE-1/X16/ATK,NOR(ZONE-1/X16/INF,ZONE-1/X16/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr112",
+       "removestate":["rSAact112","rSAactS112"],
+       "id":"SAactr112"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON01,REMOTEACCESS/X01/INF,NOR(REMOTEACCESS/X01/ATK,REMOTEACCESS/X01/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact113",
+       "removestate":["rSAactr113"],
+       "id":"SAact113"
+	},
+	{
+       "type":"auto",
+       "name":"リモートPCの隔離解除",
+       "systemstatecondition":["SAactS113"],
+       "from":"リモートPC",
+       "to":"サイバー攻撃者",
+       "attachments":["REMOTEACCESS/X01/INF/ON","REMOTEACCESS/X01/CON/OFF","REMOTEACCESS/X01/ATK/OFF"],
+       "rerunstate":"rSAactS113",
+       "removestate":["SYSCON01","SAactS113"],
+       "id":"SAactS113"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON01,REMOTEACCESS/X01/INF,NOR(REMOTEACCESS/X01/ATK,REMOTEACCESS/X01/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr113",
+       "removestate":["rSAact113","rSAactS113"],
+       "id":"SAactr113"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON02,FW_INTERNET/X02/INF,NOR(FW_INTERNET/X02/ATK,FW_INTERNET/X02/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact114",
+       "removestate":["rSAactr114"],
+       "id":"SAact114"
+	},
+	{
+       "type":"auto",
+       "name":"FW1の隔離解除",
+       "systemstatecondition":["SAactS114"],
+       "from":"FW1",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_INTERNET/X02/INF/ON","FW_INTERNET/X02/CON/OFF","FW_INTERNET/X02/ATK/OFF"],
+       "rerunstate":"rSAactS114",
+       "removestate":["SYSCON02","SAactS114"],
+       "id":"SAactS114"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON02,FW_INTERNET/X02/INF,NOR(FW_INTERNET/X02/ATK,FW_INTERNET/X02/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr114",
+       "removestate":["rSAact114","rSAactS114"],
+       "id":"SAactr114"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON03,VPN/X03/INF,NOR(VPN/X03/ATK,VPN/X03/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact115",
+       "removestate":["rSAactr115"],
+       "id":"SAact115"
+	},
+	{
+       "type":"auto",
+       "name":"VPNの隔離解除",
+       "systemstatecondition":["SAactS115"],
+       "from":"VPN",
+       "to":"サイバー攻撃者",
+       "attachments":["VPN/X03/INF/ON","VPN/X03/CON/OFF","VPN/X03/ATK/OFF"],
+       "rerunstate":"rSAactS115",
+       "removestate":["SYSCON03","SAactS115"],
+       "id":"SAactS115"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON03,VPN/X03/INF,NOR(VPN/X03/ATK,VPN/X03/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr115",
+       "removestate":["rSAact115","rSAactS115"],
+       "id":"SAactr115"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON04,ZONE-4/X04/INF,NOR(ZONE-4/X04/ATK,ZONE-4/X04/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact116",
+       "removestate":["rSAactr116"],
+       "id":"SAact116"
+	},
+	{
+       "type":"auto",
+       "name":"メールサーバの隔離解除",
+       "systemstatecondition":["SAactS116"],
+       "from":"メールサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X04/INF/ON","ZONE-4/X04/CON/OFF","ZONE-4/X04/ATK/OFF"],
+       "rerunstate":"rSAactS116",
+       "removestate":["SYSCON04","SAactS116"],
+       "id":"SAactS116"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON04,ZONE-4/X04/INF,NOR(ZONE-4/X04/ATK,ZONE-4/X04/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr116",
+       "removestate":["rSAact116","rSAactS116"],
+       "id":"SAactr116"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON05,ZONE-4/X05/INF,NOR(ZONE-4/X05/ATK,ZONE-4/X05/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact117",
+       "removestate":["rSAactr117"],
+       "id":"SAact117"
+	},
+	{
+       "type":"auto",
+       "name":"Webサーバの隔離解除",
+       "systemstatecondition":["SAactS117"],
+       "from":"Webサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X05/INF/ON","ZONE-4/X05/CON/OFF","ZONE-4/X05/ATK/OFF"],
+       "rerunstate":"rSAactS117",
+       "removestate":["SYSCON05","SAactS117"],
+       "id":"SAactS117"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON05,ZONE-4/X05/INF,NOR(ZONE-4/X05/ATK,ZONE-4/X05/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr117",
+       "removestate":["rSAact117","rSAactS117"],
+       "id":"SAactr117"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON06,ZONE-4/X06/INF,NOR(ZONE-4/X06/ATK,ZONE-4/X06/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact118",
+       "removestate":["rSAactr118"],
+       "id":"SAact118"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC1の隔離解除",
+       "systemstatecondition":["SAactS118"],
+       "from":"社員用PC1",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X06/INF/ON","ZONE-4/X06/CON/OFF","ZONE-4/X06/ATK/OFF"],
+       "rerunstate":"rSAactS118",
+       "removestate":["SYSCON06","SAactS118"],
+       "id":"SAactS118"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON06,ZONE-4/X06/INF,NOR(ZONE-4/X06/ATK,ZONE-4/X06/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr118",
+       "removestate":["rSAact118","rSAactS118"],
+       "id":"SAactr118"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON07,ZONE-4/X07/INF,NOR(ZONE-4/X07/ATK,ZONE-4/X07/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact119",
+       "removestate":["rSAactr119"],
+       "id":"SAact119"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC2の隔離解除",
+       "systemstatecondition":["SAactS119"],
+       "from":"社員用PC2",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X07/INF/ON","ZONE-4/X07/CON/OFF","ZONE-4/X07/ATK/OFF"],
+       "rerunstate":"rSAactS119",
+       "removestate":["SYSCON07","SAactS119"],
+       "id":"SAactS119"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON07,ZONE-4/X07/INF,NOR(ZONE-4/X07/ATK,ZONE-4/X07/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr119",
+       "removestate":["rSAact119","rSAactS119"],
+       "id":"SAactr119"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON08,ZONE-4/X08/INF,NOR(ZONE-4/X08/ATK,ZONE-4/X08/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact120",
+       "removestate":["rSAactr120"],
+       "id":"SAact120"
+	},
+	{
+       "type":"auto",
+       "name":"保守PC1の隔離解除",
+       "systemstatecondition":["SAactS120"],
+       "from":"保守PC1",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X08/INF/ON","ZONE-4/X08/CON/OFF","ZONE-4/X08/ATK/OFF"],
+       "rerunstate":"rSAactS120",
+       "removestate":["SYSCON08","SAactS120"],
+       "id":"SAactS120"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON08,ZONE-4/X08/INF,NOR(ZONE-4/X08/ATK,ZONE-4/X08/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr120",
+       "removestate":["rSAact120","rSAactS120"],
+       "id":"SAactr120"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON09,ZONE-4/X09/INF,NOR(ZONE-4/X09/ATK,ZONE-4/X09/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact121",
+       "removestate":["rSAactr121"],
+       "id":"SAact121"
+	},
+	{
+       "type":"auto",
+       "name":"ERPサーバの隔離解除",
+       "systemstatecondition":["SAactS121"],
+       "from":"ERPサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X09/INF/ON","ZONE-4/X09/CON/OFF","ZONE-4/X09/ATK/OFF"],
+       "rerunstate":"rSAactS121",
+       "removestate":["SYSCON09","SAactS121"],
+       "id":"SAactS121"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON09,ZONE-4/X09/INF,NOR(ZONE-4/X09/ATK,ZONE-4/X09/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr121",
+       "removestate":["rSAact121","rSAactS121"],
+       "id":"SAactr121"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON10,FW_0/X10/INF,NOR(FW_0/X10/ATK,FW_0/X10/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact122",
+       "removestate":["rSAactr122"],
+       "id":"SAact122"
+	},
+	{
+       "type":"auto",
+       "name":"FW2の隔離解除",
+       "systemstatecondition":["SAactS122"],
+       "from":"FW2",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_0/X10/INF/ON","FW_0/X10/CON/OFF","FW_0/X10/ATK/OFF"],
+       "rerunstate":"rSAactS122",
+       "removestate":["SYSCON10","SAactS122"],
+       "id":"SAactS122"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON10,FW_0/X10/INF,NOR(FW_0/X10/ATK,FW_0/X10/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr122",
+       "removestate":["rSAact122","rSAactS122"],
+       "id":"SAactr122"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON11,ZONE-3/X11/INF,NOR(ZONE-3/X11/ATK,ZONE-3/X11/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact123",
+       "removestate":["rSAactr123"],
+       "id":"SAact123"
+	},
+	{
+       "type":"auto",
+       "name":"生産管理サーバの隔離解除",
+       "systemstatecondition":["SAactS123"],
+       "from":"生産管理サーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X11/INF/ON","ZONE-3/X11/CON/OFF","ZONE-3/X11/ATK/OFF"],
+       "rerunstate":"rSAactS123",
+       "removestate":["SYSCON11","SAactS123"],
+       "id":"SAactS123"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON11,ZONE-3/X11/INF,NOR(ZONE-3/X11/ATK,ZONE-3/X11/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr123",
+       "removestate":["rSAact123","rSAactS123"],
+       "id":"SAactr123"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON12,ZONE-3/X12/INF,NOR(ZONE-3/X12/ATK,ZONE-3/X12/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact124",
+       "removestate":["rSAactr124"],
+       "id":"SAact124"
+	},
+	{
+       "type":"auto",
+       "name":"設備管理サーバの隔離解除",
+       "systemstatecondition":["SAactS124"],
+       "from":"設備管理サーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X12/INF/ON","ZONE-3/X12/CON/OFF","ZONE-3/X12/ATK/OFF"],
+       "rerunstate":"rSAactS124",
+       "removestate":["SYSCON12","SAactS124"],
+       "id":"SAactS124"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON12,ZONE-3/X12/INF,NOR(ZONE-3/X12/ATK,ZONE-3/X12/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr124",
+       "removestate":["rSAact124","rSAactS124"],
+       "id":"SAactr124"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON13,ZONE-2/X13/INF,NOR(ZONE-2/X13/ATK,ZONE-2/X13/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact125",
+       "removestate":["rSAactr125"],
+       "id":"SAact125"
+	},
+	{
+       "type":"auto",
+       "name":"EWSの隔離解除",
+       "systemstatecondition":["SAactS125"],
+       "from":"EWS",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X13/INF/ON","ZONE-2/X13/CON/OFF","ZONE-2/X13/ATK/OFF"],
+       "rerunstate":"rSAactS125",
+       "removestate":["SYSCON13","SAactS125"],
+       "id":"SAactS125"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON13,ZONE-2/X13/INF,NOR(ZONE-2/X13/ATK,ZONE-2/X13/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr125",
+       "removestate":["rSAact125","rSAactS125"],
+       "id":"SAactr125"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON14,ZONE-2/X14/INF,NOR(ZONE-2/X14/ATK,ZONE-2/X14/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact126",
+       "removestate":["rSAactr126"],
+       "id":"SAact126"
+	},
+	{
+       "type":"auto",
+       "name":"SCADAの隔離解除",
+       "systemstatecondition":["SAactS126"],
+       "from":"SCADA",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X14/INF/ON","ZONE-2/X14/CON/OFF","ZONE-2/X14/ATK/OFF"],
+       "rerunstate":"rSAactS126",
+       "removestate":["SYSCON14","SAactS126"],
+       "id":"SAactS126"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON14,ZONE-2/X14/INF,NOR(ZONE-2/X14/ATK,ZONE-2/X14/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr126",
+       "removestate":["rSAact126","rSAactS126"],
+       "id":"SAactr126"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON15,ZONE-2/X15/INF,NOR(ZONE-2/X15/ATK,ZONE-2/X15/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact127",
+       "removestate":["rSAactr127"],
+       "id":"SAact127"
+	},
+	{
+       "type":"auto",
+       "name":"OPCサーバの隔離解除",
+       "systemstatecondition":["SAactS127"],
+       "from":"OPCサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X15/INF/ON","ZONE-2/X15/CON/OFF","ZONE-2/X15/ATK/OFF"],
+       "rerunstate":"rSAactS127",
+       "removestate":["SYSCON15","SAactS127"],
+       "id":"SAactS127"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON15,ZONE-2/X15/INF,NOR(ZONE-2/X15/ATK,ZONE-2/X15/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr127",
+       "removestate":["rSAact127","rSAactS127"],
+       "id":"SAactr127"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON16,ZONE-1/X16/INF,NOR(ZONE-1/X16/ATK,ZONE-1/X16/CON))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact128",
+       "removestate":["rSAactr128"],
+       "id":"SAact128"
+	},
+	{
+       "type":"auto",
+       "name":"PLCの隔離解除",
+       "systemstatecondition":["SAactS128"],
+       "from":"PLC",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-1/X16/INF/ON","ZONE-1/X16/CON/OFF","ZONE-1/X16/ATK/OFF"],
+       "rerunstate":"rSAactS128",
+       "removestate":["SYSCON16","SAactS128"],
+       "id":"SAactS128"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON16,ZONE-1/X16/INF,NOR(ZONE-1/X16/ATK,ZONE-1/X16/CON))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr128",
+       "removestate":["rSAact128","rSAactS128"],
+       "id":"SAactr128"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON01,NOR(REMOTEACCESS/X01/INF,REMOTEACCESS/X01/CON,REMOTEACCESS/X01/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact129",
+       "removestate":["rSAactr129"],
+       "id":"SAact129"
+	},
+	{
+       "type":"auto",
+       "name":"リモートPCの隔離解除",
+       "systemstatecondition":["SAactS129"],
+       "from":"リモートPC",
+       "to":"サイバー攻撃者",
+       "attachments":["REMOTEACCESS/X01/INF/OFF","REMOTEACCESS/X01/CON/OFF","REMOTEACCESS/X01/ATK/OFF"],
+       "rerunstate":"rSAactS129",
+       "removestate":["SYSCON01","SAactS129"],
+       "id":"SAactS129"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON01,NOR(REMOTEACCESS/X01/INF,REMOTEACCESS/X01/CON,REMOTEACCESS/X01/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr129",
+       "removestate":["rSAact129","rSAactS129"],
+       "id":"SAactr129"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON02,NOR(FW_INTERNET/X02/INF,FW_INTERNET/X02/CON,FW_INTERNET/X02/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact130",
+       "removestate":["rSAactr130"],
+       "id":"SAact130"
+	},
+	{
+       "type":"auto",
+       "name":"FW1の隔離解除",
+       "systemstatecondition":["SAactS130"],
+       "from":"FW1",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_INTERNET/X02/INF/OFF","FW_INTERNET/X02/CON/OFF","FW_INTERNET/X02/ATK/OFF"],
+       "rerunstate":"rSAactS130",
+       "removestate":["SYSCON02","SAactS130"],
+       "id":"SAactS130"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON02,NOR(FW_INTERNET/X02/INF,FW_INTERNET/X02/CON,FW_INTERNET/X02/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr130",
+       "removestate":["rSAact130","rSAactS130"],
+       "id":"SAactr130"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON03,NOR(VPN/X03/INF,VPN/X03/CON,VPN/X03/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact131",
+       "removestate":["rSAactr131"],
+       "id":"SAact131"
+	},
+	{
+       "type":"auto",
+       "name":"VPNの隔離解除",
+       "systemstatecondition":["SAactS131"],
+       "from":"VPN",
+       "to":"サイバー攻撃者",
+       "attachments":["VPN/X03/INF/OFF","VPN/X03/CON/OFF","VPN/X03/ATK/OFF"],
+       "rerunstate":"rSAactS131",
+       "removestate":["SYSCON03","SAactS131"],
+       "id":"SAactS131"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON03,NOR(VPN/X03/INF,VPN/X03/CON,VPN/X03/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr131",
+       "removestate":["rSAact131","rSAactS131"],
+       "id":"SAactr131"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON04,NOR(ZONE-4/X04/INF,ZONE-4/X04/CON,ZONE-4/X04/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact132",
+       "removestate":["rSAactr132"],
+       "id":"SAact132"
+	},
+	{
+       "type":"auto",
+       "name":"メールサーバの隔離解除",
+       "systemstatecondition":["SAactS132"],
+       "from":"メールサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X04/INF/OFF","ZONE-4/X04/CON/OFF","ZONE-4/X04/ATK/OFF"],
+       "rerunstate":"rSAactS132",
+       "removestate":["SYSCON04","SAactS132"],
+       "id":"SAactS132"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON04,NOR(ZONE-4/X04/INF,ZONE-4/X04/CON,ZONE-4/X04/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr132",
+       "removestate":["rSAact132","rSAactS132"],
+       "id":"SAactr132"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON05,NOR(ZONE-4/X05/INF,ZONE-4/X05/CON,ZONE-4/X05/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact133",
+       "removestate":["rSAactr133"],
+       "id":"SAact133"
+	},
+	{
+       "type":"auto",
+       "name":"Webサーバの隔離解除",
+       "systemstatecondition":["SAactS133"],
+       "from":"Webサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X05/INF/OFF","ZONE-4/X05/CON/OFF","ZONE-4/X05/ATK/OFF"],
+       "rerunstate":"rSAactS133",
+       "removestate":["SYSCON05","SAactS133"],
+       "id":"SAactS133"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON05,NOR(ZONE-4/X05/INF,ZONE-4/X05/CON,ZONE-4/X05/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr133",
+       "removestate":["rSAact133","rSAactS133"],
+       "id":"SAactr133"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON06,NOR(ZONE-4/X06/INF,ZONE-4/X06/CON,ZONE-4/X06/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact134",
+       "removestate":["rSAactr134"],
+       "id":"SAact134"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC1の隔離解除",
+       "systemstatecondition":["SAactS134"],
+       "from":"社員用PC1",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X06/INF/OFF","ZONE-4/X06/CON/OFF","ZONE-4/X06/ATK/OFF"],
+       "rerunstate":"rSAactS134",
+       "removestate":["SYSCON06","SAactS134"],
+       "id":"SAactS134"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON06,NOR(ZONE-4/X06/INF,ZONE-4/X06/CON,ZONE-4/X06/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr134",
+       "removestate":["rSAact134","rSAactS134"],
+       "id":"SAactr134"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON07,NOR(ZONE-4/X07/INF,ZONE-4/X07/CON,ZONE-4/X07/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact135",
+       "removestate":["rSAactr135"],
+       "id":"SAact135"
+	},
+	{
+       "type":"auto",
+       "name":"社員用PC2の隔離解除",
+       "systemstatecondition":["SAactS135"],
+       "from":"社員用PC2",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X07/INF/OFF","ZONE-4/X07/CON/OFF","ZONE-4/X07/ATK/OFF"],
+       "rerunstate":"rSAactS135",
+       "removestate":["SYSCON07","SAactS135"],
+       "id":"SAactS135"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON07,NOR(ZONE-4/X07/INF,ZONE-4/X07/CON,ZONE-4/X07/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr135",
+       "removestate":["rSAact135","rSAactS135"],
+       "id":"SAactr135"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON08,NOR(ZONE-4/X08/INF,ZONE-4/X08/CON,ZONE-4/X08/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact136",
+       "removestate":["rSAactr136"],
+       "id":"SAact136"
+	},
+	{
+       "type":"auto",
+       "name":"保守PC1の隔離解除",
+       "systemstatecondition":["SAactS136"],
+       "from":"保守PC1",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X08/INF/OFF","ZONE-4/X08/CON/OFF","ZONE-4/X08/ATK/OFF"],
+       "rerunstate":"rSAactS136",
+       "removestate":["SYSCON08","SAactS136"],
+       "id":"SAactS136"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON08,NOR(ZONE-4/X08/INF,ZONE-4/X08/CON,ZONE-4/X08/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr136",
+       "removestate":["rSAact136","rSAactS136"],
+       "id":"SAactr136"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON09,NOR(ZONE-4/X09/INF,ZONE-4/X09/CON,ZONE-4/X09/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact137",
+       "removestate":["rSAactr137"],
+       "id":"SAact137"
+	},
+	{
+       "type":"auto",
+       "name":"ERPサーバの隔離解除",
+       "systemstatecondition":["SAactS137"],
+       "from":"ERPサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-4/X09/INF/OFF","ZONE-4/X09/CON/OFF","ZONE-4/X09/ATK/OFF"],
+       "rerunstate":"rSAactS137",
+       "removestate":["SYSCON09","SAactS137"],
+       "id":"SAactS137"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON09,NOR(ZONE-4/X09/INF,ZONE-4/X09/CON,ZONE-4/X09/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr137",
+       "removestate":["rSAact137","rSAactS137"],
+       "id":"SAactr137"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON10,NOR(FW_0/X10/INF,FW_0/X10/CON,FW_0/X10/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact138",
+       "removestate":["rSAactr138"],
+       "id":"SAact138"
+	},
+	{
+       "type":"auto",
+       "name":"FW2の隔離解除",
+       "systemstatecondition":["SAactS138"],
+       "from":"FW2",
+       "to":"サイバー攻撃者",
+       "attachments":["FW_0/X10/INF/OFF","FW_0/X10/CON/OFF","FW_0/X10/ATK/OFF"],
+       "rerunstate":"rSAactS138",
+       "removestate":["SYSCON10","SAactS138"],
+       "id":"SAactS138"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON10,NOR(FW_0/X10/INF,FW_0/X10/CON,FW_0/X10/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr138",
+       "removestate":["rSAact138","rSAactS138"],
+       "id":"SAactr138"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON11,NOR(ZONE-3/X11/INF,ZONE-3/X11/CON,ZONE-3/X11/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact139",
+       "removestate":["rSAactr139"],
+       "id":"SAact139"
+	},
+	{
+       "type":"auto",
+       "name":"生産管理サーバの隔離解除",
+       "systemstatecondition":["SAactS139"],
+       "from":"生産管理サーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X11/INF/OFF","ZONE-3/X11/CON/OFF","ZONE-3/X11/ATK/OFF"],
+       "rerunstate":"rSAactS139",
+       "removestate":["SYSCON11","SAactS139"],
+       "id":"SAactS139"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON11,NOR(ZONE-3/X11/INF,ZONE-3/X11/CON,ZONE-3/X11/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr139",
+       "removestate":["rSAact139","rSAactS139"],
+       "id":"SAactr139"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON12,NOR(ZONE-3/X12/INF,ZONE-3/X12/CON,ZONE-3/X12/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact140",
+       "removestate":["rSAactr140"],
+       "id":"SAact140"
+	},
+	{
+       "type":"auto",
+       "name":"設備管理サーバの隔離解除",
+       "systemstatecondition":["SAactS140"],
+       "from":"設備管理サーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-3/X12/INF/OFF","ZONE-3/X12/CON/OFF","ZONE-3/X12/ATK/OFF"],
+       "rerunstate":"rSAactS140",
+       "removestate":["SYSCON12","SAactS140"],
+       "id":"SAactS140"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON12,NOR(ZONE-3/X12/INF,ZONE-3/X12/CON,ZONE-3/X12/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr140",
+       "removestate":["rSAact140","rSAactS140"],
+       "id":"SAactr140"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON13,NOR(ZONE-2/X13/INF,ZONE-2/X13/CON,ZONE-2/X13/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact141",
+       "removestate":["rSAactr141"],
+       "id":"SAact141"
+	},
+	{
+       "type":"auto",
+       "name":"EWSの隔離解除",
+       "systemstatecondition":["SAactS141"],
+       "from":"EWS",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X13/INF/OFF","ZONE-2/X13/CON/OFF","ZONE-2/X13/ATK/OFF"],
+       "rerunstate":"rSAactS141",
+       "removestate":["SYSCON13","SAactS141"],
+       "id":"SAactS141"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON13,NOR(ZONE-2/X13/INF,ZONE-2/X13/CON,ZONE-2/X13/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr141",
+       "removestate":["rSAact141","rSAactS141"],
+       "id":"SAactr141"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON14,NOR(ZONE-2/X14/INF,ZONE-2/X14/CON,ZONE-2/X14/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact142",
+       "removestate":["rSAactr142"],
+       "id":"SAact142"
+	},
+	{
+       "type":"auto",
+       "name":"SCADAの隔離解除",
+       "systemstatecondition":["SAactS142"],
+       "from":"SCADA",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X14/INF/OFF","ZONE-2/X14/CON/OFF","ZONE-2/X14/ATK/OFF"],
+       "rerunstate":"rSAactS142",
+       "removestate":["SYSCON14","SAactS142"],
+       "id":"SAactS142"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON14,NOR(ZONE-2/X14/INF,ZONE-2/X14/CON,ZONE-2/X14/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr142",
+       "removestate":["rSAact142","rSAactS142"],
+       "id":"SAactr142"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON15,NOR(ZONE-2/X15/INF,ZONE-2/X15/CON,ZONE-2/X15/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact143",
+       "removestate":["rSAactr143"],
+       "id":"SAact143"
+	},
+	{
+       "type":"auto",
+       "name":"OPCサーバの隔離解除",
+       "systemstatecondition":["SAactS143"],
+       "from":"OPCサーバ",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-2/X15/INF/OFF","ZONE-2/X15/CON/OFF","ZONE-2/X15/ATK/OFF"],
+       "rerunstate":"rSAactS143",
+       "removestate":["SYSCON15","SAactS143"],
+       "id":"SAactS143"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON15,NOR(ZONE-2/X15/INF,ZONE-2/X15/CON,ZONE-2/X15/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr143",
+       "removestate":["rSAact143","rSAactS143"],
+       "id":"SAactr143"
+	},
+	{
+       "type":"auto",
+       "name":"count",
+       "systemstatecondition":["AND(SYSCON16,NOR(ZONE-1/X16/INF,ZONE-1/X16/CON,ZONE-1/X16/ATK))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAact144",
+       "removestate":["rSAactr144"],
+       "id":"SAact144"
+	},
+	{
+       "type":"auto",
+       "name":"PLCの隔離解除",
+       "systemstatecondition":["SAactS144"],
+       "from":"PLC",
+       "to":"サイバー攻撃者",
+       "attachments":["ZONE-1/X16/INF/OFF","ZONE-1/X16/CON/OFF","ZONE-1/X16/ATK/OFF"],
+       "rerunstate":"rSAactS144",
+       "removestate":["SYSCON16","SAactS144"],
+       "id":"SAactS144"
+	},
+	{
+       "type":"auto",
+       "systemstatecondition":["AND(start,NOT(AND(SYSCON16,NOR(ZONE-1/X16/INF,ZONE-1/X16/CON,ZONE-1/X16/ATK))))"],
+       "from":"system",
+       "to":"system",
+       "rerunstate":"rSAactr144",
+       "removestate":["rSAact144","rSAactS144"],
+       "id":"SAactr144"
 	},
 	{
        "type":"auto",
