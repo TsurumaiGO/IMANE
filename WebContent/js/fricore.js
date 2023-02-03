@@ -3246,20 +3246,24 @@ function onLoadEvent(data, showHidden){
 		_.each(cards, function(i){
 			var org=_.findWhere(FRICORE.states, {id:i});
 			var current=_.findWhere(FRICORE.availableStates, {id:i});
-			if(!current){
-				if(org){
-					FrICORE.trace('新しいステートカードを獲得:' + org.name);
-					FRICORE.availableStates.push(org);
-					if(org.type != 0){
-						//onSpecialState(org.type);
-					}
-					if(org.effect){
-						effects.push(org);
-					}
-				}else{
-					FrICORE.trace("不明なステートカード:" + i);
-				}
+			//TODO: 2023.2.3 重複している場合は順番を入れ替え
+			if(current){
+				FRICORE.availableStates = _.without(FRICORE.availableStates, current);
+				FrICORE.trace('重複するステートカードを獲得:' + org.name);
 			}
+			if(org){
+				FrICORE.trace('新しいステートカードを獲得:' + org.name);
+				FRICORE.availableStates.push(org);
+				if(org.type != 0){
+					//onSpecialState(org.type);
+				}
+				if(org.effect){
+					effects.push(org);
+				}
+			}else{
+				FrICORE.trace("不明なステートカード:" + i);
+			}
+			
 			if(!org){
 				org = {name:"不明なステートカード:"+i, id:i, description:"未定義のカードがイベントで通知されました。", type:0};
 			}
