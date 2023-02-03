@@ -85,14 +85,14 @@ advances
 Project maintainers are responsible for clarifying the standards of acceptable
 behavior and are expected to take appropriate and fair corrective action in
 response to any instances of unacceptable behavior.
-プロジェクトのメンテナーは、許容される振る舞いの標準を明確にする責務を負い、すべての許容されない振る舞いに対して適切で公正な適正化行動をとることを期待される。
+プロジェクトのメンテナーは、許容される振る舞いの標準を明確にする責務を負い、すべての許容されない振る舞いに対して適切で公正な適正化行動をとることを期待されます。
 
 Project maintainers have the right and responsibility to remove, edit, or
 reject comments, commits, code, wiki edits, issues, and other contributions
 that are not aligned to this Code of Conduct, or to ban temporarily or
 permanently any contributor for other behaviors that they deem inappropriate,
 threatening, offensive, or harmful.
-プロジェクトメンテナーは、この行動規範に反するコメント、コミット、コード、wiki編集、問題、その他の貢献の削除、編集、あるいは拒否し、あるいは他人に対して不適切、脅迫、攻撃的、有害と判断されたコントリビュータを一時的または恒久的に禁止する権利と責務を持つ。
+プロジェクトメンテナーは、この行動規範に反するコメント、コミット、コード、wiki編集、問題、その他の貢献の削除、編集、あるいは拒否し、あるいは他人に対して不適切、脅迫、攻撃的、有害と判断されたコントリビュータを一時的または恒久的に禁止する権利と責務を持ちます。
 
 ### Scope 範囲
 
@@ -102,7 +102,8 @@ representing a project or community include using an official project e-mail
 address, posting via an official social media account, or acting as an appointed
 representative at an online or offline event. Representation of a project may be
 further defined and clarified by project maintainers.
-この行動規範は、個人がプロジェクトまたはそのコミュニティに存在するとき、プロジェクトの内部と公的空間の両方に適用される。
+この行動規範は、個人がプロジェクトまたはそのコミュニティに存在するとき、プロジェクトの内部と公的空間の両方に適用されます。
+プロジェクトあるいはコミュニティを代表することの例として、公式プロジェクト電子メールアドレスを使用すること、公式ソーシャルメディアアカウントを通じて投稿すること、オンラインまたはオフラインイベントで任命された代表者として振舞うことが含まれます。プロジェクトの代表は、プロジェクトメンテナーによって詳細に定義され明確化されることがあります。
 
 ### Enforcement
 
@@ -112,10 +113,12 @@ complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
 Further details of specific enforcement policies may be posted separately.
+虐待的、嫌がらせ、その他許されない振る舞いはプロジェクトチームに連絡することで報告することができます。すべての苦情は確認・調査され、その状況に対して必要と思われる適切な対応が取られます。プロジェクトチームは問題の報告者に関する秘密を守る責任を負います。特定の執行ポリシーに関する詳細は別途投稿されることがあります。
 
 Project maintainers who do not follow or enforce the Code of Conduct in good
 faith may face temporary or permanent repercussions as determined by other
 members of the project's leadership.
+正しい信念のもとに行動規範に従わない、あるいは執行しないプロジェクトのメンテナーは、プロジェクトのリーダーシップのメンバによる判断により、一時的または恒久的な影響を受けることがあります。
 
 ### Attribution
 

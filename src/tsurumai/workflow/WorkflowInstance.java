@@ -513,7 +513,7 @@ public class WorkflowInstance {
 	protected boolean isSuspending(){
 
 		boolean ret = State.SUSPENDED.equals(this.state);
-		if(this.world.isPaused() != ret) {logger.error("内部状態が矛盾しています。", new WorkflowException("ワークフロー状態が矛盾"));}
+		if(this.world != null && this.world.isPaused() != ret) {logger.error("内部状態が矛盾しています。", new WorkflowException("ワークフロー状態が矛盾"));}
 
 		return ret;
 	}

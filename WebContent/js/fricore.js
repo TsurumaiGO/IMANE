@@ -53,6 +53,22 @@ var FrICORE = function(){
 		HIDDEN:0x10,
 		CONTROL:0x20
 	};
+	/*
+	this.markerMapping=[
+		{selector:".data-imane-status-normal",matcher:"(HEA)([0-9]+)", resetState:true},
+		{selector:".data-imane-status-vulnerable",matcher:"(VUL)([0-9]+)"},
+		{selector:".data-imane-status-compromised",matcher:"(ATK)([0-9]+)"},
+		{selector:".data-imane-status-infected",matcher:"(INF)([0-9]+)"},
+		{selector:".data-imane-status-quarantined",matcher:"(CON)([0-9]+)"}
+	]*/
+	this.markerLabel = {
+		HEA: "正常",
+		VUL: "脆弱性あり",
+		ATK: "乗っ取られている", 
+		INF: "感染している", 
+		CON: "隔離されている"
+	};
+
 };
 
 FrICORE.info = function(msg){
@@ -1375,6 +1391,12 @@ function updateWorkflowInfo(){
 	.fail(function(xhr){
 	});
 	
+	
+	//TODO:
+	refreshSystemView();
+	
+	
+	
 	if($('#facilitator-main').is(":visible") && FRICORE.isadmin && FRICORE.usersession){
 		//if($('#processlist-autoupdate:checked').length != 0){
 		if(!FRICORE.disabAutoRefresh){
@@ -1385,6 +1407,9 @@ function updateWorkflowInfo(){
 				updateWF();
 		}
 	}
+	
+	
+	//
 }
 /**
  * 通信エラーダイアログを表示
@@ -2368,6 +2393,8 @@ function doLogin(){
 
 		loadHistory();
 		monitor.lap('loadHistory');
+		
+		refreshSystemView();
 
 		if(FRICORE.isadmin){
 			getProcess({},true);
@@ -3209,6 +3236,7 @@ function onLoadEvent(data, showHidden){
 		}
 	}
 	var cards = [];
+	
 	if(data.action.attachments)	cards = _.union(cards, data.action.attachments);
 	if(data.reply && data.reply.state)	cards.push(data.reply.state);
 	if(data.action.statecards)	cards = _.union(cards,data.action.statecards);
@@ -3217,20 +3245,24 @@ function onLoadEvent(data, showHidden){
 		_.each(cards, function(i){
 			var org=_.findWhere(FRICORE.states, {id:i});
 			var current=_.findWhere(FRICORE.availableStates, {id:i});
-			if(!current){
-				if(org){
-					FrICORE.trace('新しいステートカードを獲得:' + org.name);
-					FRICORE.availableStates.push(org);
-					if(org.type != 0){
-						//onSpecialState(org.type);
-					}
-					if(org.effect){
-						effects.push(org);
-					}
-				}else{
-					FrICORE.trace("不明なステートカード:" + i);
-				}
+			//TODO: 2023.2.3 重複している場合は順番を入れ替え
+			if(current){
+				FRICORE.availableStates = _.without(FRICORE.availableStates, current);
+				FrICORE.trace('重複するステートカードを獲得:' + org.name);
 			}
+			if(org){
+				FrICORE.trace('新しいステートカードを獲得:' + org.name);
+				FRICORE.availableStates.push(org);
+				if(org.type != 0){
+					//onSpecialState(org.type);
+				}
+				if(org.effect){
+					effects.push(org);
+				}
+			}else{
+				FrICORE.trace("不明なステートカード:" + i);
+			}
+			
 			if(!org){
 				org = {name:"不明なステートカード:"+i, id:i, description:"未定義のカードがイベントで通知されました。", type:0};
 			}
@@ -3278,6 +3310,8 @@ function onLoadEvent(data, showHidden){
 			playEffect(e);
 		});
 	}
+	
+	refreshSystemView();
 }
 
 
@@ -4483,7 +4517,143 @@ function xhrToString(err){//TODO: coordinate console log
 }
 
 
+//experimental: システムビュー
+function showSystemView(){
+	var c = $("#systemview-container");
+	c.dialog({
+		position:{my:"right bottom", at:"right bottom"},
+		height: 600,width:800,
+	}).on("dialogresize",(e)=>{svgFitToContainer("#systemview-container svg");});
+	var s = $("#systemview-placeholder");
+	if(s.children("svg").length == 0){
+		s.load("systemview.svg", null,
+			(e)=>{svgFitToContainer("#systemview-container svg");refreshSystemView();});
+	}
+}
+function refreshSystemView(){
+	
+	//TODO: implement me.
+	//ユーザステートとシステムステートをスキャンし、FRICORE.markerMappingに定義されたセレクタとマッチする要素にスタイルを適用する
 
+	$("[data-imane-device]").removeClass("data-imane-status-quarantined").
+		removeClass("data-imane-status-infected").
+		removeClass("data-imane-status-compromised").
+		removeClass("data-imane-status-vulnerable").
+		removeClass("data-imane-status-normal");
+
+	//TODO: tooltipのイベントハンドラをリセット
+	$("#systemview-tooltip").text("");
+	$("[data-imane-device]").on("click", null);
+
+	
+	setDeviceMarker("data-imane-status-normal", "HEA");
+	setDeviceMarker("data-imane-status-vulnerable", "VUL");
+	setDeviceMarker("data-imane-status-compromised", "ATK");
+	setDeviceMarker("data-imane-status-infected", "INF");
+	setDeviceMarker("data-imane-status-quarantined", "CON");
+	
+
+/*//TODO: ユーザステートを反映	
+	var userStates = FRICORE.availableStates;
+	var history = FRICORE.events;
+	var attachedEvents = _.filter(FRICORE.events, (e)=>{return e.action.attachments != null;});
+	
+*/
+	
+}
+function setDeviceMarker(attr, exp){
+	
+	var isSystemState = $("#systemview-systemstate").is(":checked");
+	var keys = isSystemState ? 
+		Object.keys(FRICORE.workflowstate.systemState) : FRICORE.availableStates.map(e=>{return e.id;});
+
+	keys.forEach(e=>{
+		var s = parseDeviceStatus(e);
+		if(s.status != exp) return;
+		var ss = [s.zone,s.deviceid,s.status].join("/");
+		var elm = $("["+attr+"='"+ss+"']");
+		if(s.verb == "OFF"){
+			elm.removeClass(attr);
+			elm.on("click", null);
+		}else{
+			elm.addClass(attr);
+			elm.on("click", (e)=>{showDeviceStatusText(exp, e);});
+		}
+	})
+	/*
+	var target = _.filter(keys,(e)=>{return e.endsWith(exp)});
+	target.forEach((e)=>{
+		var elm = $("["+attr+"='"+e+"']");
+		elm.addClass(attr);
+		elm.on("click", (e)=>{showDeviceStatusText(exp, e);});
+
+   });
+   */
+
+}
+function parseDeviceStatus(str){
+	var buff = str.split("/");
+	var ret = {
+		zone:buff[0],
+		deviceid:buff[1],
+		status:buff[2],
+		verb:buff[3]
+	};
+	return ret;
+}
+
+function showDeviceStatusText(exp, evt){
+	var elm = $("#systemview-tooltip");
+	if(elm.is(":visible")){
+		elm.hide().text("");
+	}else{
+		var label = exp.replace("/","");
+		var txt = label ? FRICORE.markerLabel[label] : "異常あり";
+		elm.text(txt).css("left", evt.pageX).css("top", evt.pageY).css("z-index", 1000).show();
+	}
+}
+
+
+//TODO: implementing now...
+function groupStateCards(){
+	
+	var sys = _.filter(FRICORE.workflowstate.systemState, (e)=>{return /(\w+)\/(\w+)\/(\w+)/.exec(e)});
+	var usr = _.filter(FRICORE.availableStates,  (e)=>{});
+
+	var r = /(\w+)\/(\w+)\/(\w+)/.exec(s);
+	
+	
+	
+}
+
+
+
+function svgZoom(svgselector, ratio){
+/*	var s = $(svgselector)[0];
+	var w = $(svgselector).width();
+	var h = $(svgselector).height();
+	var scale = s.currentScale + ratio;
+	$(s).width(w*scale).height(h*scale);*/
+	var s = $(svgselector)[0];
+	s.currentScale = s.currentScale + ratio;
+}
+
+//SVG要素を縮小
+function svgZoomout(svgselector){
+	svgZoom(svgselector, -0.1)
+}
+//SVG要素を拡大
+function svgZoomin(svgselector){
+	svgZoom(svgselector, 0.1);
+}
+//SVG要素を親要素のサイズに合わせる
+function svgFitToContainer(svgselector){
+	var c = $(svgselector).parent();
+	var h = c.innerHeight() - 20;
+	var w = c.innerWidth();
+	$(svgselector)[0].setAttribute("currentScale", 1);
+	$(svgselector).width(w).height(h);
+}
 
 
 
