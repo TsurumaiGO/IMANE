@@ -36,6 +36,7 @@ final class Group{
 	public String icon = "";
 	public boolean isDefault = true;
 }
+
 @JsonIgnoreProperties({"comment","","//","#"})
 @XmlRootElement
 public class ScenarioData implements Cloneable{
@@ -68,6 +69,12 @@ public class ScenarioData implements Cloneable{
 	/**フェーズのリスト*/
 	@XmlElement
 	public PhaseData[] phases;	
+	
+	@XmlElement
+	public int NumberFW_I ;
+	public int NumberFW_0;
+	public int NumberVPN;
+	public int NumberREMOTEACCESS;
 	
 	
 	@XmlAttribute
@@ -253,7 +260,10 @@ public class ScenarioData implements Cloneable{
 		}
 		return newest;
 	}
+	
 }
+	
+
 	
 	
 	

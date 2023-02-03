@@ -180,6 +180,22 @@
        {"required": ["id","name"]}
       ]
     },
+    "NumberFW_I":{
+    "type":"integer",
+	"title": "internetと本社ゾーンの境界にあるFWの行列演算での要素番号を指定"
+	},
+	"NumberFW_0":{
+    "type":"integer",
+	"title": "本社ゾーンと事業所ゾーンの境界にあるFWの行列演算での要素番号を指定"	
+	},
+	"NumberVPN":{
+    "type":"integer",
+	"title": "VPNの行列演算での要素番号を指定"	
+	},
+	"NumberREMOTEACCESS":{
+    "type":"integer",
+	"title": "VPN接続を使用するリモートPCの行列演算での要素番号を指定"	
+	},   
 
     "features":{
       "type":"array",

@@ -115,16 +115,47 @@ class TriggerEvent{
 public class WorkflowInstance {
 	//追加：単位行列・接続行列の作成
 	public static int elem = 17 ;
+	
 	public static int[][] C = new int[elem][elem];
-	public static int[][] C0 =new int[elem][elem];
 	public static int[][] D = new int[elem][elem];
-	public static int[][] D_inf = new int[elem][elem];
-	public static int[][] B = new int[elem][elem];
-	public static int[][] eye = new int [elem][elem];
-	int fwI ;
-	int fw0 ;
-	int vpn ;
-	int ra ;
+	public static int[][] F = new int[elem][elem];
+	public static int[][] B = new int[elem][elem];    
+	public static int [][] C0 ={{1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				                {1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				                {1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+								{0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+								{0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+								{0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+								{0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+						        {0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+								{0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+								{0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+								{0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+								{0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0},
+								{0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0},
+								{0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1},
+								{0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1},
+								{0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1},
+								{0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1}};
+					
+	public static int [][] eye={{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			       				{0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							    {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							    {0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+							    {0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
+							    {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+							    {0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
+							    {0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
+							    {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
+							    {0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
+							    {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+							    {0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+							    {0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
+							    {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0},
+							    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
+							    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
+							    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}};
+	
 		
 	
 	public WorkflowInstance() {}
@@ -169,7 +200,7 @@ public class WorkflowInstance {
 				}else if(str[2].equals(VUL)){
 					B_calculate(asset_number,add);
 				}else if(str[2].equals(INF)){
-					D_inf_calculate(asset_number,add);
+					F_calculate(asset_number,add);
 				}
 		
 				//感染型の処理を追加
@@ -234,7 +265,7 @@ public class WorkflowInstance {
 					}else if(str[2].equals(VUL)){
 						B_calculate(asset_number,remove);
 					}else if(str[2].equals(INF)){
-						D_inf_calculate(asset_number,remove);
+						F_calculate(asset_number,remove);
 					}
 		
 					//感染型の処理を追加
@@ -395,260 +426,8 @@ public class WorkflowInstance {
 	/**フェーズを開始*/
 	public void start(int phase){
 		logger.info("start:" +this.toString());
-		
-		int i,j;
-		String state_elem;
-		
-		//行列を初期化
-		for(i=0; i < elem; i++){
-			for(j=0; j < elem; j++){
-				C[i][j] = 0;
-				C0[i][j] = 0;
-				D[i][j] = 0;
-				D_inf[i][j] = 0;
-				B[i][j] = 0;
-				eye[i][j] = 0;
-			}
-		}
-
-		//単位行列eye
-		for(i=0; i < elem; i++){
-			for(j=0; j < elem; j++){
-				if (i == j) {
-					eye[i][j] = 1;
-				}
-			}
-		}
-		
-
-		//接続行列C0の対角成分以外の接続を設定
-		C0[0][0] = 1;
-		C0[1][0] = 1;
-		C0[2][0] = 1;
-
-		C0[0][1] = 1;
-		C0[1][1] = 1;
-		C0[2][1] = 1;
-
-		C0[0][2] = 1;
-		C0[1][2] = 1;
-		C0[2][2] = 1;
-		C0[3][2] = 1;
-		C0[4][2] = 1;
-		C0[5][2] = 1;
-		C0[6][2] = 1;
-		C0[7][2] = 1;
-		C0[8][2] = 1;
-		C0[9][2] = 1;
-		C0[10][2] = 1;
-		
-		C0[2][3] = 1;
-		C0[3][3] = 1;
-		C0[4][3] = 1;
-		C0[5][3] = 1;
-		C0[6][3] = 1;
-		C0[7][3] = 1;
-		C0[8][3] = 1;
-		C0[9][3] = 1;
-		C0[10][3] = 1;
-
-		C0[2][4] = 1;
-		C0[3][4] = 1;
-		C0[4][4] = 1;
-		C0[5][4] = 1;
-		C0[6][4] = 1;
-		C0[7][4] = 1;
-		C0[8][4] = 1;
-		C0[9][4] = 1;
-		C0[10][4] = 1;
-
-		C0[2][5] = 1;
-		C0[3][5] = 1;
-		C0[4][5] = 1;
-		C0[5][5] = 1;
-		C0[6][5] = 1;
-		C0[7][5] = 1;
-		C0[8][5] = 1;
-		C0[9][5] = 1;
-		C0[10][5] = 1;
-
-		C0[2][6] = 1;
-		C0[3][6] = 1;
-		C0[4][6] = 1;
-		C0[5][6] = 1;
-		C0[6][6] = 1;
-		C0[7][6] = 1;
-		C0[8][6] = 1;
-		C0[9][6] = 1;
-		C0[10][6] = 1;
-
-		C0[2][7] = 1;
-		C0[3][7] = 1;
-		C0[4][7] = 1;
-		C0[5][7] = 1;
-		C0[6][7] = 1;
-		C0[7][7] = 1;
-		C0[8][7] = 1;
-		C0[9][7] = 1;
-		C0[10][7] = 1;
-
-		C0[2][8] = 1;
-		C0[3][8] = 1;
-		C0[4][8] = 1;
-		C0[5][8] = 1;
-		C0[6][8] = 1;
-		C0[7][8] = 1;
-		C0[8][8] = 1;
-		C0[9][8] = 1;
-		C0[10][8] = 1;
-
-		C0[2][9] = 1;
-		C0[3][9] = 1;
-		C0[4][9] = 1;
-		C0[5][9] = 1;
-		C0[6][9] = 1;
-		C0[7][9] = 1;
-		C0[8][9] = 1;      
-		C0[9][9] = 1;
-		C0[10][9] = 1;
-
-
-		C0[2][10] = 1;
-		C0[3][10] = 1;
-		C0[4][10] = 1;
-		C0[5][10] = 1;
-		C0[6][10] = 1;
-		C0[7][10] = 1;
-		C0[8][10] = 1;
-		C0[9][10] = 1;
-		C0[10][10] = 1;
-		C0[11][10] = 1;
-		C0[12][10] = 1;
-		C0[13][10] = 1;
-		C0[14][10] = 1;
-		C0[15][10] = 1;
-
-		C0[10][11] = 1;
-		C0[11][11] = 1;
-		C0[12][11] = 1;
-		C0[13][11] = 1;
-		C0[14][11] = 1;
-		C0[15][11] = 1;
-
-		C0[10][12] = 1;
-		C0[11][12] = 1;
-		C0[12][12] = 1;
-		C0[13][12] = 1;
-		C0[14][12] = 1;
-		C0[15][12] = 1;
-
-		C0[10][13] = 1;
-		C0[11][13] = 1;
-		C0[12][13] = 1;
-		C0[13][13] = 1;
-		C0[14][13] = 1;
-		C0[15][13] = 1;
-		C0[16][13] = 1;
-
-		C0[10][14] = 1;
-		C0[11][14] = 1;
-		C0[12][14] = 1;
-		C0[13][14] = 1;
-		C0[14][14] = 1;
-		C0[15][14] = 1;
-		C0[16][14] = 1;
-
-		C0[10][15] = 1;
-		C0[11][15] = 1;
-		C0[12][15] = 1;
-		C0[13][15] = 1;
-		C0[14][15] = 1;
-		C0[15][15] = 1;
-		C0[16][15] = 1;
-
-		C0[13][16] = 1;
-		C0[14][16] = 1;
-		C0[15][16] = 1;
-		C0[16][16] = 1;
-
-		//C0 = C　にする
-		for(i=0; i < elem; i++){
-			for(j=0; j < elem; j++){
-				C[i][j] = C0[i][j];
-			}
-		}
-
-		D[0][0] = 1;
-		B[0][0] = 1;
-
-		fwI = 2;
-		fw0 = 10;
-		vpn = 3;
-		ra = 2;
-		/*
-		try {
-			//internetからの通信を通すfwの位置を設定	
-			state_elem = "FW_INTERNET/";
-			String state_FW = StateData.getStateID(state_elem);
-			if(state_FW != null){
-				String[] str = state_FW.split("/");
-				fwI = Integer.parseInt(str[1].substring(str[1].length()-2),10);
-				logger.info("FW_INTERNETの位置を" + fwI + "に設定しました。");
-			}
-		}catch(Throwable t) {
-			logger.error("FW_INTERNETの位置が解析出来ませんでした。",t);
-		}
-		
-		try {
-			//internetからの通信を通さないfwの位置を設定	
-			state_elem = "FW_0/";
-			String state_FW0 = StateData.getStateID(state_elem);
-			if(state_FW0 != null){
-				String[] str = state_FW0.split("/");
-				fw0 = Integer.parseInt(str[1].substring(str[1].length()-2),10);
-				logger.info("FW_INTERNETの位置を" + fw0 + "に設定しました。");
-			}
-		}catch(Throwable t) {
-			logger.error("FW_INTERNETの位置が解析出来ませんでした。",t);
-		}
-
-		try {		
-			//vpnの位置を設定
-			state_elem = "VPN/";
-			String state_VPN = StateData.getStateID(state_elem);
-			if(state_VPN != null){
-				String[] str = state_VPN.split("/");
-				vpn = Integer.parseInt(str[1].substring(str[1].length()-2),10);
-				logger.info("VPNの位置を" + vpn + "に設定しました。");
-			}
-		}catch(Throwable t) {
-			logger.error("VPNの位置が解析出来ませんでした。",t);
-		}
-		
-		try {	
-			//remoteaccessの位置を設定
-			state_elem = "REMOTEACCESS/";
-			String state_REMOTEACCESS = StateData.getStateID(state_elem);
-			if(state_REMOTEACCESS != null){
-				String[] str = state_REMOTEACCESS.split("/");
-				ra = Integer.parseInt(str[1].substring(str[1].length()-2),10);
-				logger.info("REMOTEACCESSの位置を" + ra + "に設定しました。");
-			}
-		}catch(Throwable t) {
-			logger.error("REMOTEACCESSの位置が解析出来ませんでした。",t);
-		}
-		*/
 				
-		//確認のため出力
-		System.out.print("C["+"\r\n");
-		for(i=0; i < elem; i++){
-			for(j=0; j < elem; j++){
-				System.out.print( C[i][j] + ",");
-			}
-			System.out.print("\r\n");
-		}
-		System.out.print("]" + "\r\n");    
-
+		matrix_init();
 		
 		this.clearAutoActionTimers();
 		this.state = State.STARTED;
@@ -1133,9 +912,8 @@ public class WorkflowInstance {
 	                		}else{
 	                			b = a ;
 	                			count = -1;
-	                			}
-	                		}
-	                	else if(aP1[a] > aP2[b]){
+	                		}	                	
+	                	}else if(aP1[a] > aP2[b]){
 	                		if(count != 0){
 	                			b = b + count -1;
 	                			count = 0;
@@ -1164,7 +942,7 @@ public class WorkflowInstance {
                 str0 = str0.substring(aP0[0]+1);
                 buf.add(str1);
 
-        		}
+        	}
             
             //whileの処理の一番最後にp0の値を更新            
             if (str0 != null){
@@ -1193,9 +971,9 @@ public class WorkflowInstance {
 	    str0=str0.toUpperCase(); //すべて大文字に変換する
 	    
 	    int P1=str0.indexOf("(");
-	    logic=str0.substring(0,P1-1);
+	    logic=str0.substring(0,P1);
 	    int P2=str0.lastIndexOf(")");
-	    str0=str0.substring(P1+1,P2-1);
+	    str0=str0.substring(P1+1,P2);
 	    
 	    buf=SplitElm(str0);
 	
@@ -2435,51 +2213,73 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		System.out.print("]" + "\r\n");
 	}
 
-	//D_inf行列の要素を変える関数　2022/12/20
-	public void D_inf_calculate(int asset_number, String change){
+	//F行列の要素を変える関数　2022/12/20
+	public void F_calculate(int asset_number, String change){
 		int i,j;
 		String add = "add";
 		String remove = "remove";
 		int as = asset_number;
 
 		if(change.equals(add)){
-			D_inf[as][as] = 1;
+			F[as][as] = 1;
 		}else if(change.equals(remove)){
-			D_inf[as][as] = 0;
+			F[as][as] = 0;
 		}
 
-		//結果確認(陥落行列D_inf)
-		System.out.print("D_inf["+"\r\n");
+		//結果確認(陥落行列F)
+		System.out.print("F["+"\r\n");
 		for(i=0; i < elem; i++){
 			for(j=0; j < elem; j++){
-				System.out.print( D_inf[i][j] + ",");
+				System.out.print( F[i][j] + ",");
 			}
 			System.out.print("\r\n");
 		}
 		System.out.print("]" + "\r\n");
 	}
 	
-	//感染拡大の計算(B,C,D_infの行列の要素が変化する度に計算)　2022/12/20
+	//感染拡大の計算(B,C,Fの行列の要素が変化する度に計算)　2022/12/20
 	public void INF_calculate(){
 		int i,j,k,n;
 		String state_elem ;
-		int[][] v = new int[elem][1];
+		int[][] u = new int[elem][1];
 		int[][] r = new int[elem][1];
 		int[][] RE = new int[elem][elem];
 		int[][] R = new int[elem][elem];
 		int[][] R0 = new int[elem][elem];
 		int[][] R1 = new int[elem][elem];
 
+		ScenarioData d = getActiveScenario();
+		int vpn = d.NumberVPN;
+		int ra = d.NumberREMOTEACCESS;
+		
 		for(i=0; i<elem ; i++){
-			v[i][0] = 1 ;
+			u[i][0] = 1 ;
 		}
-		//2022.01.26　リモートPCが感染しても被害が広がらない問題:今のところデータの作り方で対処
+		
+		//raの状態を行ベクトルと列ベクトルで保存する
+		int[][] VR = new int[elem][1];
+		int[][] VC = new int[1][elem];
 
-		//R0,R = (B+D_inf)*C
+		//raの接続状態を保存
+		for(i=0; i < elem; i++){
+			VR[i][0] = C[i][ra];
+			VC[0][i] = C[ra][i];
+		}
+				
+		//vpn及びraが隔離されていないとき、計算中は一時的にraをvpnと同じ接続状態にする
+		if(C[ra][ra] != 0 && C[vpn][vpn] != 0) {
+			for(i=0; i < elem; i++){
+				C[i][ra] = C[i][vpn];
+				C[ra][i] = C[vpn][i];
+			}
+			C[ra][ra] = 1;
+		}
+		
+		//R0,R = (B+F)*C
 		for(i=0; i < elem; i++){
 			for(j=0; j < elem; j++){
 				for(k=0; k < elem; k++){
-					R0[i][j] += (B[i][k]+D_inf[i][k] )* C[k][j];
+					R0[i][j] += (B[i][k]+F[i][k] )* C[k][j];
 				}
 				R[i][j] = R0[i][j];
 			}
@@ -2512,35 +2312,47 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 			for(j=0; j < elem; j++){
 				for(k=0; k < elem; k++){
 					if(k==0){
-						R1[i][j] = R[i][k] * D_inf[k][j];
+						R1[i][j] = R[i][k] * F[k][j];
 					}else{        
-						R1[i][j] += R[i][k] * D_inf[k][j];
+						R1[i][j] += R[i][k] * F[k][j];
 					}
 				}
 			}
 		}
 		
-		//R=R1*vベクトル
+		//R=R1*uベクトル
 		for(i=0; i < elem; i++){
 			for(k=0; k < elem; k++){
 				if(k==0){
-					r[i][0] = R1[i][k]* v[k][0];
+					r[i][0] = R1[i][k]* u[k][0];
 				}else{
-					r[i][0] += R1[i][k]* v[k][0];
+					r[i][0] += R1[i][k]* u[k][0];
 				}      
 			}
 		}
+		
+		//raの接続状態を元の状態に戻す
+		for(i=0; i < elem; i++){
+			C[i][ra]= VR[i][0];
+			C[ra][i] = VC[0][i];
+		}
+		
 
 		//攻撃対象が攻撃可能かを判定する
 		for(i=1; i<elem; i++){
 			//新しく感染した機器をステート追加
-			if (r[i][0]!=0 && D_inf[i][i]==0){
+			if (r[i][0]!=0 && F[i][i]==0){
 				state_elem = String.format("%02d",i) + "/INF";
 				String INF_state = StateData.getStateID(state_elem);
-				if(INF_state == null){
-					logger.warn("存在しないINFステートを追加しようとしました。" + state.toString());
-				}				
-				addState(INF_state,  new Date(), "ikura");
+				
+				StateData s = StateData.getStateData(INF_state);
+				if(s == null){
+					logger.warn("存在しないシステムステートを追加しようとしました。" + INF_state.toString());
+					s = new StateData(INF_state);
+				}
+				logger.info("システムステートを追加します。" + s.toString());
+				systemState.put(INF_state, new Date());
+				onAddState(INF_state, "ikura");
 			}
 		}
 	}
@@ -2557,6 +2369,12 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		int[][] BR = new int[elem][elem];
 		u[from][0] = 1 ;
 		v[0][to] = 1 ;
+		
+		ScenarioData d = getActiveScenario();
+		int fwI = d.NumberFW_I ;
+		int fw0 = d.NumberFW_0;
+		int vpn = d.NumberVPN;
+		int ra = d.NumberREMOTEACCESS;
 		
 		int fwI_diag;
 		int vpn_diag;
@@ -2674,6 +2492,40 @@ protected boolean evaluateStateCondition(final String cond[], final Operator def
 		}else{
 			return true;
 		}
+	}
+	
+	public void matrix_init(){
+		int i,j;
+
+		//行列を初期化
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				C[i][j] = 0;
+				D[i][j] = 0;
+				F[i][j] = 0;
+				B[i][j] = 0;
+			}
+		}
+
+		//C0 = C　にする
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				C[i][j] = C0[i][j];
+			}
+		}
+
+		D[0][0] = 1;
+		B[0][0] = 1;
+				
+		//確認のため出力
+		System.out.print("C["+"\r\n");
+		for(i=0; i < elem; i++){
+			for(j=0; j < elem; j++){
+				System.out.print( C[i][j] + ",");
+			}
+			System.out.print("\r\n");
+		}
+		System.out.print("]" + "\r\n");    
 	}
 	
 }

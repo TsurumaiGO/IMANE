@@ -6,5 +6,9 @@
 	"teams": [{"id":"test.example.com", "name":"test.example.com"}],
 	"groups": [
 		{"id":"red", "name":"red", "icon":"redteam", "isDefault":false},
-		{"id":"blue", "name":"blue", "icon":"blueteam", "isDefault":true}]
+		{"id":"blue", "name":"blue", "icon":"blueteam", "isDefault":true}],
+	"NumberFW_I":2,
+	"NumberFW_0":10,
+	"NumberVPN":3,
+	"NumberREMOTEACCESS":1
 }
