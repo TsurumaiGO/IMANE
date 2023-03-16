@@ -1,5 +1,5 @@
 package tsurumai.workflow.model;
-
+ 
 import java.beans.Transient;
 import java.io.File;
 import java.io.IOException;
