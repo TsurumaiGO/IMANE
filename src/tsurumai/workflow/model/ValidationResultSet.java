@@ -53,6 +53,7 @@ public class ValidationResultSet extends ArrayList<ValidationResult>{
 	 * @parma dir シナリオ格納先ディレクトリの相対パス
 	 * */
 	public static ValidationResultSet validateScenarioSet(String name) {
+		//TODO: この処理でシナリオデータのパスが一時的に変更されるため、複数のシナリオセットがインストールされているとタイミングによってデータが不正に書き換えられる。
 		
 		final String dir = Path.of(name).isAbsolute() ? name : WorkflowService.getContextRelativePath("data") + File.separator + name;
 		

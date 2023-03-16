@@ -379,8 +379,10 @@ public class ReplyData{
 	}
 	public static void reload(final String file) throws WorkflowException {
 		try {
-			cache.reload(targetFile=file);
+			if(!file.equals(targetFile))
+				logger.warn(String.format("リプライデータのパスが変更されました。%s >%s", targetFile, file));
 			
+			cache.reload(targetFile=file);
 			String contents1 = Util.readAll(file);
 			Map<Integer, Collection<ReplyData>> r1=mapReplyData(new JSONObject(contents1));
 	

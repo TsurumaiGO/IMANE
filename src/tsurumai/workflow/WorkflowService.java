@@ -672,14 +672,16 @@ public class WorkflowService extends Application implements ServletContextListen
 				
 				//TODO: 恐らくデフォルトシナリオが正しく処理されていない
 				String dir = context.getRealPath("data") + ("_default_".equals(k) ? "" : (File.separator + k));
-				
-				ValidationResultSet validationResult = validateScenarioSet(dir);
+				//TODO:シナリオデータが巨大になるとタイミングによってデータの矛盾が発生する問題への対策
+				ValidationResultSet validationResult = null;
+				if("true".equals(System.getProperty("fricore.enableScenarioValidation","false")))
+					validationResult = validateScenarioSet(dir);
 				
 				//TODO: シナリオが同名の場合に上書きされてアクティブなシナリオがなくなる場合がある
 				cur.validationResult = validationResult;
 				cur.active = k.equals(activeScenario);
 //				ret.put(name, cur);
-				ret.put(k, cur);//TODO: こうか？？
+				ret.put(k, cur);
 			}));
 			
 
