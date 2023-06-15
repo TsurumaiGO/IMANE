@@ -110,7 +110,7 @@ public class ServiceLogger {
 //		logger.debug(header + message);
 //	}
 
-	public static String getCaller() {
+	public  String getCaller() {
 		StackTraceElement[] st = new Throwable().getStackTrace();
 		for(int i = 0; i < st.length; i ++) {
 			if(st[i].getClassName().equals(Util.class.getName()) || 
@@ -138,20 +138,23 @@ public class ServiceLogger {
 		getLogger().info(str);
 	}
 	public void debug(String msg, Object...params) {
+		if(!logger.isDebugEnabled()) return;//性能改善
 		String paramstr = Util.join(params, ",");
 		getLogger().debug("(" + paramstr + ") : " + msg);
 	}
 	public void debug(String msg) {
+		if(!logger.isDebugEnabled()) return;//性能改善
 		logger.debug(tm.format(new Date()) + ": " + getCaller() + msg);
 	}
 
 	public void trace(String msg, Object...params) {
-
+		if(!logger.isTraceEnabled()) return;//性能改善
 		String paramstr = Util.join(params, ",");
 		logger.info(tm.format(new Date()) + ": " + getCaller() + "(" + paramstr + ") : " + msg);
 	}
 	
 	public void trace(String msg) {
+		if(!logger.isTraceEnabled()) return;//性能改善
 		trace(msg, new Object[0]);
 	}
 	public void warn(String msg) {

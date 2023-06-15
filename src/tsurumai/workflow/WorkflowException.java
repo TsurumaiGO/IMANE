@@ -32,7 +32,7 @@ class ScenarioException extends WorkflowException{
 		super(message, HttpServletResponse.SC_BAD_REQUEST, t);
 		this.jsonfile = jsonfile;
 		if(t instanceof JsonParseException){
-			//TODO:
+
 		}else if(t instanceof JsonProcessingException){
 
 		}else if(t instanceof JsonMappingException){

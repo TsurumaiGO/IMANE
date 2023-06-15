@@ -1310,7 +1310,7 @@ function updateWorkflowInfoCallback(){
 };
 /**
  * 秒数を日:時:分:秒に書式化
- * TODO:時の処理にバグがある*/
+ * */
 function formatSeconds(sec){
 
 	if(!sec)	return "";
@@ -1391,11 +1391,7 @@ function updateWorkflowInfo(){
 	.fail(function(xhr){
 	});
 	
-	
-	//TODO:
 	refreshSystemView();
-	
-	
 	
 	if($('#facilitator-main').is(":visible") && FRICORE.isadmin && FRICORE.usersession){
 		//if($('#processlist-autoupdate:checked').length != 0){
@@ -1407,9 +1403,6 @@ function updateWorkflowInfo(){
 				updateWF();
 		}
 	}
-	
-	
-	//
 }
 /**
  * 通信エラーダイアログを表示
@@ -2271,10 +2264,8 @@ function doTrim(exec){
 
 //ログイン前の初期化処理
 function preinit(){
-	//TODO
 	loadCards();
 	onIDchanged();
-	
 }
 //ログイン後の初期化処理
 function init(){
@@ -2561,7 +2552,6 @@ function isFacilitator(){
 
 
 /**汎用:日時を書式化
- * TODO:オフセット、加速 
  */
 function formatDate(insec){
 	if(!insec) return "";
@@ -2741,7 +2731,6 @@ function getProcess(params, select){
 					rr.find(selector).prop('checked',true).trigger('change');
 				}
 				
-				//TODO: 現在時刻を表示
 				adjustProcessList($(rr), summary);
 				
 			}
@@ -3245,7 +3234,6 @@ function onLoadEvent(data, showHidden){
 		_.each(cards, function(i){
 			var org=_.findWhere(FRICORE.states, {id:i});
 			var current=_.findWhere(FRICORE.availableStates, {id:i});
-			//TODO: 2023.2.3 重複している場合は順番を入れ替え
 			if(current){
 				FRICORE.availableStates = _.without(FRICORE.availableStates, current);
 				FrICORE.trace('重複するステートカードを獲得:' + org.name);
@@ -3604,7 +3592,7 @@ function renderPresence(presence){
 	FRICORE.presence.member.forEach(function(c){
 		var self = c.email == FRICORE.usersession.username;
 		var online = c.online;
-		var system = c.system;//TODO:
+		var system = c.system;
 		var t = _.template($("#presence-template").html(), c);
 		var m = $(t).data('card', c).on('click', function(e){
 			onCardClicked(e);
@@ -4070,7 +4058,6 @@ function processWFHistory(resp, renderDiagram){
 		var pointkeys = _.keys(wf.pointchest);
 		_.each(pointkeys, function(k){
 			if(k==data.id){
-				var dummy=0;//TODO:概要をリロードしないといけない
 				var pointdata = wf.pointchest[data.id];//array
 				_.each(pointdata, function(p){
 					var pe = _.template("<span class='card list-card list-card-point' title='<%=description%>'><%=name%>: <%=point%>点</span>", p);
@@ -4492,8 +4479,7 @@ function digestText(txt){
 	return t;
 	
 }
-function xhrToString(err){//TODO: coordinate console log
-//	if(err instanceof XMLHttpRequest){ << dont work correctly(:<)
+function xhrToString(err){
 	if(!err)
 		return "";
 	else if(err instanceof String)
@@ -4532,7 +4518,6 @@ function showSystemView(){
 }
 function refreshSystemView(){
 	
-	//TODO: implement me.
 	//ユーザステートとシステムステートをスキャンし、FRICORE.markerMappingに定義されたセレクタとマッチする要素にスタイルを適用する
 
 	$("[data-imane-device]").removeClass("data-imane-status-quarantined").
@@ -4541,7 +4526,7 @@ function refreshSystemView(){
 		removeClass("data-imane-status-vulnerable").
 		removeClass("data-imane-status-normal");
 
-	//TODO: tooltipのイベントハンドラをリセット
+	//tooltipのイベントハンドラをリセット
 	$("#systemview-tooltip").text("");
 	$("[data-imane-device]").on("click", null);
 

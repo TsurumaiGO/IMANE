@@ -1,2 +1,36 @@
 {
+    "json.schemas": [
+        {
+            "fileMatch": ["actions.json"],
+            "url": "/WebContent/schema/actions.json"
+        },
+        {
+            "fileMatch": ["contacts.json"],
+            "url": "/WebContent/schema/contacts.json"
+        },
+        {
+            "fileMatch": ["points.json"],
+            "url": "/WebContent/schema/points.json"
+        },
+        {
+            "fileMatch": ["product.json"],
+            "url": "/WebContent/schema/product.json"
+        },
+        {
+            "fileMatch": ["replies.json"],
+            "url": "/WebContent/schema/replies.json"
+        },
+        {
+            "fileMatch": ["setting.json"],
+            "url": "/WebContent/schema/setting.json"
+        },
+        {
+            "fileMatch": ["states.json"],
+            "url": "/WebContent/schema/states.json"
+        },
+        {
+            "fileMatch": ["actions.json"],
+            "url": "/WebContent/schema/actions.json"
+        },
+    ]
 }
