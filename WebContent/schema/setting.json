@@ -180,6 +180,9 @@
        {"required": ["id","name"]}
       ]
     },
+    "validators": {"type":"array","description": "攻撃判定モジュールのクラス名(複数可)を指定します。攻撃判定モジュールは、tsurumai.workflow.AttackEvaluatorを実装したクラスをクラスパスに配置したうえで、ここにクラス名を記述することで有効になります。"},
+    "params":{"type":"object","description": "シナリオ固有の任意のパラメータ(キー・値のセット)を指定します。"},
+
     "NumberFW_I":{
     "type":"integer",
 	"title": "internetと本社ゾーンの境界にあるFWの行列演算での要素番号を指定"

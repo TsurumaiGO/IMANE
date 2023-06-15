@@ -89,7 +89,7 @@ public class Scheduler {
 	}
 	/**スケジュールタスクを登録する。*/
 	public Scheduler register(Task task) {
-		//TODO: ここで実行済み回数をリセットしなければならない？
+
 		if(taskPool.contains(task)) {
 			logger.debug("スケジュールタスクは登録済:" + task.toString());
 			return this;

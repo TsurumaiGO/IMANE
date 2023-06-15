@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +36,9 @@ import javax.xml.bind.DatatypeConverter;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import tsurumai.workflow.WorkflowInstance;
 import tsurumai.workflow.WorkflowService;
+import tsurumai.workflow.model.ReplyData;
 
 public class Util {
 	/**配列から要素を探して添字を返す。見つからなければ-1を返す。評価はequalsで行う。elementはnullでも良い。arrayはnull*/

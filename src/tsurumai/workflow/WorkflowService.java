@@ -173,14 +173,10 @@ public class WorkflowService extends Application implements ServletContextListen
 		PointCard.reload(dir + File.separator + "points.json");
 		//validateScenarioSet();
 		activeScenario = relname == null ? "_default_" : relname;
+		ScenarioData.activateScenario(activeScenario);
 		initializeProcesses();
 
 	}
-//	public PhaseData getActiveScenario() {
-//		List<PhaseData> p = PhaseData.loadAll();
-////TODO:
-//		return null;
-//	}
 
 	/**ユーザIDに対応するセションデータを取得する*/
 	public static SessionData getSessionByUserId(final String userId){

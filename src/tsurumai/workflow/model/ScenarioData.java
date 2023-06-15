@@ -37,7 +37,7 @@ final class Group{
 	public boolean isDefault = true;
 }
 
-@JsonIgnoreProperties({"comment","","//","#"})
+@JsonIgnoreProperties(value={"comment","","//","#"}, ignoreUnknown=true)
 @XmlRootElement
 public class ScenarioData implements Cloneable{
 	/**シナリオデータの著作権情報。*/
@@ -70,13 +70,16 @@ public class ScenarioData implements Cloneable{
 	@XmlElement
 	public PhaseData[] phases;	
 	
+	protected String path;
+	
+//	@XmlElement
+//	public int NumberFW_I ;
+//	public int NumberFW_0;
+//	public int NumberVPN;
+//	public int NumberREMOTEACCESS;
+	
 	@XmlElement
-	public int NumberFW_I ;
-	public int NumberFW_0;
-	public int NumberVPN;
-	public int NumberREMOTEACCESS;
-	
-	
+	public String[] evaluators;
 	@XmlAttribute
 	@JsonProperty("invisible-action")
 	public String[] invisibleAction;
@@ -88,11 +91,34 @@ public class ScenarioData implements Cloneable{
 	/**デフォルトのシナリオ(シナリオ格納ディレクトリ直下にシナリオデータがある)ならtrue*/
 	@XmlAttribute
 	public boolean isDefault = false;
-	
-	
+	/**シナリオ固有の拡張プロパティ*/
+	@XmlAttribute
+	public Hashtable<String, Object> params;
+
 	/**このシナリオがアクティブな場合はtrue。実行時のみ有効。*/
 	@XmlAttribute
 	public boolean active = false;
+	public static String activeScenario = "_default_";
+	public static String getActiveScenarioName() {return activeScenario;}
+	public static ScenarioData getActiveScenario() {
+		Hashtable<String, ScenarioData> scenarios = ScenarioData.loadAll(false);
+		return scenarios.get(activeScenario);
+	}
+	public static void activateScenario(final String scenarioName) {
+		Hashtable<String, ScenarioData> scenarios = ScenarioData.loadAll(false);
+		scenarios.keys().asIterator().forEachRemaining((k->{
+			ScenarioData cur = scenarios.get(k);
+			if(cur == null) throw new WorkflowException("シナリオデータが見つかりません。"+scenarioName, new Throwable());
+			if(k.equals(scenarioName)) {
+				cur.active = true;
+				activeScenario = scenarioName;
+				logger.info("シナリオデータがアクティブ化されました。"+scenarioName);
+			}else {
+				cur.active = false;
+			}
+		}));
+	}
+	
 	
 	/**このシナリオの検証結果*/
 	@XmlAttribute
@@ -199,6 +225,8 @@ public class ScenarioData implements Cloneable{
 		ScenarioData dat =  loadData(pathname);
 		ScenarioData def =  loadData("sys");
 		ScenarioData ret =  dat.override(def);
+		ret.path = pathname+ File.separator + "setting.json";
+
 		return ret;
 		
 	}
@@ -260,7 +288,6 @@ public class ScenarioData implements Cloneable{
 		}
 		return newest;
 	}
-	
 }
 	
 

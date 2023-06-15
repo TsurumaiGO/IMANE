@@ -72,7 +72,6 @@ public class World {
 	//@JsonSerialize(as = Date.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
 	//TODO: jaxrs-ri-2.24ではJsonFormatは無視され、不正な(パースできない)フォーマットの文字列が返される。
-	//というかjacksonが呼ばれていないのか。
 	/**ワールドの現在時刻を返す
 	 * 初期化されていない場合は基準時刻(Date.setTime(0))を返す
 	 * */
