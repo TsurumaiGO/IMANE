@@ -931,6 +931,19 @@ input[type="range"] {
 
 
 
-
-
+#sequence-role-filter{
+	max-height: 10em;
+	overflow-y: scroll;
+	list-style-type: none;
+}
+#sequence-role-filter>li{
+	cursor: hand;
+	clear: both;
+}
+#sequence-role-filter>li:hover{
+	background-color: highlight;
+}
+#sequence-role-filter>li>button{
+	
+}
 

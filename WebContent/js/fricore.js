@@ -792,32 +792,45 @@ function expandViewBox(rect){
  * showWFHistoryから呼ばれる*/
 function drawDiagram(arr, data){
 
-	showFilter();
+//	showFilter();
 	var header ="";
 	var phase = FRICORE.workflowstate ? FRICORE.workflowstate.phase : '未開始';
 	var team = $("teampicker").val() || FRICORE.usersession.team;
 	var score = FRICORE.workflowstate ? FRICORE.workflowstate.score : '';
 	var hideInactive = $('#hide-inactive').prop('checked');
-	var pt = ["participant システム"];
+	var pt = [];
 
 	FRICORE.sequence = {};
 	FRICORE.sequence.team = team;
 	FRICORE.sequence.roles = pt;
 	FRICORE.sequence.events = data;
 	
-		var roles = {};
+	if(!FRICORE.sortedRoles){
+		var roles = [];
+		var defaultRoles = [{role:"system",rolename:"システム", order:1},
+			{role:"others",rolename:"その他", order:2},
+			{role:"all",rolename:"チーム全員", order:3}	];
+		
+		
 		if(!FRICORE.setting["roles-order"]){
 			roles = FRICORE.members;
 		}else{
 			roles = _.sortBy(FRICORE.setting["roles-order"], "order");
 		}
+		FRICORE.sortedRoles = _.union(defaultRoles, roles);
 		
-		_.each(_.sortBy(roles, "order"), function(e){
-			
-			var role=_.find(FRICORE.members, function(ee){
-				return ee.role == e.role;
-			});
-			if(role){
+		
+	}
+	showFilter();
+	var pt = [];
+	
+		
+		_.each(FRICORE.sortedRoles, function(e){
+			var role = e;		
+//			var role=_.find(FRICORE.members, function(ee){
+//				return ee.role == e.role;
+//			});
+//			if(role){
 				//フィルタで無効化されていたらスキップ
 				var hidden = !validateRoleFilter(role.role);
 				//やりとりがなかったらスキップ。
@@ -832,16 +845,23 @@ function drawDiagram(arr, data){
 				if(!hidden && (exists || !hideInactive)){
 					pt.push("participant " + escape4vga(role.rolename));
 				}else{
+					//その他は常に表示
+					if(role.role == "others" && !hidden){
+						pt.push("participant " + escape4vga(role.rolename));
+					}
 					FrICORE.trace("participant " + role.rolename +" skipped.");
 				}
-			}else
-				FrICORE.info("warn: role not found: " + e);
+//			}else
+//				FrICORE.info("warn: role not found: " + e);
 		});
 		
 		header = "sequenceDiagram\n" + pt.join("\n");
 
 		var s = arr;
 		var str = s.join("\n");
+	
+		//TODO: ここで「その他」を挿げ替える
+	
 	
 		if(pt && pt.length >= 2){
 			str =str.replace(/<PH_FROM>/g,pt[0].replace("participant ", "")).replace(/<PH_TO>/g,pt[1].replace("participant ", ""));
@@ -1032,7 +1052,7 @@ $(function(){
 	
 	//UI部品初期化
 	$('.picker').button({icons:{primary:'ui-icon-circle-plus'}});
-	$('select').select2({
+	$('select').not('.noselect2').select2({
 	  placeholder: '選択してください。',
 	  containerCssClass:'select2-custom'
 	});
@@ -3882,7 +3902,11 @@ function summerizeDiagramLine(data){
 function makeDiagramLine(hist){
 	var toIsVisible = validateRoleFilter(hist.to.role) ;
 	var fromIsVisible = validateRoleFilter(hist.from.role);
-	if(!toIsVisible || !fromIsVisible){
+	
+	
+	//TODO: to/fromどちらも不可視なら非表示
+	//if(!toIsVisible || !fromIsVisible){
+	if(!toIsVisible && !fromIsVisible){
 		try{
 			FrICORE.trace("イベント表示がフィルタされました。" + hist.from.role + "->"+hist.to.role);
 		}catch(t){}
@@ -3916,6 +3940,14 @@ function makeDiagramLine(hist){
 				_.template('Note over <%=from%>,<%=to%>: <%=sentDate%> <%=action%>:<%=message%> <br/><%=inf%>', data);
 		seq.push(str);
 	}else{
+		
+		//TODO: to/fromどちらかが不可視なら「その他」に移動
+		if(!toIsVisible){
+			data.to = "その他";		
+		}else if(!fromIsVisible){
+			data.from = "その他";	
+		}
+		
 		var str = online ? 
 				_.template('<%=from%>->><%=to%>:{"date":"<%=sentDate%>","message":"<%=action%>","title":"<%=message%><wbr/><%=inf%>","statecards":"<%=statecards%>","pointcards":"<%=pointcards%>","id":"<%=id%>"}', data) : 
 				_.template('<%=from%>->><%=to%>:<%=sentDate%> <%=action%>:<%=message%> <br/><%=inf%>', data);
@@ -3935,17 +3967,40 @@ function makeDiagramLine(hist){
  シーケンス図のフィルタ設定を初期化して表示/非表示を切り替えます。
  */
  function showFilter(){
-	var members = FRICORE.members;
+	//var members = FRICORE.members;
+	var members = FRICORE.sortedRoles;
 	var container = $('#sequence-filter');
-	var roles = _.union([{role:"all",rolename:"チーム全員"}/*,{role:"system",rolename:"システム"}*/],members);
+	
+	//2023.6.23 システムロールの非表示を許可
+	var roles = members;//_.union([{role:"all",rolename:"チーム全員"},{role:"system",rolename:"システム"},{role:"others", rolename:"その他"}],members);
+	
+	
+	var list = $('#sequence-role-filter').children("li");
+	if(list.length > 0)
+		return;
+	
 	
 	_.each(roles, function(m){
 		if($("#filter-role-"+m.role).length != 0) return;
-		var tmpl = "<span class='filter-item'><label for = 'filter-role-<%=role%>'><%=rolename%></label><input type='checkbox' id='filter-role-<%=role%>' checked /></span>";
-		var cb = $(_.template(tmpl, m));
+		//var tmpl = "<span class='filter-item'><input type='checkbox' id='filter-role-<%=role%>' checked /><label for = 'filter-role-<%=role%>'><%=rolename%></label></span>";
+		var tmpl = $("#sequence-roles-filter-item").html();
+		var item = _.template(tmpl, m);
+		var cb = $(item);
 		$('#sequence-role-filter').append(cb);
-		var cls = isSystemUser(m, 0) ? "member-system" : "member-manual member-online";
-		cb.next("span").addClass(cls);
+		//var cls = isSystemUser(m, 0) ? "member-system" : "member-manual member-online";
+		//cb.next("span").addClass(cls);
+	});
+	
+	$("button.role-filter-up").on("click", (ev)=>{
+		changeRoleFilter(ev, true);
+		ev.stopPropagation();
+		return false;
+	});
+	$("button.role-filter-down").on("click", (ev)=>{
+		
+		changeRoleFilter(ev, false);
+		ev.stopPropagation();
+		return false;
 	});
 	
 	if(container.is(':visible')){
@@ -3955,9 +4010,38 @@ function makeDiagramLine(hist){
 		container.prev("button").text('絞り込み条件を非表示').attr('title', '絞り込み表示条件を非表示にします。');
 		container.show();
 	}
+	//$("#sequence-role-filter").selectable();
+	//$(".selectable").on("click mouseup mousedown",(e)=>{e.stopPropagation();});
+ }
+ function changeRoleFilter(ev, up){
+	var role = $(ev.currentTarget).data("rolename");
+	var target = _.find(FRICORE.sortedRoles, (e)=>{return e.rolename==role;});
+
+	var index = FRICORE.sortedRoles.indexOf(target);
+	if(up){
+		if(index == 0) return;
+		var dest =  FRICORE.sortedRoles[index  - 1];
+		FRICORE.sortedRoles[index] = dest;
+		FRICORE.sortedRoles[index - 1] = target;
+		var targetelm  = $("[data-rolename='"+target.rolename+"'").parents("li"); 
+		var destelm  = $("[data-rolename='"+dest.rolename+"'").parents("li");;
+		targetelm.after(destelm);
+		
+	}else{
+		if(index == FRICORE.sortedRoles.length - 1) return;
+		var dest =  FRICORE.sortedRoles[index  + 1];
+		FRICORE.sortedRoles[index] = dest;
+		FRICORE.sortedRoles[index + 1] = target;
+		var targetelm  = $("[data-rolename='"+target.rolename+"'").parents("li"); 
+		var destelm  = $("[data-rolename='"+dest.rolename+"'").parents("li");;
+		targetelm.before(destelm);
+
+	}
+	//applyFilter();
  }
  function checkAllFilter(show){
 	$('#sequence-role-filter>>input[type=checkbox]').prop('checked', show);
+
  }
  function applyFilter(){
 	 showWFHistory(null, true);
@@ -3965,7 +4049,8 @@ function makeDiagramLine(hist){
  /**フィルタ設定を評価し、ロールが表示対象ならtrueを返します。all/systemは常にtrueを返します。*/
  function validateRoleFilter(role){
 	 
-	 if(role == "system") return true;
+	 //202306 システムロールの非表示を許可
+	 //if(role == "system") return true;
 	 
 	 var id = "#filter-role-" + role;
 	 
