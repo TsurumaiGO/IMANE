@@ -2153,7 +2153,7 @@ function viewSystem(){
 }
 function viewOrganizations(){
 	var url = "organizations.html";
-	window.open(url, 'oraniations','width=800,height=500');
+	window.open(url, 'oraniations','width=600,height=500');
 }
 function viewActions(){
 	getHelpContent();
