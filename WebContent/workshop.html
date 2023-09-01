@@ -339,12 +339,13 @@
 
 
 
-<div id = "svgctrl" class = "debugmenu" style = "display:none">
+<div id = "svgctrl">
 	<button onclick="zoomin()" title='チャートを10%拡大します。'>拡大</button>
 	<button onclick="zoomout()" title='チャートを10%縮小します。'>縮小</button>
 	<button onclick="trim()" title='チャートをドラッグして選択した範囲を拡大表示します。'>トリム</button>
 	<button onclick="resume()" title='拡大/縮小前のサイズを復元します。'>元のサイズ</button>
 	<span id='zoomratio' style='display:inline-block;width:4em;padding-left:1em;'></span>
+	<hr>	
 	<button onclick="showFilter('#sequence-filter')" title = "表示対象を絞り込むための条件設定項目を表示します。">絞り込み条件を設定</button>
 	<div id = 'sequence-filter' style='display:none'>
 		<input type='checkbox' checked id='hide-inactive'><label for = 'hide-inactive' title='フェーズ中にアクションのなかったユーザを非表示にします。'>非アクティブなユーザを隠す</label><br/>
@@ -354,8 +355,9 @@
 		<button onclick='checkAllFilter(true)' title="すべての役割の選択状態を有効にします。">すべての役割を選択</button>
 		<button onclick='checkAllFilter(false)' title="すべての役割の選択状態を無効にします。">すべての役割を解除</button>
 		<button onclick='applyFilter()' title = "役割の選択状態を適用してチャートを再表示します。">選択を適用</button>
-		<div id = 'sequence-role-filter'>
-		</div>
+		<br>
+		<ul id = 'sequence-role-filter'">		
+		</ul>
 	</div>
 </div>
  <input type="text" id = "printheader"/>
@@ -584,7 +586,7 @@
 <div class = "ctrl" style = "top:0;right:0;border:none" id = "systemview-ctrl">
 	
 	<input type = "checkbox" class='fa fa-reload iconbutton' id = "systemview-systemstate" 
-		title='システムビュー/ユーザビューを切り替え' onchange='refreshSystemView()' checked="checked"><label for = "systemview-systemstate" title='システムビュー/ユーザビューを切り替え'>ビューを切り替え</label>
+		title='システムビュー/ユーザビューを切り替え(演習中はチェックしないでください)' onchange='refreshSystemView()' checked="false"><label for = "systemview-systemstate" title='システムビュー/ユーザビューを切り替え'>ビューを切り替え</label>
 	<span class='fa fa-sync iconbutton' 
 		title='更新' onclick='refreshSystemView()'></span>
 	
@@ -890,6 +892,19 @@
 <script type = "template" id = "select2-action-template">
 <span <%=hasOwnProperty('icon') ? ('class="fa fa-icon '+icon + '"') : ''%> title='<%=name%>(<%=id%>) <%=description%>'><%=name||id%></span>
 </script>
+
+
+<script type = "template" id = "sequence-roles-filter-item">
+<li><input type='checkbox' id='filter-role-<%=role%>' checked />
+	<%=rolename%>
+	<span style = "float:right">
+	<button class = "ui-button role-filter-up" data-rolename="<%=rolename%>"><span class = "fa fa-icon fa-arrow-up"></span></button>
+	<button class = " ui-button role-filter-down" data-rolename="<%=rolename%>"><span class = "fa fa-icon fa-arrow-down"></span></button>
+	</span>
+	</li>
+</script>
+
+
 
 <div id = "dialog-container" style="display:none"></div>
 

@@ -567,7 +567,6 @@ transform-origin:none;
     top: 4em;
     background: lightgray;
     border: 1px solid gray;
-    position: fixed;
     border: 1px;
     font-size: small;
     padding: 0.1em;
@@ -931,6 +930,19 @@ input[type="range"] {
 
 
 
-
-
+#sequence-role-filter{
+	max-height: 10em;
+	overflow-y: scroll;
+	list-style-type: none;
+}
+#sequence-role-filter>li{
+	cursor: hand;
+	clear: both;
+}
+#sequence-role-filter>li:hover{
+	background-color: highlight;
+}
+#sequence-role-filter>li>button{
+	
+}
 
